@@ -2,6 +2,7 @@ import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
+import { DocumentData } from '@google-cloud/firestore';
 
 admin.initializeApp(functions.config().firebase);
 const db = admin.firestore(); // Add this
@@ -65,7 +66,7 @@ app.get('/fights/:id', async (request, response) => {
 app.get('/fights', async (request, response) => {
 	try {
 		const fightQuerySnapshot = await db.collection('fights').get();
-		const fights = [];
+		const fights: { id: string; data: DocumentData }[] = [];
 		fightQuerySnapshot.forEach(doc => {
 			fights.push({
 				id: doc.id,
@@ -91,10 +92,10 @@ app.put('/fights/:id', async (request, response) => {
 		const data = {
 			title,
 		};
-		const fightRef = await db
-			.collection('fights')
-			.doc(fightId)
-			.set(data, { merge: true });
+		// const fightRef = await db
+		// 	.collection('fights')
+		// 	.doc(fightId)
+		// 	.set(data, { merge: true });
 
 		response.json({
 			id: fightId,
