@@ -1,5 +1,6 @@
 {
   "projects": {
-    "dev": "vita-cs407"
+    "dev": "vita-cs407",
+    "default": "vita-cs407"
   }
 }
