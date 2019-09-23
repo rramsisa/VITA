@@ -2,6 +2,9 @@
 
 This is a server that uses node.js to run an express server with a Mongo DB database
 
+To run the server, run npm start
+It will run on localhost:3000
+
 @hapi/joi version 15.0.3
 
 When logging in, an auth token will be returned in the header. This token needs to be stored by the client until they are logged in and must be part of the header of every request made to the server.
