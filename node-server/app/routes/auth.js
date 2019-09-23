@@ -44,7 +44,7 @@ router.post('/register', async (req, res) => {
     } catch (err) {
         res.status(400).send(err);
     }
-})
+}) //end register post
 
 router.post('/login', async (req, res) => {
 
@@ -78,6 +78,6 @@ router.post('/login', async (req, res) => {
     });
 
     res.header('auth-token', token).status(200).send(token);
-})
+}) // end login
 
 module.exports = router
