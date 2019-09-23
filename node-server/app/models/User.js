@@ -22,7 +22,38 @@ const userSchema = new mongoose.Schema({
     date: {
         type: Date,
         default: Date.now
+    },
+    pairedDevices: [{
+        type: Number,
+    }],
+    listOfItems: [{
+        type: Number,
+    }]
+})
+
+const itemSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+    },
+    status: { // true => in-stock, false => out-of-stock
+        type: Boolean,
+        required: true
+    },
+    date: { // Date created
+        type: Date,
+        default: Date.now
+    },
+    quantity: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    barcode: {
+        type: Number,
+        required: false
     }
 })
 
 module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('Item', itemSchema);
