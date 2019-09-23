@@ -22,4 +22,5 @@ When logging out, this token must be deleted.
 
 <b>To Do:</b>
 
-Update Schema to accomodate paired devices as well as the inventory items
+1. Update Schema to accomodate paired devices as well as the inventory items
+2. Add change password api
