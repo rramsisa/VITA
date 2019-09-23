@@ -1,5 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const authRoute = require('./app/routes/auth')
+const postRoute = require('./app/routes/posts');
+
+dotenv.config();
+
+mongoose.Promise = global.Promise;
 
 // create express app
 const app = express();
@@ -12,15 +20,10 @@ app.use(bodyParser.urlencoded({
 // parse requests of content-type - application/json
 app.use(bodyParser.json())
 
-// Configuring the database
-const dbConfig = require('./config/database.config.js');
-const mongoose = require('mongoose');
-
-mongoose.Promise = global.Promise;
-
 // Connecting to the database
-mongoose.connect(dbConfig.url, {
-    useNewUrlParser: true
+mongoose.connect(process.env.DB_CONNECT, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 }).then(() => {
     console.log("Successfully connected to the database");
 }).catch(err => {
@@ -28,14 +31,10 @@ mongoose.connect(dbConfig.url, {
     process.exit();
 });
 
-// define a simple route
-app.get('/', (req, res) => {
-    res.json({
-        "message": "Welcome to VITA application."
-    });
-});
+app.use(express.json());
 
-require('./app/routes/item.routes.js')(app);
+app.use('/api/user/', authRoute);
+app.use('/api/post/', postRoute);
 
 // listen for requests
 app.listen(3000, () => {
