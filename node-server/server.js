@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const authRoute = require('./app/routes/auth')
-const postRoute = require('./app/routes/posts');
+const raspiRoute = require('./app/routes/raspi');
 
 dotenv.config();
 
@@ -34,7 +34,7 @@ mongoose.connect(process.env.DB_CONNECT, {
 app.use(express.json());
 
 app.use('/api/user/', authRoute);
-app.use('/api/post/', postRoute);
+app.use('/api/raspi/', raspiRoute);
 
 // listen for requests
 app.listen(3000, () => {
