@@ -111,17 +111,21 @@ router.post('/changepassword', verify, async (req, res) => {
         });
     }
 
-    const cur_user = await User.findOne({
+    const user = await User.findOne({
         _id: req.user._id
     })
 
-    if (cur_user.email != req.body.email) {
+    if (user.email != req.body.email) {
         return res.status(400).send({
             message: 'Email not associated with this account'
         })
     }
 
-    const validPass = await bcrypt.compare(req.body.password, cur_user.password)
+
+    console.log(req.body.password);
+    console.log(await bcrypt.compare(req.body.password, user.password))
+
+    const validPass = await bcrypt.compare(req.body.password, user.password)
 
     if (!validPass) {
         return res.status(400).send({
@@ -130,9 +134,10 @@ router.post('/changepassword', verify, async (req, res) => {
     }
 
     console.log(req.body.newPassword);
-    console.log(await bcrypt.compare(req.body.newPassword, cur_user.password))
+    console.log(req.body.password);
+    console.log(await bcrypt.compare(req.body.newPassword, user.password))
 
-    const validPass1 = await bcrypt.compare(req.body.newPassword, cur_user.password)
+    const validPass1 = await bcrypt.compare(req.body.newPassword, user.password)
 
     if (validPass1) {
         return res.status(400).send({
@@ -143,15 +148,12 @@ router.post('/changepassword', verify, async (req, res) => {
     // HASH the password
     const salt = await bcrypt.genSalt(10)
     const hashPassword = await bcrypt.hash(req.body.newPassword, salt);
+
     try {
         // TODO: Update DB properly
-        await User.update({
-            password: hashPassword
-        }, {
-            where: {
-                _id: cur_user._id
-            }
-        })
+        user.password = hashPassword;
+        const savedUser = await user.save();
+        
         return res.send({
             message: "Password Updated"
         });
