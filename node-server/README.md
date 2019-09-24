@@ -18,7 +18,17 @@ When logging out, this token must be deleted.
 
 1. /api/user/register/
 2. /api/user/login/
-3. /api/post/ (for testing)
+3. /api/user/changepassword/
+
+
+| Type  | Path                      | Parameters                                               |
+| ---   | ---                       | ---                                                      |
+| POST  | /api/user/register/       | name (string), email (string), password (string)         |
+| POST  | /api/user/login/          | email (string), password (string)                        |
+| POST  | /api/user/changepassword/ | email (string), password (string), new_password (string) |
+
+
+
 
 <b>To Do:</b>
 
