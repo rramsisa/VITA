@@ -121,10 +121,6 @@ router.post('/changepassword', verify, async (req, res) => {
         })
     }
 
-
-    console.log(req.body.password);
-    console.log(await bcrypt.compare(req.body.password, user.password))
-
     const validPass = await bcrypt.compare(req.body.password, user.password)
 
     if (!validPass) {
@@ -132,10 +128,6 @@ router.post('/changepassword', verify, async (req, res) => {
             message: "Invalid Password"
         });
     }
-
-    console.log(req.body.newPassword);
-    console.log(req.body.password);
-    console.log(await bcrypt.compare(req.body.newPassword, user.password))
 
     const validPass1 = await bcrypt.compare(req.body.newPassword, user.password)
 
@@ -150,10 +142,8 @@ router.post('/changepassword', verify, async (req, res) => {
     const hashPassword = await bcrypt.hash(req.body.newPassword, salt);
 
     try {
-        // TODO: Update DB properly
         user.password = hashPassword;
         const savedUser = await user.save();
-        
         return res.send({
             message: "Password Updated"
         });
