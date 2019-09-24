@@ -25,3 +25,4 @@ When logging out, this token must be deleted.
 1. Update Schema to accomodate paired devices as well as the inventory items
 2. Make change password api endpoint (POST)
 3. Basic POST API call to receive bar code from Raspi. No association with accounts needed right now.
+4. Make pair/unpair scanner endpoints
