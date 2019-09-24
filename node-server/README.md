@@ -28,7 +28,8 @@ When logging out, this token must be deleted.
 | POST  | /api/user/changepassword/ | email (string), password (string), new_password (string) |
 
 
-
+<b> PostMan test cases </b>
+https://app.getpostman.com/join-team?invite_code=f7a228669babd77bdd2a5ae7c1dac92d
 
 <b>To Do:</b>
 
