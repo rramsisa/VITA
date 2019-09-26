@@ -8,7 +8,8 @@ const verify = require('./verifyToken');
 const {
     registerValidation,
     loginValidation,
-    changePasswordValidation
+    changePasswordValidation, 
+    deleteUserValidation
 } = require('../validation');
 
 router.post('/register', async (req, res) => {
@@ -153,6 +154,51 @@ router.post('/changepassword', verify, async (req, res) => {
         });
     }
 }) //end change password post
+
+
+router.post('/deleteuser', verify, async (req, res) => {
+
+    // Validate key data before submission
+    const {
+        error
+    } = deleteUserValidation(req.body);
+    if (error) {
+        return res.status(400).send({
+            message: error.details[0].message
+        });
+    }
+
+    const user = await User.findOne({
+        _id: req.user._id
+    })
+
+    if (user.email != req.body.email) {
+        return res.status(400).send({
+            message: 'Email not associated with this account'
+        })
+    }
+
+    const validPass = await bcrypt.compare(req.body.password, user.password)
+
+    if (!validPass) {
+        return res.status(400).send({
+            message: "Invalid Password"
+        });
+    }
+
+
+    try {
+        
+        const savedUser = await user.delete();
+        return res.send({
+            message: "user deleted"
+        });
+    } catch (err) {
+        res.status(400).send({
+            message: err
+        });
+    }
+}) //end delete user post
 
 
 
