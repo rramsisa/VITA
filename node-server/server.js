@@ -47,7 +47,10 @@ app.route("/api/user/register")
 
 app.route("/api/user/deleteuser" )
     .post(verify, authRoute.deleteuser);
-
+    
+app.route("/api/user/changepassword" )
+    .post(verify, authRoute.changepassword);
+    
 
 
 app.use('/api/raspi/', raspiRoute);

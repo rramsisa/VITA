@@ -113,62 +113,63 @@ async function login (req, res) {
 
 
 
+async function changepassword (req, res) {
+        // router.post('/changepassword', verify, async (req, res) => {
 
+            // Validate key data before submission
+            const {
+                error
+            } = changePasswordValidation(req.body);
+            if (error) {
+                return res.status(400).send({
+                    message: error.details[0].message
+                });
+            }
 
-// router.post('/changepassword', verify, async (req, res) => {
+            const user = await User.findOne({
+                _id: req.user._id
+            })
 
-//     // Validate key data before submission
-//     const {
-//         error
-//     } = changePasswordValidation(req.body);
-//     if (error) {
-//         return res.status(400).send({
-//             message: error.details[0].message
-//         });
-//     }
+            if (user.email != req.body.email) {
+                return res.status(400).send({
+                    message: 'Email not associated with this account'
+                })
+            }
 
-//     const user = await User.findOne({
-//         _id: req.user._id
-//     })
+            const validPass = await bcrypt.compare(req.body.password, user.password)
 
-//     if (user.email != req.body.email) {
-//         return res.status(400).send({
-//             message: 'Email not associated with this account'
-//         })
-//     }
+            if (!validPass) {
+                return res.status(400).send({
+                    message: "Invalid Password"
+                });
+            }
 
-//     const validPass = await bcrypt.compare(req.body.password, user.password)
+            const validPass1 = await bcrypt.compare(req.body.newPassword, user.password)
 
-//     if (!validPass) {
-//         return res.status(400).send({
-//             message: "Invalid Password"
-//         });
-//     }
+            if (validPass1) {
+                return res.status(400).send({
+                    message: "New password is same as old password"
+                });
+            }
 
-//     const validPass1 = await bcrypt.compare(req.body.newPassword, user.password)
+            // HASH the password
+            const salt = await bcrypt.genSalt(10)
+            const hashPassword = await bcrypt.hash(req.body.newPassword, salt);
 
-//     if (validPass1) {
-//         return res.status(400).send({
-//             message: "New password is same as old password"
-//         });
-//     }
+            try {
+                user.password = hashPassword;
+                const savedUser = await user.save();
+                return res.send({
+                    message: "Password Updated"
+                });
+            } catch (err) {
+                res.status(400).send({
+                    message: err
+                });
+            }
+        // }) //end change password post
+}
 
-//     // HASH the password
-//     const salt = await bcrypt.genSalt(10)
-//     const hashPassword = await bcrypt.hash(req.body.newPassword, salt);
-
-//     try {
-//         user.password = hashPassword;
-//         const savedUser = await user.save();
-//         return res.send({
-//             message: "Password Updated"
-//         });
-//     } catch (err) {
-//         res.status(400).send({
-//             message: err
-//         });
-//     }
-// }) //end change password post
 
 async function deleteuser (req, res) {
 
@@ -213,11 +214,10 @@ async function deleteuser (req, res) {
                     message: err
                 });
             }
-        // }) //end delete user post
 }
 
 // module.exports = router
 module.exports = {
     login, register,
-    deleteuser
+    deleteuser, changepassword
 };

@@ -1,5 +1,4 @@
  
-
 var request = require("request"),
     assert = require('assert'),
     base_url = "http://localhost:3000/";
@@ -52,6 +51,41 @@ describe('Unit-ish_testning', () => {
                 .end((err, res) => {
                       res.should.have.status(200);                      
                       token_login = res.body.token
+                  done();
+                });
+
+          });
+
+      });
+    describe('change passoword testing', () => {
+          it('normal change 1 - should work', (done) => {
+              let user = {
+                  email: "tester@yahoo.com",
+                  password: "tester1234",
+                  newPassword:"tester4321"
+              }
+           chai.request(app)
+                .post('/api/user/changepassword')
+                .set('auth-token', token_login)
+                .send(user)
+                .end((err, res) => {
+                      res.should.have.status(200);                      
+                  done();
+                });
+
+          });
+          it('normal change 2 - should work', (done) => {
+              let user = {
+                  email: "tester@yahoo.com",
+                  newPassword: "tester1234",
+                  password:"tester4321"
+              }
+           chai.request(app)
+                .post('/api/user/changepassword')
+                .set('auth-token', token_login)
+                .send(user)
+                .end((err, res) => {
+                      res.should.have.status(200);                      
                   done();
                 });
 
