@@ -22,7 +22,9 @@ async function register (req, res) {
                 error
             } = registerValidation(req.body);
             if (error) {
+                
                 return res.status(400).send({
+
                     message: error.details[0].message
                 });
             }
