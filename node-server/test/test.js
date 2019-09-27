@@ -22,7 +22,7 @@ describe('Unit-ish_testning', () => {
 
     
     describe('register testing', () => {
-          it('normal register - should work', (done) => {
+      it('normal register - should work', (done) => {
               let user = {
                   email: "tester@yahoo.com",
                   password: "tester1234",
@@ -38,6 +38,79 @@ describe('Unit-ish_testning', () => {
                 });
 
           });
+      it('email already exists', (done) => {
+              let user = {
+                  email: "tester@yahoo.com",
+                  password: "tester1234",
+                  name: "tester"
+                
+              }
+           chai.request(app)
+                .post('/api/user/register')
+                .send(user)
+                .end((err, res) => {
+                      res.should.have.status(400);
+                      res.body.should.have.property('message').eql("Email already exists");
+
+                  done();
+                });
+
+          });
+      it('register no password', (done) => {
+              let user = {
+                  email: "tester1@yahoo.com",
+                  password: "",
+                  name: "tester"
+                
+              }
+           chai.request(app)
+                .post('/api/user/register')
+                .send(user)
+                .end((err, res) => {
+                  
+                      res.should.have.status(400);
+                      res.body.should.have.property('message').eql("\"password\" is not allowed to be empty");
+                      
+                  done();
+                });
+
+          });
+      it('register no email', (done) => {
+              let user = {
+                  email: "",
+                  password: "tester1234",
+                  name: "tester"
+                
+              }
+           chai.request(app)
+                .post('/api/user/register')
+                .send(user)
+                .end((err, res) => {
+                  
+                      res.should.have.status(400);
+                      res.body.should.have.property('message').eql("\"email\" is not allowed to be empty");                  done();
+                });
+
+          });
+      it('register no name', (done) => {
+              let user = {
+                  email: "tester1@yahoo.com",
+                  password: "tester1234",
+                  name: ""
+                
+              }
+           chai.request(app)
+                .post('/api/user/register')
+                .send(user)
+                .end((err, res) => {
+                  
+                      res.should.have.status(400);
+                      res.body.should.have.property('message').eql("\"name\" is not allowed to be empty"); 
+                  done();
+                });
+
+          });
+          
         });
     describe('login testing', () => {
           it('normal login - should work', (done) => {
@@ -55,6 +128,55 @@ describe('Unit-ish_testning', () => {
                 });
 
           });
+          it('no email', (done) => {
+              let user = {
+                  email: "",
+                  password: "tester1234"
+              }
+           chai.request(app)
+                .post('/api/user/login')
+                .send(user)
+                .end((err, res) => {
+                      res.should.have.status(400);    
+                      res.body.should.have.property('message').eql("\"email\" is not allowed to be empty");                   
+                      
+                  done();
+                });
+
+          });
+          it('no password', (done) => {
+                        let user = {
+                            email: "tester@yahoo.com",
+                            password: ""
+                        }
+                     chai.request(app)
+                          .post('/api/user/login')
+                          .send(user)
+                          .end((err, res) => {
+                                res.should.have.status(400); 
+                                res.body.should.have.property('message').eql("\"password\" is not allowed to be empty");                      
+                                
+                            done();
+                          });
+
+                    });
+          it('wrong password', (done) => {
+              let user = {
+                  email: "tester@yahoo.com",
+                  password: "1234tester"
+              }
+              chai.request(app)
+                .post('/api/user/login')
+                .send(user)
+                .end((err, res) => {
+                      res.should.have.status(400); 
+                      res.body.should.have.property('message').eql("Invalid Password");                      
+                      
+                  done();
+                });
+
+          });
+
 
       });
     describe('change passoword testing', () => {
@@ -90,10 +212,153 @@ describe('Unit-ish_testning', () => {
                 });
 
           });
+          it('no email', (done) => {
+              let user = {
+                  email: "",
+                  newPassword: "tester1234",
+                  password:"tester4321"
+              }
+           chai.request(app)
+                .post('/api/user/changepassword')
+                .set('auth-token', token_login)
+                .send(user)
+                .end((err, res) => {
+                      res.should.have.status(400);  
+                      res.body.should.have.property('message').eql("\"email\" is not allowed to be empty");                    
+                  done();
+                });
+
+          });
+          it('no password', (done) => {
+              let user = {
+                  email: "tester@yahoo.com",
+                  newPassword: "tester1234",
+                  password:""
+              }
+           chai.request(app)
+                .post('/api/user/changepassword')
+                .set('auth-token', token_login)
+                .send(user)
+                .end((err, res) => {
+                      res.should.have.status(400);   
+                      res.body.should.have.property('message').eql("\"password\" is not allowed to be empty");                   
+                  done();
+                });
+
+          });
+          it('no new password', (done) => {
+              let user = {
+                  email: "tester@yahoo.com",
+                  newPassword: "",
+                  password:"tester4321"
+              }
+           chai.request(app)
+                .post('/api/user/changepassword')
+                .set('auth-token', token_login)
+                .send(user)
+                .end((err, res) => {
+                
+                      res.should.have.status(400); 
+                      res.body.should.have.property('message').eql("\"newPassword\" is not allowed to be empty");                     
+                  done();
+                });
+
+          });
+          it('same password', (done) => {
+              let user = {
+                  email: "tester@yahoo.com",
+                  newPassword: "tester1234",
+                  password:"tester1234"
+              }
+           chai.request(app)
+                .post('/api/user/changepassword')
+                .set('auth-token', token_login)
+                .send(user)
+                .end((err, res) => {
+              
+                      res.should.have.status(400); 
+                      res.body.should.have.property('message').eql("New password is same as old password");                      
+                  done();
+                });
+
+          });
+          it('wrong original password', (done) => {
+              let user = {
+                  email: "tester@yahoo.com",
+                  newPassword: "tester1234",
+                  password:"tester4321"
+              }
+           chai.request(app)
+                .post('/api/user/changepassword')
+                .set('auth-token', token_login)
+                .send(user)
+                .end((err, res) => {
+                  
+                      res.should.have.status(400);    
+                       res.body.should.have.property('message').eql("Invalid Password");                      
+                  
+                  done();
+                });
+
+          });
 
       });
     describe('delete testing', () => {
-          it('normal delete - should work', (done) => {
+          it('no password', (done) => {
+              let user = {
+                  email: "tester@yahoo.com",
+                  password: ""
+              }
+           chai.request(app)
+                .post('/api/user/deleteuser')
+                .set('auth-token', token_login)
+                .send(user)
+                .end((err, res) => {
+                      res.should.have.status(400);
+                      res.body.should.have.property('message').eql("\"password\" is not allowed to be empty"); 
+
+                  done();
+                });
+
+          });
+
+  
+      it('no email', (done) => {
+              let user = {
+                  email: "",
+                  password: "tester1234"
+              }
+           chai.request(app)
+                .post('/api/user/deleteuser')
+                .set('auth-token', token_login)
+                .send(user)
+                .end((err, res) => {
+                      res.should.have.status(400);
+                      res.body.should.have.property('message').eql("\"email\" is not allowed to be empty"); 
+                     
+                  done();
+                });
+
+          });
+      it('wrong password', (done) => {
+              let user = {
+                  email: "tester@yahoo.com",
+                  password: "1234tester"
+              }
+           chai.request(app)
+                .post('/api/user/deleteuser')
+                .set('auth-token', token_login)
+                .send(user)
+                .end((err, res) => {
+                      res.should.have.status(400);
+                      res.body.should.have.property('message').eql("Invalid Password"); 
+
+                     
+                  done();
+                });
+
+          });
+      it('normal delete - should work', (done) => {
               let user = {
                   email: "tester@yahoo.com",
                   password: "tester1234"
@@ -111,4 +376,6 @@ describe('Unit-ish_testning', () => {
           });
 
       });
+
+
 });
