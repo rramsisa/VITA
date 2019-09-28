@@ -49,7 +49,7 @@ describe('Unit-ish_testning', () => {
                 .post('/api/user/register')
                 .send(user)
                 .end((err, res) => {
-                      res.should.have.status(400);
+                      res.should.have.status(409);
                       res.body.should.have.property('message').eql("Email already exists");
 
                   done();
@@ -68,7 +68,7 @@ describe('Unit-ish_testning', () => {
                 .send(user)
                 .end((err, res) => {
                   
-                      res.should.have.status(400);
+                      res.should.have.status(422);
                       res.body.should.have.property('message').eql("\"password\" is not allowed to be empty");
                       
                   done();
@@ -87,7 +87,7 @@ describe('Unit-ish_testning', () => {
                 .send(user)
                 .end((err, res) => {
                   
-                      res.should.have.status(400);
+                      res.should.have.status(422);
                       res.body.should.have.property('message').eql("\"email\" is not allowed to be empty");                  done();
                 });
 
@@ -104,7 +104,7 @@ describe('Unit-ish_testning', () => {
                 .send(user)
                 .end((err, res) => {
                   
-                      res.should.have.status(400);
+                      res.should.have.status(422);
                       res.body.should.have.property('message').eql("\"name\" is not allowed to be empty"); 
                   done();
                 });
@@ -135,7 +135,7 @@ describe('Unit-ish_testning', () => {
             .post('/api/user/login')
             .send(user)
             .end((err, res) => {
-                  res.should.have.status(400);    
+                  res.should.have.status(422);    
                   res.body.should.have.property('message').eql("\"email\" is not allowed to be empty");                   
                   
               done();
@@ -150,7 +150,7 @@ describe('Unit-ish_testning', () => {
             .post('/api/user/login')
             .send(user)
             .end((err, res) => {
-                  res.should.have.status(400); 
+                  res.should.have.status(422); 
                   res.body.should.have.property('message').eql("\"password\" is not allowed to be empty");                      
                   
               done();
@@ -166,7 +166,7 @@ describe('Unit-ish_testning', () => {
               .post('/api/user/login')
               .send(user)
               .end((err, res) => {
-                    res.should.have.status(400); 
+                    res.should.have.status(403); 
                     res.body.should.have.property('message').eql("Invalid Password");                       
                 done();
               });
@@ -214,7 +214,7 @@ describe('Unit-ish_testning', () => {
             .set('auth-token', token_login)
             .send(user)
             .end((err, res) => {
-                  res.should.have.status(400);  
+                  res.should.have.status(422);  
                   res.body.should.have.property('message').eql("\"email\" is not allowed to be empty");                    
               done();
             });
@@ -231,7 +231,7 @@ describe('Unit-ish_testning', () => {
             .set('auth-token', token_login)
             .send(user)
             .end((err, res) => {
-                  res.should.have.status(400);   
+                  res.should.have.status(422);   
                   res.body.should.have.property('message').eql("\"password\" is not allowed to be empty");                   
               done();
             });
@@ -248,7 +248,7 @@ describe('Unit-ish_testning', () => {
             .send(user)
             .end((err, res) => {
             
-                  res.should.have.status(400); 
+                  res.should.have.status(422); 
                   res.body.should.have.property('message').eql("\"newPassword\" is not allowed to be empty");                     
               done();
             });
@@ -266,7 +266,7 @@ describe('Unit-ish_testning', () => {
             .send(user)
             .end((err, res) => {
           
-                  res.should.have.status(400); 
+                  res.should.have.status(422); 
                   res.body.should.have.property('message').eql("New password is same as old password");                      
               done();
             });
@@ -284,7 +284,7 @@ describe('Unit-ish_testning', () => {
             .send(user)
             .end((err, res) => {
               
-                  res.should.have.status(400);    
+                  res.should.have.status(403);    
                    res.body.should.have.property('message').eql("Invalid Password");                      
               
               done();
@@ -303,7 +303,7 @@ describe('Unit-ish_testning', () => {
             .send(device)
             .end((err, res) => {
                   
-                  res.should.have.status(400);
+                  res.should.have.status(422);
                   res.body.should.have.property('message').eql("\"device\" is not allowed to be empty"); 
 
               done();
@@ -349,7 +349,7 @@ describe('Unit-ish_testning', () => {
             .send(device)
             .end((err, res) => {
                   
-                  res.should.have.status(400);
+                  res.should.have.status(422);
                   res.body.should.have.property('message').eql("\"device\" is not allowed to be empty"); 
 
               done();
@@ -377,7 +377,7 @@ describe('Unit-ish_testning', () => {
             .set('auth-token', token_login)
             .send(device)
             .end((err, res) => {
-                  res.should.have.status(400);
+                  res.should.have.status(404);
                   res.body.should.have.property('message').eql("Device not found"); 
 
               done();
@@ -395,7 +395,7 @@ describe('Unit-ish_testning', () => {
             .set('auth-token', token_login)
             .send(user)
             .end((err, res) => {
-                  res.should.have.status(400);
+                  res.should.have.status(422);
                   res.body.should.have.property('message').eql("\"password\" is not allowed to be empty"); 
 
               done();
@@ -411,7 +411,7 @@ describe('Unit-ish_testning', () => {
                 .set('auth-token', token_login)
                 .send(user)
                 .end((err, res) => {
-                      res.should.have.status(400);
+                      res.should.have.status(422);
                       res.body.should.have.property('message').eql("\"email\" is not allowed to be empty"); 
                      
                   done();
@@ -428,7 +428,7 @@ describe('Unit-ish_testning', () => {
                 .set('auth-token', token_login)
                 .send(user)
                 .end((err, res) => {
-                      res.should.have.status(400);
+                      res.should.have.status(403);
                       res.body.should.have.property('message').eql("Invalid Password"); 
 
                      
