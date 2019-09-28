@@ -26,10 +26,17 @@ When logging out, this token must be deleted.
 | POST  | /api/user/register/       | name (string), email (string), password (string)         |
 | POST  | /api/user/login/          | email (string), password (string)                        |
 | POST  | /api/user/changepassword/ | email (string), password (string), new_password (string) |
+| POST  | /api/user/deleteuser/     | email (string), password (string)                        |
+| POST  | /api/raspi/pair/          | device(string id)                                        |
+| POST  | /api/raspi/unpair/        | device(string id)                                        |
+
 
 
 <b> PostMan test cases </b>
 https://app.getpostman.com/join-team?invite_code=f7a228669babd77bdd2a5ae7c1dac92d
+
+<b> Unit-ish testing</b>
+run : npm test
 
 <b>To Do:</b>
 
