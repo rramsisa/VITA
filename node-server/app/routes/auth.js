@@ -17,7 +17,7 @@ async function register (req, res) {
             } = registerValidation(req.body);
             if (error) {
                 
-                return res.status(400).send({
+                return res.status(422).send({
 
                     message: error.details[0].message
                 });
@@ -28,7 +28,7 @@ async function register (req, res) {
                 email: req.body.email
             })
             if (emailExists) {
-                return res.status(400).send({
+                return res.status(409).send({
                     message: 'Email already exists'
                 })
             }
@@ -62,7 +62,7 @@ async function login (req, res) {
             error
         } = loginValidation(req.body);
         if (error) {
-            return res.status(400).send({
+            return res.status(422).send({
                 message: error.details[0].message
             });
         }
@@ -72,7 +72,7 @@ async function login (req, res) {
             email: req.body.email
         })
         if (!user) {
-            return res.status(400).send({
+            return res.status(404).send({
                 message: 'Email doesn\'t exist'
             });
         }
@@ -80,23 +80,28 @@ async function login (req, res) {
         const validPass = await bcrypt.compare(req.body.password, user.password)
 
         if (!validPass) {
-            return res.status(400).send({
+            return res.status(403).send({
                 message: 'Invalid Password'
             });
         }
 
-        // Create and assign a token
-        const token = jwt.sign({
-            _id: user._id
-        }, process.env.TOKEN_SECRET, {
-            expiresIn: '1d'
-        });
+        try {
+            // Create and assign a token
+            const token = jwt.sign({
+                _id: user._id
+            }, process.env.TOKEN_SECRET, {
+                expiresIn: '1d'
+            });
 
-        return res.header('auth-token', token).status(200).send({
-            "token": token,
-            message: "Logged In!"
-        });
-
+            return res.header('auth-token', token).status(200).send({
+                "token": token,
+                message: "Logged In!"
+            });
+            } catch (err) {
+                res.status(401).send({
+                    message: err
+                });
+            }
 }
 
 async function changepassword (req, res) {
@@ -105,7 +110,7 @@ async function changepassword (req, res) {
                 error
             } = changePasswordValidation(req.body);
             if (error) {
-                return res.status(400).send({
+                return res.status(422).send({
                     message: error.details[0].message
                 });
             }
@@ -115,7 +120,7 @@ async function changepassword (req, res) {
             })
 
             if (user.email != req.body.email) {
-                return res.status(400).send({
+                return res.status(403).send({
                     message: 'Email not associated with this account'
                 })
             }
@@ -123,7 +128,7 @@ async function changepassword (req, res) {
             const validPass = await bcrypt.compare(req.body.password, user.password)
 
             if (!validPass) {
-                return res.status(400).send({
+                return res.status(403).send({
                     message: "Invalid Password"
                 });
             }
@@ -131,7 +136,7 @@ async function changepassword (req, res) {
             const validPass1 = await bcrypt.compare(req.body.newPassword, user.password)
 
             if (validPass1) {
-                return res.status(400).send({
+                return res.status(422).send({
                     message: "New password is same as old password"
                 });
             }
@@ -147,7 +152,7 @@ async function changepassword (req, res) {
                     message: "Password Updated"
                 });
             } catch (err) {
-                res.status(400).send({
+                res.status(401).send({
                     message: err
                 });
             }
@@ -159,7 +164,7 @@ async function deleteuser (req, res) {
                 error
             } = deleteUserValidation(req.body);
             if (error) {
-                return res.status(400).send({
+                return res.status(422).send({
                     message: error.details[0].message
                 });
             }
@@ -168,7 +173,7 @@ async function deleteuser (req, res) {
             })
 
             if (user.email != req.body.email) {
-                return res.status(400).send({
+                return res.status(403).send({
                     message: 'Email not associated with this account'
                 })
             }
@@ -176,7 +181,7 @@ async function deleteuser (req, res) {
             const validPass = await bcrypt.compare(req.body.password, user.password)
 
             if (!validPass) {
-                return res.status(400).send({
+                return res.status(403).send({
                     message: "Invalid Password"
                 });
             }
@@ -187,7 +192,7 @@ async function deleteuser (req, res) {
                     message: "user deleted"
                 });
             } catch (err) {
-                res.status(400).send({
+                res.status(401).send({
                     message: err
                 });
             }
