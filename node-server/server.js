@@ -36,24 +36,20 @@ mongoose.connect(process.env.DB_CONNECT, {
 
 app.use(express.json());
 
-
-// app.use('/api/user/', authRoute);
-
-
 app.route("/api/user/login")
 	.post(authRoute.login);
 app.route("/api/user/register")
     .post(authRoute.register);
-
 app.route("/api/user/deleteuser" )
     .post(verify, authRoute.deleteuser);
-    
 app.route("/api/user/changepassword" )
     .post(verify, authRoute.changepassword);
-    
 
+app.route("/api/raspi/pair")
+    .post(verify, raspiRoute.pair)
+app.route("/api/raspi/unpair")
+    .post(verify, raspiRoute.unpair)
 
-app.use('/api/raspi/', raspiRoute);
 
 // listen for requests
 const server = app.listen(3000, () => {

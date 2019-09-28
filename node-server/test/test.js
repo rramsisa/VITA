@@ -292,6 +292,98 @@ describe('Unit-ish_testning', () => {
 
           });
     });
+    describe('pair device testing', () => {
+      it('pair - no id', (done) => {
+          let device = {
+              device: ""
+          }
+         chai.request(app)
+            .post('/api/raspi/pair')
+            .set('auth-token', token_login)
+            .send(device)
+            .end((err, res) => {
+                  
+                  res.should.have.status(400);
+                  res.body.should.have.property('message').eql("\"device\" is not allowed to be empty"); 
+
+              done();
+            });
+         });
+      it('pair - normal', (done) => {
+          let device = {
+              device: "1234"
+          }
+         chai.request(app)
+            .post('/api/raspi/pair')
+            .set('auth-token', token_login)
+            .send(device)
+            .end((err, res) => {
+                  res.should.have.status(200);
+              done();
+            });
+         });
+      it('pair - already added', (done) => {
+          let device = {
+              device: "1234"
+          }
+         chai.request(app)
+            .post('/api/raspi/pair')
+            .set('auth-token', token_login)
+            .send(device)
+            .end((err, res) => {
+                  res.should.have.status(400);
+                  res.body.should.have.property('message').eql("Device already added"); 
+
+              done();
+            });
+         });
+    });
+    describe('unpair device testing', () => {
+      it('unpair - no id', (done) => {
+          let device = {
+              device: ""
+          }
+         chai.request(app)
+            .post('/api/raspi/unpair')
+            .set('auth-token', token_login)
+            .send(device)
+            .end((err, res) => {
+                  
+                  res.should.have.status(400);
+                  res.body.should.have.property('message').eql("\"device\" is not allowed to be empty"); 
+
+              done();
+            });
+         });
+      it('unpair - normal', (done) => {
+          let device = {
+              device: "1234"
+          }
+         chai.request(app)
+            .post('/api/raspi/unpair')
+            .set('auth-token', token_login)
+            .send(device)
+            .end((err, res) => {
+                  res.should.have.status(200);
+              done();
+            });
+         });
+      it('unpair - already removed', (done) => {
+          let device = {
+              device: "1234"
+          }
+         chai.request(app)
+            .post('/api/raspi/unpair')
+            .set('auth-token', token_login)
+            .send(device)
+            .end((err, res) => {
+                  res.should.have.status(400);
+                  res.body.should.have.property('message').eql("Device not found"); 
+
+              done();
+            });
+         });
+    });
     describe('delete testing', () => {
       it('delete - no password', (done) => {
           let user = {
@@ -360,8 +452,6 @@ describe('Unit-ish_testning', () => {
                 });
 
           });
-
     });
-
 
 });

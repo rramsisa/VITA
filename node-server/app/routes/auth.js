@@ -4,8 +4,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const verify = require('./verifyToken');
 
-
-
 const {
     registerValidation,
     loginValidation,
@@ -13,11 +11,7 @@ const {
     deleteUserValidation
 } = require('../validation');
 
-
 async function register (req, res) {
-        // router.post('/register', async (req, res) => {
-
-            // Validate key data before submission
             const {
                 error
             } = registerValidation(req.body);
@@ -60,10 +54,7 @@ async function register (req, res) {
                     message: err
                 });
             }
-        // }) //end register post
 }
-
-
 
 async function login (req, res) {
         // Validate key data before submission
@@ -108,16 +99,7 @@ async function login (req, res) {
 
 }
 
-
-
-
-
-
-
-
 async function changepassword (req, res) {
-        // router.post('/changepassword', verify, async (req, res) => {
-
             // Validate key data before submission
             const {
                 error
@@ -169,14 +151,9 @@ async function changepassword (req, res) {
                     message: err
                 });
             }
-        // }) //end change password post
 }
 
-
 async function deleteuser (req, res) {
-
-        // router.post('/deleteuser', verify, async (req, res) => {
-
             // Validate key data before submission
             const {
                 error
@@ -203,8 +180,6 @@ async function deleteuser (req, res) {
                     message: "Invalid Password"
                 });
             }
-
-
             try {
                 
                 const savedUser = await user.delete();
@@ -218,7 +193,6 @@ async function deleteuser (req, res) {
             }
 }
 
-// module.exports = router
 module.exports = {
     login, register,
     deleteuser, changepassword

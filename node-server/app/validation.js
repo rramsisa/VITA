@@ -64,8 +64,18 @@ const deleteUserValidation = (data) => {
     return Joi.validate(data, schema);
 };
 
+const pairPiValidation = (data) => {
+    const schema = {
+        device: Joi.string()
+            .required()
+    };
+
+    return Joi.validate(data, schema);
+};
+
 
 module.exports.registerValidation = registerValidation;
 module.exports.loginValidation = loginValidation;
 module.exports.changePasswordValidation = changePasswordValidation;
 module.exports.deleteUserValidation = deleteUserValidation;
+module.exports.pairPiValidation = pairPiValidation;
