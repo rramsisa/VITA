@@ -22,7 +22,7 @@ describe('Unit-ish_testning', () => {
 
     
     describe('register testing', () => {
-      it('normal register - should work', (done) => {
+      it('register - normal', (done) => {
           let user = {
               email: "tester@yahoo.com",
               password: "tester1234",
@@ -38,7 +38,7 @@ describe('Unit-ish_testning', () => {
               });
 
           });
-      it('email already exists', (done) => {
+      it('register - email already exists', (done) => {
           let user = {
               email: "tester@yahoo.com",
               password: "tester1234",
@@ -56,7 +56,7 @@ describe('Unit-ish_testning', () => {
                 });
 
           });
-      it('register no password', (done) => {
+      it('register - no password', (done) => {
           let user = {
               email: "tester1@yahoo.com",
               password: "",
@@ -75,7 +75,7 @@ describe('Unit-ish_testning', () => {
                 });
 
           });
-      it('register no email', (done) => {
+      it('register - no email', (done) => {
           let user = {
               email: "",
               password: "tester1234",
@@ -92,7 +92,7 @@ describe('Unit-ish_testning', () => {
                 });
 
           });
-      it('register no name', (done) => {
+      it('register - no name', (done) => {
           let user = {
               email: "tester1@yahoo.com",
               password: "tester1234",
@@ -112,7 +112,7 @@ describe('Unit-ish_testning', () => {
            });      
     });
     describe('login testing', () => {
-      it('normal login - should work', (done) => {
+      it('login - normal', (done) => {
         let user = {
             email: "tester@yahoo.com",
             password: "tester1234"
@@ -126,7 +126,7 @@ describe('Unit-ish_testning', () => {
               done();
             });
        });
-      it('no email', (done) => {
+      it('login - no email', (done) => {
         let user = {
             email: "",
             password: "tester1234"
@@ -141,7 +141,7 @@ describe('Unit-ish_testning', () => {
               done();
             });
        });
-      it('no password', (done) => {
+      it('login - no password', (done) => {
         let user = {
               email: "tester@yahoo.com",
               password: ""
@@ -157,7 +157,7 @@ describe('Unit-ish_testning', () => {
             });
 
        });
-      it('wrong password', (done) => {
+      it('login - wrong password', (done) => {
             let user = {
                 email: "tester@yahoo.com",
                 password: "1234tester"
@@ -173,7 +173,7 @@ describe('Unit-ish_testning', () => {
              });
     });
     describe('change passoword testing', () => {
-      it('normal change 1 - should work', (done) => {
+      it('change passoword - normal 1', (done) => {
         let user = {
               email: "tester@yahoo.com",
               password: "tester1234",
@@ -188,7 +188,7 @@ describe('Unit-ish_testning', () => {
               done();
             });
        });
-      it('normal change 2 - should work', (done) => {
+      it('change passoword - normal 2', (done) => {
             let user = {
                 email: "tester@yahoo.com",
                 newPassword: "tester1234",
@@ -203,7 +203,7 @@ describe('Unit-ish_testning', () => {
                 done();
               });
              });
-      it('no email', (done) => {
+      it('change passoword - no email', (done) => {
           let user = {
               email: "",
               newPassword: "tester1234",
@@ -220,7 +220,7 @@ describe('Unit-ish_testning', () => {
             });
 
          });
-      it('no password', (done) => {
+      it('change passoword - no password', (done) => {
           let user = {
               email: "tester@yahoo.com",
               newPassword: "tester1234",
@@ -236,7 +236,7 @@ describe('Unit-ish_testning', () => {
               done();
             });
            });
-      it('no new password', (done) => {
+      it('change passoword - no new password', (done) => {
           let user = {
               email: "tester@yahoo.com",
               newPassword: "",
@@ -254,7 +254,7 @@ describe('Unit-ish_testning', () => {
             });
 
          });
-      it('same password', (done) => {
+      it('change passoword - same password', (done) => {
           let user = {
               email: "tester@yahoo.com",
               newPassword: "tester1234",
@@ -272,7 +272,7 @@ describe('Unit-ish_testning', () => {
             });
 
           });
-      it('wrong original password', (done) => {
+      it('change passoword - wrong original password', (done) => {
           let user = {
               email: "tester@yahoo.com",
               newPassword: "tester1234",
@@ -293,7 +293,7 @@ describe('Unit-ish_testning', () => {
           });
     });
     describe('delete testing', () => {
-      it('no password', (done) => {
+      it('delete - no password', (done) => {
           let user = {
               email: "tester@yahoo.com",
               password: ""
@@ -309,7 +309,7 @@ describe('Unit-ish_testning', () => {
               done();
             });
          });
-      it('no email', (done) => {
+      it('delete - no email', (done) => {
           let user = {
             email: "",
             password: "tester1234"
@@ -326,7 +326,7 @@ describe('Unit-ish_testning', () => {
                 });
 
           });
-      it('wrong password', (done) => {
+      it('delete - wrong password', (done) => {
           let user = {
               email: "tester@yahoo.com",
               password: "1234tester"
@@ -344,7 +344,7 @@ describe('Unit-ish_testning', () => {
                 });
 
           });
-      it('normal delete - should work', (done) => {
+      it('delete - normal', (done) => {
           let user = {
               email: "tester@yahoo.com",
               password: "tester1234"
