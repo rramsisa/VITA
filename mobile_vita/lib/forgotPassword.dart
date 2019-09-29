@@ -1,28 +1,5 @@
 import 'package:flutter/material.dart';
 
-class ForgotPasswordApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'VITA Forgot Password',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.purple
-      ),
-      home: ForgotPasswordPage(title: 'VITA Forgot Password Page'),
-    );
-  }
-}
-
 class ForgotPasswordPage extends StatefulWidget {
   ForgotPasswordPage({Key key, this.title}) : super(key: key);
 
@@ -46,6 +23,16 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
 
+    final appBar = AppBar(
+      title: Text('Forgot Password'),
+      automaticallyImplyLeading: true,
+      leading: IconButton(icon:Icon(Icons.arrow_back),
+        onPressed: (){
+          Navigator.of(context).maybePop();
+        },
+      )
+    );
+
     final emailField = TextField(
       obscureText: false,
       decoration: InputDecoration(
@@ -66,7 +53,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {},
-        child: Text("Forgot Password",
+        child: Text("Send Email",
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white, 
@@ -76,6 +63,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     );
 
     return Scaffold(
+      appBar: appBar,
       body: Center(
         child: Container(
           color: Colors.white,

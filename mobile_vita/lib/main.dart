@@ -5,7 +5,7 @@ import 'innerPage.dart';
 import 'changePassword.dart';
 import 'settings.dart';
 
-void main() => runApp(InnerApp());
+void main() => runApp(LoginApp());
 
 class LoginApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -104,7 +104,12 @@ class _LoginPageState extends State<LoginPage> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width / 3,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SignupPage()),
+          );
+        },
         child: Text("Sign Up",
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -120,7 +125,12 @@ class _LoginPageState extends State<LoginPage> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ForgotPasswordPage()),
+          );
+        },
         child: Text("Forgot Password",
             textAlign: TextAlign.center,
             style: TextStyle(
