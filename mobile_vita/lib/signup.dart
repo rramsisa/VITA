@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(SignupApp());
+// void main() => runApp(SignupApp());
 
 class SignupApp extends StatelessWidget {
   // This widget is the root of your application.
