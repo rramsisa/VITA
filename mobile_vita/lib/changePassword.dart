@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
-import 'signup.dart';
-import 'forgotPassword.dart';
-import 'innerPage.dart';
-import 'changePassword.dart';
 
-void main() => runApp(ChangePasswordApp());
-
-class LoginApp extends StatelessWidget {
+class ChangePasswordApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'VITA Login',
+      title: 'VITA Change Password',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -24,13 +18,13 @@ class LoginApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.purple
       ),
-      home: LoginPage(title: 'VITA Login Page'),
+      home: ChangePasswordPage(title: 'VITA Forgot Change Page'),
     );
   }
 }
 
-class LoginPage extends StatefulWidget {
-  LoginPage({Key key, this.title}) : super(key: key);
+class ChangePasswordPage extends StatefulWidget {
+  ChangePasswordPage({Key key, this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -44,31 +38,47 @@ class LoginPage extends StatefulWidget {
   final String title;
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _ChangePasswordPageState createState() => _ChangePasswordPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _ChangePasswordPageState extends State<ChangePasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-
-    final emailField = TextField(
-      obscureText: false,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Email",
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.purpleAccent, width: 2.0),
-          ),
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))
-      ),
+    final appBar = AppBar(
+      title: Text('VITA'),
     );
-    final passwordField = TextField(
+
+    final bottomNavigationBar = BottomNavigationBar(
+      currentIndex: 3, // this will be set when a new tab is selected
+      selectedItemColor: Colors.deepPurple,
+      unselectedItemColor: Colors.purple,
+      type: BottomNavigationBarType.fixed,
+      items: [
+        BottomNavigationBarItem(
+          icon: new Icon(Icons.fastfood),
+          title: Text('Inventory')
+        ),
+        BottomNavigationBarItem(
+          icon: new Icon(Icons.shopping_cart),
+          title: Text('Lists')
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.assignment),
+          title: Text('Recipes')
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.settings),
+          title: Text('Settings')
+        )
+      ],
+    );
+
+    final oldPasswordField = TextField(
       obscureText: true,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Password",
+          hintText: "Old Password",
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.purpleAccent, width: 2.0),
           ),
@@ -78,55 +88,41 @@ class _LoginPageState extends State<LoginPage> {
               )
       ),
     );
-    final loginButton = Material(
-      borderRadius: BorderRadius.circular(10.0),
-      color: Colors.purple,
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width / 3,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {},
-        child: Text("Login",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white, 
-              fontWeight: FontWeight.bold)
-        ),
+
+    final newPasswordField = TextField(
+      obscureText: true,
+      decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          hintText: "New Password",
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.purpleAccent, width: 2.0),
+          ),
+          border:
+              OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0)
+              )
       ),
     );
 
-    final signupButton = Material(
+    final sendButton = Material(
       borderRadius: BorderRadius.circular(10.0),
       color: Colors.purple,
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width / 3,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {},
-        child: Text("Sign Up",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white, 
-              fontWeight: FontWeight.bold)
-        ),
-      ),
-    );
-
-    final forgotPasswordButton = Material(
-      borderRadius: BorderRadius.circular(10.0),
-      color: Colors.grey,
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {},
-        child: Text("Forgot Password",
+        child: Text("Change Password",
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Colors.purple, 
+              color: Colors.white, 
               fontWeight: FontWeight.bold)
         ),
       ),
     );
 
     return Scaffold(
+      appBar: appBar,
+      bottomNavigationBar: bottomNavigationBar,
       body: Center(
         child: Container(
           color: Colors.white,
@@ -136,33 +132,12 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                SizedBox(
-                  height: 155.0,
-                  child: Image.asset(
-                    "assets/logo.png",
-                    fit: BoxFit.contain,
-                  ),
-                ),
-                SizedBox(height: 45.0),
-                emailField,
                 SizedBox(height: 25.0),
-                passwordField,
-                SizedBox(
-                  height: 35.0,
-                ),
-                // loginButton,
-                new ButtonTheme.bar(
-                  child: new ButtonBar(
-                  alignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    loginButton, signupButton
-                  ]
-                  ),
-                ),
-                SizedBox(
-                  height: 15.0,
-                ),
-                forgotPasswordButton,
+                oldPasswordField,
+                SizedBox(height: 25.0),
+                newPasswordField,
+                SizedBox(height: 35.0,),
+                sendButton,
               ],
             ),
           ),
