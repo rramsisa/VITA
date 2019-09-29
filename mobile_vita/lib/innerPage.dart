@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'settings.dart';
+import 'placeholderWidget.dart';
 
 class InnerApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -42,19 +44,37 @@ class InnerPage extends StatefulWidget {
 }
 
 class _InnerPageState extends State<InnerPage> {
+  int _currentIndex = 0;
+  final List<Widget> _children = [
+    PlaceholderWidget(Colors.white), // Inventory Page
+    PlaceholderWidget(Colors.grey[100]), // Lists Page
+    PlaceholderWidget(Colors.grey[200]), // Recipes Page
+    SettingsPage(),
+  ];
+
+  void onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
 
     final appBar = AppBar(
       title: Text('VITA'),
+      // automaticallyImplyLeading: true,
+      // leading: IconButton(icon:Icon(Icons.arrow_back),
+      //   onPressed:() => Navigator.pop(context, false),
+      // )
     );
 
     final bottomNavigationBar = BottomNavigationBar(
-      currentIndex: 0, // this will be set when a new tab is selected
       selectedItemColor: Colors.deepPurple,
       unselectedItemColor: Colors.purple,
       type: BottomNavigationBarType.fixed,
+      onTap: onTabTapped, // new
+      currentIndex: _currentIndex, // new
       items: [
         BottomNavigationBarItem(
           icon: new Icon(Icons.fastfood),
@@ -75,24 +95,26 @@ class _InnerPageState extends State<InnerPage> {
       ],
     );
 
-    return Scaffold(
-      appBar: appBar,
-      bottomNavigationBar: bottomNavigationBar,
-      body: Center(
-        child: Container(
-          color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.all(36.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                // SizedBox(height: 25.0),
-              ],
-            ),
-          ),
+    final tempButton = Material(
+      borderRadius: BorderRadius.circular(10.0),
+      color: Colors.white,
+      child: MaterialButton(
+        minWidth: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: () {},
+        child: Text("Content Coming Soon",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black, 
+              fontWeight: FontWeight.bold)
         ),
       ),
+    );
+
+    return Scaffold(
+      appBar: appBar,
+      body: _children[_currentIndex], // new
+      bottomNavigationBar: bottomNavigationBar,
     );
   }
 }

@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
+import 'changePassword.dart';
 
-class SettingsApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'VITA Settings',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.purple
-      ),
-      home: SettingsPage(title: 'VITA Settings Page'),
-    );
-  }
-}
+// class SettingsApp extends StatelessWidget {
+//   // This widget is the root of your application.
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'VITA Settings',
+//       theme: ThemeData(
+//         // This is the theme of your application.
+//         //
+//         // Try running your application with "flutter run". You'll see the
+//         // application has a blue toolbar. Then, without quitting the app, try
+//         // changing the primarySwatch below to Colors.green and then invoke
+//         // "hot reload" (press "r" in the console where you ran "flutter run",
+//         // or simply save your changes to "hot reload" in a Flutter IDE).
+//         // Notice that the counter didn't reset back to zero; the application
+//         // is not restarted.
+//         primarySwatch: Colors.purple
+//       ),
+//       home: SettingsPage(title: 'VITA Settings Page'),
+//     );
+//   }
+// }
 
 class SettingsPage extends StatefulWidget {
   SettingsPage({Key key, this.title}) : super(key: key);
@@ -45,34 +46,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final appBar = AppBar(
-      title: Text('VITA'),
-    );
-
-    final bottomNavigationBar = BottomNavigationBar(
-      currentIndex: 3, // this will be set when a new tab is selected
-      selectedItemColor: Colors.deepPurple,
-      unselectedItemColor: Colors.purple,
-      type: BottomNavigationBarType.fixed,
-      items: [
-        BottomNavigationBarItem(
-          icon: new Icon(Icons.fastfood),
-          title: Text('Inventory')
-        ),
-        BottomNavigationBarItem(
-          icon: new Icon(Icons.shopping_cart),
-          title: Text('Lists')
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.assignment),
-          title: Text('Recipes')
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          title: Text('Settings')
-        )
-      ],
-    );
 
     final changePasswordButton = Material(
       borderRadius: BorderRadius.circular(10.0),
@@ -80,7 +53,12 @@ class _SettingsPageState extends State<SettingsPage> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ChangePasswordPage()),
+          );
+        },
         child: Text("Change Password",
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -123,8 +101,6 @@ class _SettingsPageState extends State<SettingsPage> {
     );
 
     return Scaffold(
-      appBar: appBar,
-      bottomNavigationBar: bottomNavigationBar,
       body: Center(
         child: Container(
           color: Colors.white,

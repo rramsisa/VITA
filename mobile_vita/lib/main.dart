@@ -5,7 +5,7 @@ import 'innerPage.dart';
 import 'changePassword.dart';
 import 'settings.dart';
 
-void main() => runApp(SettingsApp());
+void main() => runApp(InnerApp());
 
 class LoginApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -26,6 +26,9 @@ class LoginApp extends StatelessWidget {
         primarySwatch: Colors.purple
       ),
       home: LoginPage(title: 'VITA Login Page'),
+      routes: {
+        "/settings": (BuildContext context) => new SettingsPage(),
+      },
     );
   }
 }

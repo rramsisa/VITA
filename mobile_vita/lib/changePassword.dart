@@ -1,27 +1,5 @@
 import 'package:flutter/material.dart';
-
-class ChangePasswordApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'VITA Change Password',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.purple
-      ),
-      home: ChangePasswordPage(title: 'VITA Forgot Change Page'),
-    );
-  }
-}
+import 'settings.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   ChangePasswordPage({Key key, this.title}) : super(key: key);
@@ -45,33 +23,15 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    final appBar = AppBar(
-      title: Text('VITA'),
-    );
 
-    final bottomNavigationBar = BottomNavigationBar(
-      currentIndex: 3, // this will be set when a new tab is selected
-      selectedItemColor: Colors.deepPurple,
-      unselectedItemColor: Colors.purple,
-      type: BottomNavigationBarType.fixed,
-      items: [
-        BottomNavigationBarItem(
-          icon: new Icon(Icons.fastfood),
-          title: Text('Inventory')
-        ),
-        BottomNavigationBarItem(
-          icon: new Icon(Icons.shopping_cart),
-          title: Text('Lists')
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.assignment),
-          title: Text('Recipes')
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          title: Text('Settings')
-        )
-      ],
+    final appBar = AppBar(
+      title: Text('Change Password'),
+      automaticallyImplyLeading: true,
+      leading: IconButton(icon:Icon(Icons.arrow_back),
+        onPressed: (){
+          Navigator.of(context).maybePop();
+        },
+      )
     );
 
     final oldPasswordField = TextField(
@@ -122,7 +82,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
 
     return Scaffold(
       appBar: appBar,
-      bottomNavigationBar: bottomNavigationBar,
+      // bottomNavigationBar: bottomNavigationBar,
       body: Center(
         child: Container(
           color: Colors.white,
