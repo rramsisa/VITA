@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-import 'signup.dart';
-import 'forgotPassword.dart';
 
-void main() => runApp(ForgotPasswordApp());
-
-class LoginApp extends StatelessWidget {
+class ForgotPasswordApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'VITA Login',
+      title: 'VITA Forgot Password',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -22,13 +18,13 @@ class LoginApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.purple
       ),
-      home: LoginPage(title: 'VITA Login Page'),
+      home: ForgotPasswordPage(title: 'VITA Forgot Password Page'),
     );
   }
 }
 
-class LoginPage extends StatefulWidget {
-  LoginPage({Key key, this.title}) : super(key: key);
+class ForgotPasswordPage extends StatefulWidget {
+  ForgotPasswordPage({Key key, this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -42,10 +38,10 @@ class LoginPage extends StatefulWidget {
   final String title;
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _ForgotPasswordPageState createState() => _ForgotPasswordPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
@@ -62,55 +58,10 @@ class _LoginPageState extends State<LoginPage> {
               OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))
       ),
     );
-    final passwordField = TextField(
-      obscureText: true,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Password",
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.purpleAccent, width: 2.0),
-          ),
-          border:
-              OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0)
-              )
-      ),
-    );
-    final loginButton = Material(
+
+    final sendButton = Material(
       borderRadius: BorderRadius.circular(10.0),
       color: Colors.purple,
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width / 3,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {},
-        child: Text("Login",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white, 
-              fontWeight: FontWeight.bold)
-        ),
-      ),
-    );
-
-    final signupButton = Material(
-      borderRadius: BorderRadius.circular(10.0),
-      color: Colors.purple,
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width / 3,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {},
-        child: Text("Sign Up",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white, 
-              fontWeight: FontWeight.bold)
-        ),
-      ),
-    );
-
-    final forgotPasswordButton = Material(
-      borderRadius: BorderRadius.circular(10.0),
-      color: Colors.grey,
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -118,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
         child: Text("Forgot Password",
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Colors.purple, 
+              color: Colors.white, 
               fontWeight: FontWeight.bold)
         ),
       ),
@@ -141,26 +92,10 @@ class _LoginPageState extends State<LoginPage> {
                     fit: BoxFit.contain,
                   ),
                 ),
-                SizedBox(height: 45.0),
-                emailField,
                 SizedBox(height: 25.0),
-                passwordField,
-                SizedBox(
-                  height: 35.0,
-                ),
-                // loginButton,
-                new ButtonTheme.bar(
-                  child: new ButtonBar(
-                  alignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    loginButton, signupButton
-                  ]
-                  ),
-                ),
-                SizedBox(
-                  height: 15.0,
-                ),
-                forgotPasswordButton,
+                emailField,
+                SizedBox(height: 35.0,),
+                sendButton,
               ],
             ),
           ),
