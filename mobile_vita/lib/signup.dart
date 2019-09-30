@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'main.dart';
 
 class SignupPage extends StatefulWidget {
@@ -39,8 +40,10 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
 
-    final appBar = AppBar(
+    final appBar = GradientAppBar(
       title: Text('Sign Up'),
+      backgroundColorStart: Colors.deepPurple,
+      backgroundColorEnd: Colors.purple,
       automaticallyImplyLeading: true,
       leading: IconButton(icon:Icon(Icons.arrow_back),
         onPressed: (){
@@ -123,7 +126,7 @@ class _SignupPageState extends State<SignupPage> {
                 SizedBox(
                   height: 155.0,
                   child: Image.asset(
-                    "assets/logo.png",
+                    "assets/logo-gradient.png",
                     fit: BoxFit.contain,
                   ),
                 ),

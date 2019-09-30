@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'signup.dart';
 import 'forgotPassword.dart';
 import 'innerPage.dart';
@@ -54,7 +55,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
-  
+
   void login() {
     print("Login Requested");
     print("Email: ${emailController.text}");
@@ -73,9 +74,14 @@ class _LoginPageState extends State<LoginPage> {
     final emailField = TextField(
       controller: emailController,
       obscureText: false,
+      style: TextStyle(color: Colors.white),
       decoration: InputDecoration(
+          enabledBorder: const OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.white, width: 1.0),
+          ),
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: "Email",
+          hintStyle: TextStyle(fontSize: 15.0, color: Colors.white),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.purpleAccent, width: 2.0),
           ),
@@ -83,12 +89,18 @@ class _LoginPageState extends State<LoginPage> {
               OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))
       ),
     );
+
     final passwordField = TextField(
       controller: passwordController,
+      style: TextStyle(color: Colors.white),
       obscureText: true,
       decoration: InputDecoration(
+          enabledBorder: const OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.white, width: 1.0),
+          ),
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: "Password",
+          hintStyle: TextStyle(fontSize: 15.0, color: Colors.white),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.purpleAccent, width: 2.0),
           ),
@@ -98,9 +110,10 @@ class _LoginPageState extends State<LoginPage> {
               )
       ),
     );
+
     final loginButton = Material(
       borderRadius: BorderRadius.circular(10.0),
-      color: Colors.purple,
+      color: Colors.white.withOpacity(0.25),
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width / 3,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -116,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
 
     final signupButton = Material(
       borderRadius: BorderRadius.circular(10.0),
-      color: Colors.purple,
+      color: Colors.white.withOpacity(0.25),
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width / 3,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -137,7 +150,7 @@ class _LoginPageState extends State<LoginPage> {
 
     final forgotPasswordButton = Material(
       borderRadius: BorderRadius.circular(10.0),
-      color: Colors.grey,
+      color: Colors.white.withOpacity(0.125),
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -150,7 +163,7 @@ class _LoginPageState extends State<LoginPage> {
         child: Text("Forgot Password",
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Colors.purple, 
+              color: Colors.white.withOpacity(0.5), 
               fontWeight: FontWeight.bold)
         ),
       ),
@@ -159,7 +172,12 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Center(
         child: Container(
-          color: Colors.white,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [Colors.purple, Colors.deepPurple])
+            ),
           child: Padding(
             padding: const EdgeInsets.all(36.0),
             child: Column(
@@ -169,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   height: 155.0,
                   child: Image.asset(
-                    "assets/logo.png",
+                    "assets/logo-white.png",
                     fit: BoxFit.contain,
                   ),
                 ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'main.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
@@ -35,8 +36,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
 
-    final appBar = AppBar(
+    final appBar = GradientAppBar(
       title: Text('Forgot Password'),
+      backgroundColorStart: Colors.deepPurple,
+      backgroundColorEnd: Colors.purple,
       automaticallyImplyLeading: true,
       leading: IconButton(icon:Icon(Icons.arrow_back),
         onPressed: (){
@@ -89,7 +92,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 SizedBox(
                   height: 155.0,
                   child: Image.asset(
-                    "assets/logo.png",
+                    "assets/logo-gradient.png",
                     fit: BoxFit.contain,
                   ),
                 ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'settings.dart';
 
 class ChangePasswordPage extends StatefulWidget {
@@ -37,8 +38,10 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   @override
   Widget build(BuildContext context) {
 
-    final appBar = AppBar(
+    final appBar = GradientAppBar(
       title: Text('Change Password'),
+      backgroundColorStart: Colors.deepPurple,
+      backgroundColorEnd: Colors.purple,
       automaticallyImplyLeading: true,
       leading: IconButton(icon:Icon(Icons.arrow_back),
         onPressed: (){

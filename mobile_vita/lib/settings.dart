@@ -96,7 +96,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
     final logoutButton = Material(
       borderRadius: BorderRadius.circular(10.0),
-      color: Colors.grey,
+      color: Colors.deepPurple,
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -104,7 +104,7 @@ class _SettingsPageState extends State<SettingsPage> {
         child: Text("Logout",
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Colors.purple, 
+              color: Colors.white, 
               fontWeight: FontWeight.bold)
         ),
       ),

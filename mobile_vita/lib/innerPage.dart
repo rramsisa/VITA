@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'settings.dart';
 import 'placeholderWidget.dart';
 
@@ -61,9 +62,11 @@ class _InnerPageState extends State<InnerPage> {
   @override
   Widget build(BuildContext context) {
 
-    final appBar = AppBar(
+    final appBar = GradientAppBar(
       title: Text('VITA'),
       automaticallyImplyLeading: false,
+      backgroundColorStart: Colors.deepPurple,
+      backgroundColorEnd: Colors.purple,
       // leading: IconButton(icon:Icon(Icons.arrow_back),
       //   onPressed:() => Navigator.pop(context, false),
       // )
