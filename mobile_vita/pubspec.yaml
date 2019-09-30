@@ -1,5 +1,5 @@
 name: mobile_vita
-description: A new Flutter project.
+description: Mobile application used for management of the VITA platform.
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -17,6 +17,7 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  gradient_app_bar: ^0.0.1
   flutter:
     sdk: flutter
 
@@ -41,9 +42,10 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #  - images/a_dot_burr.jpeg
-  #  - images/a_dot_ham.jpeg
+  assets:
+    - assets/logo.png
+    - assets/logo-white.png
+    - assets/logo-gradient.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
