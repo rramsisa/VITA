@@ -52,11 +52,25 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController passwordController = new TextEditingController();
+  void login() {
+    print("Login Requested");
+    print("Email: ${emailController.text}");
+    print("Password: ${passwordController.text}");
+
+    //TODO: Dom - Perform login verification here
+    //TODO: Dom - Store login information locally
+
+    // When successful, route to inner pages
+    Navigator.push(context, MaterialPageRoute(builder: (context) => InnerPage()));
+  }
 
   @override
   Widget build(BuildContext context) {
 
     final emailField = TextField(
+      controller: emailController,
       obscureText: false,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -69,6 +83,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
     final passwordField = TextField(
+      controller: passwordController,
       obscureText: true,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -88,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width / 3,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {},
+        onPressed: login,
         child: Text("Login",
             textAlign: TextAlign.center,
             style: TextStyle(

@@ -63,7 +63,7 @@ class _InnerPageState extends State<InnerPage> {
 
     final appBar = AppBar(
       title: Text('VITA'),
-      // automaticallyImplyLeading: true,
+      automaticallyImplyLeading: false,
       // leading: IconButton(icon:Icon(Icons.arrow_back),
       //   onPressed:() => Navigator.pop(context, false),
       // )
