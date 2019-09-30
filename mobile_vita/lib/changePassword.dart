@@ -20,6 +20,19 @@ class ChangePasswordPage extends StatefulWidget {
 }
 
 class _ChangePasswordPageState extends State<ChangePasswordPage> {
+  TextEditingController oldPasswordController = new TextEditingController();
+  TextEditingController newPasswordController = new TextEditingController();
+
+  void changePassword(){
+    print("Change Password Requested");
+    print("Old Password: ${oldPasswordController.text}");
+    print("New Password: ${newPasswordController.text}");
+
+    //TODO - Dom: Make appropriate request on the server (you'll need the login account info too :) )
+
+    //Upon successful return
+    Navigator.maybePop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +48,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     );
 
     final oldPasswordField = TextField(
+      controller: oldPasswordController,
       obscureText: true,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -50,6 +64,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     );
 
     final newPasswordField = TextField(
+      controller: newPasswordController,
       obscureText: true,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -70,7 +85,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {},
+        onPressed: changePassword,
         child: Text("Change Password",
             textAlign: TextAlign.center,
             style: TextStyle(
