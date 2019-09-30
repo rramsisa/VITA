@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'main.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   ForgotPasswordPage({Key key, this.title}) : super(key: key);
@@ -19,6 +20,17 @@ class ForgotPasswordPage extends StatefulWidget {
 }
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
+  TextEditingController emailController = new TextEditingController();
+
+  void sendEmail(){
+    print("Forgot Email Requested");
+    print("Email: ${emailController.text}");
+
+    //TODO: Dom - send request to backend
+
+    //Upon successful return
+    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +46,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     );
 
     final emailField = TextField(
+      controller: emailController,
       obscureText: false,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -52,7 +65,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {},
+        onPressed: sendEmail,
         child: Text("Send Email",
             textAlign: TextAlign.center,
             style: TextStyle(

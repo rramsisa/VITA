@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'main.dart';
 
 class SignupPage extends StatefulWidget {
   SignupPage({Key key, this.title}) : super(key: key);
@@ -19,6 +20,21 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
+  TextEditingController nameController = new TextEditingController();
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController passwordController = new TextEditingController();
+
+  void createAccount(){
+    print("Create Account Requested");
+    print("Name: ${nameController.text}");
+    print("Email: ${emailController.text}");
+    print("Password: ${passwordController.text}");
+
+    //TODO: Dom - Make appropriate call to backend 
+
+    //Upon successful return
+    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +50,7 @@ class _SignupPageState extends State<SignupPage> {
     );
 
     final nameField = TextField(
+      controller: nameController,
       obscureText: false,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -47,6 +64,7 @@ class _SignupPageState extends State<SignupPage> {
     );
 
     final emailField = TextField(
+      controller: emailController,
       obscureText: false,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -60,6 +78,7 @@ class _SignupPageState extends State<SignupPage> {
     );
 
     final passwordField = TextField(
+      controller: passwordController,
       obscureText: true,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -80,7 +99,7 @@ class _SignupPageState extends State<SignupPage> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {},
+        onPressed: createAccount,
         child: Text("Create Account",
             textAlign: TextAlign.center,
             style: TextStyle(

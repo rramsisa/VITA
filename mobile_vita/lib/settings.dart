@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_vita/main.dart';
 import 'changePassword.dart';
 
 // class SettingsApp extends StatelessWidget {
@@ -43,6 +44,15 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+
+  void logout(){
+    print("Logout Requested");
+
+    //TODO: Dom - Perform logout requirements (deleting local storage of login info)
+
+    //After successful logout
+    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +100,7 @@ class _SettingsPageState extends State<SettingsPage> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {},
+        onPressed: logout,
         child: Text("Logout",
             textAlign: TextAlign.center,
             style: TextStyle(

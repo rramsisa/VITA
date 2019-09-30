@@ -54,6 +54,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
+  
   void login() {
     print("Login Requested");
     print("Email: ${emailController.text}");
