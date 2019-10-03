@@ -3,7 +3,7 @@
 This is a server that uses node.js to run an express server with a Mongo DB database
 
 To run the server, run <b>npm start</b><endl>
-  
+
 It will run on <b>localhost:3000</b>
 
 <b>Packages:</b>
@@ -18,19 +18,16 @@ When logging out, this token must be deleted.
 
 1. /api/user/register/
 2. /api/user/login/
-3. /api/user/changepassword/
+3. /api/user/changePassword/
 
-
-| Type  | Path                      | Parameters                                               |
-| ---   | ---                       | ---                                                      |
-| POST  | /api/user/register/       | name (string), email (string), password (string)         |
-| POST  | /api/user/login/          | email (string), password (string)                        |
-| POST  | /api/user/changepassword/ | email (string), password (string), new_password (string) |
-| POST  | /api/user/deleteuser/     | email (string), password (string)                        |
-| POST  | /api/raspi/pair/          | device(string id)                                        |
-| POST  | /api/raspi/unpair/        | device(string id)                                        |
-
-
+| Type | Path                      | Parameters                                               |
+| ---- | ------------------------- | -------------------------------------------------------- |
+| POST | /api/user/register/       | name (string), email (string), password (string)         |
+| POST | /api/user/login/          | email (string), password (string)                        |
+| POST | /api/user/changePassword/ | email (string), password (string), new_password (string) |
+| POST | /api/user/deleteUser/     | email (string), password (string)                        |
+| POST | /api/raspi/pair/          | device(string id)                                        |
+| POST | /api/raspi/unpair/        | device(string id)                                        |
 
 <b> PostMan test cases </b>
 https://app.getpostman.com/join-team?invite_code=f7a228669babd77bdd2a5ae7c1dac92d
