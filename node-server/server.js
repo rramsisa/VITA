@@ -37,14 +37,13 @@ mongoose.connect(process.env.DB_CONNECT, {
 app.use(express.json());
 
 app.route("/api/user/login")
-	.post(authRoute.login);
+    .post(authRoute.login);
 app.route("/api/user/register")
     .post(authRoute.register);
-app.route("/api/user/deleteuser" )
-    .post(verify, authRoute.deleteuser);
-app.route("/api/user/changepassword" )
-    .post(verify, authRoute.changepassword);
-
+app.route("/api/user/deleteUser")
+    .post(verify, authRoute.deleteUser);
+app.route("/api/user/changePassword")
+    .post(verify, authRoute.changePassword);
 app.route("/api/raspi/pair")
     .post(verify, raspiRoute.pair)
 app.route("/api/raspi/unpair")
@@ -59,12 +58,12 @@ const server = app.listen(3000, () => {
 
 
 function stop() {
-  server.close(() => {
-            process.exit(0);
-        
+    server.close(() => {
+        process.exit(0);
+
     });
 }
 module.exports = {
-	app
+    app
 };
 module.exports.stop = stop;
