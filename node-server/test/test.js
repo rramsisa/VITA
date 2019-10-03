@@ -110,6 +110,58 @@ describe('Unit-ish_testning', () => {
                 });
 
            });      
+      it('register - short name', (done) => {
+            let user = {
+                email: "tester1@yahoo.com",
+                password: "tester1234",
+                name: "hi"
+              
+             }
+            chai.request(app)
+                  .post('/api/user/register')
+                  .send(user)
+                  .end((err, res) => {
+                    
+                        res.should.have.status(422);
+                    done();
+                  });
+
+             });     
+        it('register - short password', (done) => {
+                  let user = {
+                      email: "tester1@yahoo.com",
+                      password: "test",
+                      name: "tester"
+                    
+                   }
+                  chai.request(app)
+                        .post('/api/user/register')
+                        .send(user)
+                        .end((err, res) => {
+                          
+                              res.should.have.status(422);
+                          done();
+                        });
+
+                   });     
+        it('register - non email', (done) => {
+                  let user = {
+                      email: "tester1",
+                      password: "tester1234",
+                      name: "tester"
+                    
+                   }
+                  chai.request(app)
+                        .post('/api/user/register')
+                        .send(user)
+                        .end((err, res) => {
+                          //console.log();
+                              res.should.have.status(422);
+                          done();
+                        });
+
+                   });     
+
     });
     describe('login testing', () => {
       it('login - normal', (done) => {
@@ -121,6 +173,7 @@ describe('Unit-ish_testning', () => {
             .post('/api/user/login')
             .send(user)
             .end((err, res) => {
+                  //console.log(res.body)
                   res.should.have.status(200);                      
                   token_login = res.body.token
               done();
@@ -171,6 +224,39 @@ describe('Unit-ish_testning', () => {
                 done();
               });
              });
+      it('login - short password', (done) => {
+              let user = {
+                    email: "tester@yahoo.com",
+                    password: "test"
+                }
+              chai.request(app)
+                  .post('/api/user/login')
+                  .send(user)
+                  .end((err, res) => {
+                        res.should.have.status(422); 
+                        
+                    done();
+                  });
+
+             });
+      it('login - non email', (done) => {
+              let user = {
+                    email: "tester",
+                    password: "tester123"
+                }
+              chai.request(app)
+                  .post('/api/user/login')
+                  .send(user)
+                  .end((err, res) => {
+                        res.should.have.status(422); 
+                        
+                    done();
+                  });
+
+             });
+
+
+
     });
     describe('change passoword testing', () => {
       it('change passoword - normal 1', (done) => {
@@ -283,7 +369,6 @@ describe('Unit-ish_testning', () => {
             .set('auth-token', token_login)
             .send(user)
             .end((err, res) => {
-              
                   res.should.have.status(403);    
                    res.body.should.have.property('message').eql("Invalid Password");                      
               
@@ -291,6 +376,54 @@ describe('Unit-ish_testning', () => {
             });
 
           });
+      it('change passoword - short password', (done) => {
+          let user = {
+              email: "tester@yahoo.com",
+              newPassword: "tester",
+              password:"test"
+          }
+         chai.request(app)
+            .post('/api/user/changepassword')
+            .set('auth-token', token_login)
+            .send(user)
+            .end((err, res) => {
+                  res.should.have.status(422); 
+              done();
+            });
+
+         });
+      it('change passoword - short new password', (done) => {
+          let user = {
+              email: "tester@yahoo.com",
+              newPassword: "test",
+              password:"tester4321"
+          }
+         chai.request(app)
+            .post('/api/user/changepassword')
+            .set('auth-token', token_login)
+            .send(user)
+            .end((err, res) => {
+                  res.should.have.status(422); 
+              done();
+            });
+
+         });
+      it('change passoword - non email', (done) => {
+          let user = {
+              email: "tester",
+              newPassword: "tester4321",
+              password:"tester4321"
+          }
+         chai.request(app)
+            .post('/api/user/changepassword')
+            .set('auth-token', token_login)
+            .send(user)
+            .end((err, res) => {
+                  res.should.have.status(422); 
+              done();
+            });
+
+         });
     });
     describe('pair device testing', () => {
       it('pair - no id', (done) => {
@@ -414,6 +547,35 @@ describe('Unit-ish_testning', () => {
                       res.should.have.status(422);
                       res.body.should.have.property('message').eql("\"email\" is not allowed to be empty"); 
                      
+                  done();
+                });
+
+          });
+      it('delete - short password', (done) => {
+          let user = {
+              email: "tester@yahoo.com",
+              password: "test"
+          }
+         chai.request(app)
+            .post('/api/user/deleteuser')
+            .set('auth-token', token_login)
+            .send(user)
+            .end((err, res) => {
+                  res.should.have.status(422);
+              done();
+            });
+         });
+      it('delete - non email', (done) => {
+          let user = {
+            email: "test",
+            password: "tester1234"
+          }
+           chai.request(app)
+                .post('/api/user/deleteuser')
+                .set('auth-token', token_login)
+                .send(user)
+                .end((err, res) => {
+                      res.should.have.status(422);                     
                   done();
                 });
 
