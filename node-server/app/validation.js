@@ -68,6 +68,8 @@ const pairPiValidation = (data) => {
     const schema = {
         device: Joi.string()
             .required()
+            .min(9)
+            .max(9)
     };
 
     return Joi.validate(data, schema);
