@@ -28,6 +28,7 @@ When logging out, this token must be deleted.
 | POST | /api/user/deleteUser/     | email (string), password (string)                        |
 | POST | /api/raspi/pair/          | device(string id)                                        |
 | POST | /api/raspi/unpair/        | device(string id)                                        |
+| GET  | /api/user/                | None                                                     |
 
 <b> PostMan test cases </b>
 https://app.getpostman.com/join-team?invite_code=f7a228669babd77bdd2a5ae7c1dac92d
@@ -38,6 +39,6 @@ run : npm test
 <b>To Do:</b>
 
 1. Update Schema to accomodate paired devices as well as the inventory items (Finished)
-2. Make change password api endpoint (POST)
+2. Make change password api endpoint (POST) (finished)
 3. Basic POST API call to receive bar code from Raspi. No association with accounts needed right now.
-4. Make pair/unpair scanner endpoints
+4. Make pair/unpair scanner endpoints (finished)

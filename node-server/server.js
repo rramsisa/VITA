@@ -36,6 +36,8 @@ mongoose.connect(process.env.DB_CONNECT, {
 
 app.use(express.json());
 
+app.route("/api/user/")
+    .get(authRoute.getUsers);
 app.route("/api/user/login")
     .post(authRoute.login);
 app.route("/api/user/register")

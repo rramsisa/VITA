@@ -186,10 +186,9 @@ async function deleteUser(req, res) {
         });
     }
     try {
-
         const savedUser = await user.delete();
         return res.send({
-            message: "user deleted"
+            message: "User Deleted"
         });
     } catch (err) {
         res.status(401).send({
@@ -198,9 +197,21 @@ async function deleteUser(req, res) {
     }
 }
 
+async function getUsers(req, res) {
+    try {
+        const listOfUsers = await User.find();
+        return res.send(listOfUsers);
+    } catch (err) {
+        res.status(400).send({
+            message: err
+        })
+    }
+}
+
 module.exports = {
     login,
     register,
     deleteUser,
-    changePassword
+    changePassword,
+    getUsers
 };
