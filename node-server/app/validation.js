@@ -19,6 +19,7 @@ const registerValidation = (data) => {
     return Joi.validate(data, schema);
 };
 
+// Login Validation
 const loginValidation = (data) => {
     const schema = {
         email: Joi.string()
@@ -33,6 +34,7 @@ const loginValidation = (data) => {
     return Joi.validate(data, schema);
 };
 
+// Change Password Validation
 const changePasswordValidation = (data) => {
     const schema = {
         email: Joi.string()
@@ -50,6 +52,7 @@ const changePasswordValidation = (data) => {
     return Joi.validate(data, schema);
 };
 
+// Delete User Validation
 const deleteUserValidation = (data) => {
     const schema = {
         email: Joi.string()
@@ -64,6 +67,7 @@ const deleteUserValidation = (data) => {
     return Joi.validate(data, schema);
 };
 
+// Pair/Unpair Pi Validation
 const pairPiValidation = (data) => {
     const schema = {
         device: Joi.string()
@@ -75,9 +79,25 @@ const pairPiValidation = (data) => {
     return Joi.validate(data, schema);
 };
 
+// Bar Code Validation
+const barCodeValidation = (data) => {
+    const schema = {
+        name: Joi.string()
+            .required(),
+        barCode: Joi.string()
+            .min(12)
+            .max(12),
+        flag: Joi.number() // 0 = remove item, 1 = add item
+            .required(),
+    };
+
+    return Joi.validate(data, schema);
+};
+
 
 module.exports.registerValidation = registerValidation;
 module.exports.loginValidation = loginValidation;
 module.exports.changePasswordValidation = changePasswordValidation;
 module.exports.deleteUserValidation = deleteUserValidation;
 module.exports.pairPiValidation = pairPiValidation;
+module.exports.barCodeValidation = barCodeValidation;

@@ -98,7 +98,7 @@ async function login(req, res) {
             message: "Logged In!"
         });
     } catch (err) {
-        res.status(401).send({
+        res.status(400).send({
             message: err
         });
     }
@@ -152,7 +152,7 @@ async function changePassword(req, res) {
             message: "Password Updated"
         });
     } catch (err) {
-        res.status(401).send({
+        res.status(400).send({
             message: err
         });
     }
@@ -191,7 +191,7 @@ async function deleteUser(req, res) {
             message: "User Deleted"
         });
     } catch (err) {
-        res.status(401).send({
+        res.status(400).send({
             message: err
         });
     }

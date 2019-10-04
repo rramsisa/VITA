@@ -18,9 +18,13 @@ const itemSchema = new mongoose.Schema({
         required: true,
         default: 0
     },
-    barcode: {
+    barcode: { // Optional since the manual entries will not have bar codes
         type: Number,
         required: false
+    },
+    userID: { // User that registered the item
+        type: String,
+        reuired: true
     }
 });
 

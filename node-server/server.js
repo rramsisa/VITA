@@ -38,6 +38,8 @@ app.use(express.json());
 
 app.route("/api/user/")
     .get(authRoute.getUsers);
+app.route("/api/item/")
+    .get(raspiRoute.getItems);
 app.route("/api/user/login")
     .post(authRoute.login);
 app.route("/api/user/register")
@@ -50,6 +52,8 @@ app.route("/api/raspi/pair")
     .post(verify, raspiRoute.pair)
 app.route("/api/raspi/unpair")
     .post(verify, raspiRoute.unpair)
+app.route("/api/raspi/postBarCodeData")
+    .post(verify, raspiRoute.postBarCodeData)
 
 
 // listen for requests

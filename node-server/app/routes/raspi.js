@@ -1,9 +1,11 @@
 const router = require('express').Router();
 const verify = require('./verifyToken');
 const User = require('../models/User');
+const Item = require('../models/Item');
 
 const {
-    pairPiValidation
+    pairPiValidation,
+    barCodeValidation
 } = require('../validation');
 
 async function pair(req, res) {
@@ -78,7 +80,6 @@ async function unpair(req, res) {
     }
 
     try {
-
         const savedUser = await user.save();
         return res.send({
             message: "Device Removed"
@@ -90,8 +91,99 @@ async function unpair(req, res) {
     }
 }
 
+async function postBarCodeData(req, res) {
+    const {
+        error
+    } = barCodeValidation(req.body);
+    if (error) {
+        return res.status(422).send({
+            message: error.details[0].message
+        });
+    }
+
+    const user = await User.findOne({
+        _id: req.user._id
+    })
+
+    // console.log(user.listOfItems);
+
+    // TODO: Update for in and out of stock
+    for (i = 0; i < user.listOfItems.length; i++) {
+        // console.log(user.listOfItems[i]);
+        const item = await Item.findOne({
+            userID: user._id
+        });
+        console.log(item == null);
+        if (item != null && item.name == req.body.name) {
+            if (req.body.flag == 1) {
+                item.quantity = item.quantity + 1
+            } else if (item.quantity == 0) {
+                res.status(400).send({
+                    "message": "Item is out of stock"
+                });
+            } else {
+                item.quantity = item.quantity - 1
+            }
+            if (item.quantity == 0) {
+                item.status = false;
+            }
+            // console.log("Item exists")
+            try {
+                const savedItem = item.save();
+                return res.send({
+                    message: "Quantity Updated"
+                });
+            } catch (err) {
+                return res.status(400).send({
+                    message: err
+                });
+            }
+        }
+    }
+
+    const newItem = new Item({
+        name: req.body.name,
+        status: true,
+        quantity: 1,
+        barCode: req.body.barCode,
+        userID: user._id
+    });
+
+    // console.log("created item")
+
+    try {
+        const savedItem = await newItem.save();
+        user.listOfItems.push(newItem._id);
+        const savedUser = await user.save();
+        // console.log("saved item")
+        res.send({
+            item: newItem._id,
+            message: "Item Request received!"
+        });
+    } catch (err) {
+        console.log("caught exception")
+
+        res.status(400).send({
+            message: err
+        });
+    }
+}
+
+async function getItems(req, res) {
+    try {
+        const listOfItems = await Item.find();
+        return res.send(listOfItems);
+    } catch (err) {
+        res.status(400).send({
+            message: err
+        })
+    }
+}
+
 
 module.exports = {
     pair,
-    unpair
+    unpair,
+    postBarCodeData,
+    getItems
 };

@@ -20,15 +20,17 @@ When logging out, this token must be deleted.
 2. /api/user/login/
 3. /api/user/changePassword/
 
-| Type | Path                      | Parameters                                               |
-| ---- | ------------------------- | -------------------------------------------------------- |
-| POST | /api/user/register/       | name (string), email (string), password (string)         |
-| POST | /api/user/login/          | email (string), password (string)                        |
-| POST | /api/user/changePassword/ | email (string), password (string), new_password (string) |
-| POST | /api/user/deleteUser/     | email (string), password (string)                        |
-| POST | /api/raspi/pair/          | device(string id)                                        |
-| POST | /api/raspi/unpair/        | device(string id)                                        |
-| GET  | /api/user/                | None                                                     |
+| Type | Path                       | Parameters                                                     |
+| ---- | -------------------------- | -------------------------------------------------------------- |
+| POST | /api/user/register/        | name (string), email (string), password (string)               |
+| POST | /api/user/login/           | email (string), password (string)                              |
+| POST | /api/user/changePassword/  | email (string), password (string), new_password (string)       |
+| POST | /api/user/deleteUser/      | email (string), password (string)                              |
+| POST | /api/raspi/pair/           | device(string id)                                              |
+| POST | /api/raspi/unpair/         | device(string id)                                              |
+| GET  | /api/user/                 | None                                                           |
+| GET  | /api/item/                 | None                                                           |
+| POST | /api/raspi/postBarCodeData | name (string), flag (0 or 1), barCode(12 characters, optional) |
 
 <b> PostMan test cases </b>
 https://app.getpostman.com/join-team?invite_code=f7a228669babd77bdd2a5ae7c1dac92d
