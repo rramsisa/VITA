@@ -72,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
     String pass = passwordController.text;
     bool success = await loginCall(email, pass, context);
     if (success) {
-      Navigator.push(
+      Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => InnerPage()));
     }
   }
@@ -176,36 +176,36 @@ class _LoginPageState extends State<LoginPage> {
                   colors: [Colors.purple, Colors.deepPurple])),
           child: Padding(
             padding: const EdgeInsets.all(36.0),
-            child: Column(
-              //column before
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(
-                  height: 155.0,
-                  child: Image.asset(
-                    "assets/logo-white.png",
-                    fit: BoxFit.contain,
+            child: Center(
+              child: ListView(
+                shrinkWrap: true,
+                children: <Widget>[
+                  SizedBox(
+                    height: 155.0,
+                    child: Image.asset(
+                      "assets/logo-white.png",
+                      fit: BoxFit.contain,
+                    ),
                   ),
-                ),
-                SizedBox(height: 45.0),
-                emailField,
-                SizedBox(height: 25.0),
-                passwordField,
-                SizedBox(
-                  height: 35.0,
-                ),
-                // loginButton,
-                new ButtonTheme.bar(
-                  child: new ButtonBar(
-                      alignment: MainAxisAlignment.center,
-                      children: <Widget>[loginButton, signupButton]),
-                ),
-                SizedBox(
-                  height: 15.0,
-                ),
-                forgotPasswordButton,
-              ],
+                  SizedBox(height: 45.0),
+                  emailField,
+                  SizedBox(height: 25.0),
+                  passwordField,
+                  SizedBox(
+                    height: 35.0,
+                  ),
+                  // loginButton,
+                  new ButtonTheme.bar(
+                    child: new ButtonBar(
+                        alignment: MainAxisAlignment.center,
+                        children: <Widget>[loginButton, signupButton]),
+                  ),
+                  SizedBox(
+                    height: 15.0,
+                  ),
+                  forgotPasswordButton,
+                ],
+              ),
             ),
           ),
         ),

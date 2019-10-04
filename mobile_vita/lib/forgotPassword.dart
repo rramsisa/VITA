@@ -30,8 +30,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     //TODO: Dom - send request to backend
 
     //Upon successful return
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => LoginPage()));
+    Navigator.pop(context);
   }
 
   @override
@@ -81,24 +80,25 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           color: Colors.white,
           child: Padding(
             padding: const EdgeInsets.all(36.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(
-                  height: 155.0,
-                  child: Image.asset(
-                    "assets/logo-gradient.png",
-                    fit: BoxFit.contain,
+            child: Center(
+              child: ListView(
+                shrinkWrap: true,
+                children: <Widget>[
+                  SizedBox(
+                    height: 155.0,
+                    child: Image.asset(
+                      "assets/logo-gradient.png",
+                      fit: BoxFit.contain,
+                    ),
                   ),
-                ),
-                SizedBox(height: 25.0),
-                emailField,
-                SizedBox(
-                  height: 35.0,
-                ),
-                sendButton,
-              ],
+                  SizedBox(height: 25.0),
+                  emailField,
+                  SizedBox(
+                    height: 35.0,
+                  ),
+                  sendButton,
+                ],
+              ),
             ),
           ),
         ),

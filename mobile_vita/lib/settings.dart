@@ -51,7 +51,7 @@ class _SettingsPageState extends State<SettingsPage> {
     //TODO: Dom - Perform logout requirements (deleting local storage of login info)
     await logoutCall();
     //After successful logout
-    Navigator.push(
+    Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => LoginPage()));
   }
 

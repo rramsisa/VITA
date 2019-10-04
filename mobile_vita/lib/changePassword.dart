@@ -128,21 +128,22 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           color: Colors.white,
           child: Padding(
             padding: const EdgeInsets.all(36.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(height: 25.0),
-                oldPasswordField,
-                SizedBox(height: 25.0),
-                newPasswordField,
-                SizedBox(height: 25.0),
-                confirmPasswordField,
-                SizedBox(
-                  height: 35.0,
-                ),
-                sendButton,
-              ],
+            child: Center(
+              child: ListView(
+                shrinkWrap: true,
+                children: <Widget>[
+                  SizedBox(height: 25.0),
+                  oldPasswordField,
+                  SizedBox(height: 25.0),
+                  newPasswordField,
+                  SizedBox(height: 25.0),
+                  confirmPasswordField,
+                  SizedBox(
+                    height: 35.0,
+                  ),
+                  sendButton,
+                ],
+              ),
             ),
           ),
         ),
