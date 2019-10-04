@@ -70,18 +70,10 @@ class _LoginPageState extends State<LoginPage> {
     //TODO: Dom - Perform login verification here
     String email = emailController.text;
     String pass = passwordController.text;
-    bool success = await loginCall(email, pass);
+    bool success = await loginCall(email, pass, context);
     if (success) {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => InnerPage()));
-    } else {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text("Login Failed"),
-            );
-          });
     }
   }
 
