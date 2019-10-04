@@ -44,19 +44,18 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-
-  void logout(){
+  void logout() {
     print("Logout Requested");
 
     //TODO: Dom - Perform logout requirements (deleting local storage of login info)
 
     //After successful logout
-    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => LoginPage()));
   }
 
   @override
   Widget build(BuildContext context) {
-
     final changePasswordButton = Material(
       borderRadius: BorderRadius.circular(10.0),
       color: Colors.purple,
@@ -71,10 +70,7 @@ class _SettingsPageState extends State<SettingsPage> {
         },
         child: Text("Change Password",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white, 
-              fontWeight: FontWeight.bold)
-        ),
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     );
 
@@ -87,10 +83,7 @@ class _SettingsPageState extends State<SettingsPage> {
         onPressed: () {},
         child: Text("Manage Scanners",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white, 
-              fontWeight: FontWeight.bold)
-        ),
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     );
 
@@ -103,10 +96,7 @@ class _SettingsPageState extends State<SettingsPage> {
         onPressed: logout,
         child: Text("Logout",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white, 
-              fontWeight: FontWeight.bold)
-        ),
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     );
 
@@ -124,7 +114,9 @@ class _SettingsPageState extends State<SettingsPage> {
                 scannersButton,
                 SizedBox(height: 25.0),
                 changePasswordButton,
-                SizedBox(height: 35.0,),
+                SizedBox(
+                  height: 35.0,
+                ),
                 logoutButton,
               ],
             ),

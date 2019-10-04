@@ -23,30 +23,30 @@ class ForgotPasswordPage extends StatefulWidget {
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   TextEditingController emailController = new TextEditingController();
 
-  void sendEmail(){
+  void sendEmail() {
     print("Forgot Email Requested");
     print("Email: ${emailController.text}");
 
     //TODO: Dom - send request to backend
 
     //Upon successful return
-    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => LoginPage()));
   }
 
   @override
   Widget build(BuildContext context) {
-
     final appBar = GradientAppBar(
-      title: Text('Forgot Password'),
-      backgroundColorStart: Colors.deepPurple,
-      backgroundColorEnd: Colors.purple,
-      automaticallyImplyLeading: true,
-      leading: IconButton(icon:Icon(Icons.arrow_back),
-        onPressed: (){
-          Navigator.of(context).maybePop();
-        },
-      )
-    );
+        title: Text('Forgot Password'),
+        backgroundColorStart: Colors.deepPurple,
+        backgroundColorEnd: Colors.purple,
+        automaticallyImplyLeading: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).maybePop();
+          },
+        ));
 
     final emailField = TextField(
       controller: emailController,
@@ -58,8 +58,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             borderSide: BorderSide(color: Colors.purpleAccent, width: 2.0),
           ),
           border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))
-      ),
+              OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))),
     );
 
     final sendButton = Material(
@@ -71,10 +70,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         onPressed: sendEmail,
         child: Text("Send Email",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white, 
-              fontWeight: FontWeight.bold)
-        ),
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     );
 
@@ -98,7 +94,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 ),
                 SizedBox(height: 25.0),
                 emailField,
-                SizedBox(height: 35.0,),
+                SizedBox(
+                  height: 35.0,
+                ),
                 sendButton,
               ],
             ),

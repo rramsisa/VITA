@@ -25,32 +25,32 @@ class _SignupPageState extends State<SignupPage> {
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
 
-  void createAccount(){
+  void createAccount() {
     print("Create Account Requested");
     print("Name: ${nameController.text}");
     print("Email: ${emailController.text}");
     print("Password: ${passwordController.text}");
 
-    //TODO: Dom - Make appropriate call to backend 
+    //TODO: Dom - Make appropriate call to backend
 
     //Upon successful return
-    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => LoginPage()));
   }
 
   @override
   Widget build(BuildContext context) {
-
     final appBar = GradientAppBar(
-      title: Text('Sign Up'),
-      backgroundColorStart: Colors.deepPurple,
-      backgroundColorEnd: Colors.purple,
-      automaticallyImplyLeading: true,
-      leading: IconButton(icon:Icon(Icons.arrow_back),
-        onPressed: (){
-          Navigator.of(context).maybePop();
-        },
-      )
-    );
+        title: Text('Sign Up'),
+        backgroundColorStart: Colors.deepPurple,
+        backgroundColorEnd: Colors.purple,
+        automaticallyImplyLeading: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).maybePop();
+          },
+        ));
 
     final nameField = TextField(
       controller: nameController,
@@ -62,8 +62,7 @@ class _SignupPageState extends State<SignupPage> {
             borderSide: BorderSide(color: Colors.purpleAccent, width: 2.0),
           ),
           border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))
-      ),
+              OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))),
     );
 
     final emailField = TextField(
@@ -76,8 +75,7 @@ class _SignupPageState extends State<SignupPage> {
             borderSide: BorderSide(color: Colors.purpleAccent, width: 2.0),
           ),
           border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))
-      ),
+              OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))),
     );
 
     final passwordField = TextField(
@@ -90,10 +88,7 @@ class _SignupPageState extends State<SignupPage> {
             borderSide: BorderSide(color: Colors.purpleAccent, width: 2.0),
           ),
           border:
-              OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0)
-              )
-      ),
+              OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))),
     );
 
     final createButton = Material(
@@ -105,10 +100,7 @@ class _SignupPageState extends State<SignupPage> {
         onPressed: createAccount,
         child: Text("Create Account",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white, 
-              fontWeight: FontWeight.bold)
-        ),
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     );
 

@@ -24,7 +24,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   TextEditingController oldPasswordController = new TextEditingController();
   TextEditingController newPasswordController = new TextEditingController();
 
-  void changePassword(){
+  void changePassword() {
     print("Change Password Requested");
     print("Old Password: ${oldPasswordController.text}");
     print("New Password: ${newPasswordController.text}");
@@ -37,18 +37,17 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-
     final appBar = GradientAppBar(
-      title: Text('Change Password'),
-      backgroundColorStart: Colors.deepPurple,
-      backgroundColorEnd: Colors.purple,
-      automaticallyImplyLeading: true,
-      leading: IconButton(icon:Icon(Icons.arrow_back),
-        onPressed: (){
-          Navigator.of(context).maybePop();
-        },
-      )
-    );
+        title: Text('Change Password'),
+        backgroundColorStart: Colors.deepPurple,
+        backgroundColorEnd: Colors.purple,
+        automaticallyImplyLeading: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).maybePop();
+          },
+        ));
 
     final oldPasswordField = TextField(
       controller: oldPasswordController,
@@ -60,10 +59,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
             borderSide: BorderSide(color: Colors.purpleAccent, width: 2.0),
           ),
           border:
-              OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0)
-              )
-      ),
+              OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))),
     );
 
     final newPasswordField = TextField(
@@ -76,10 +72,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
             borderSide: BorderSide(color: Colors.purpleAccent, width: 2.0),
           ),
           border:
-              OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0)
-              )
-      ),
+              OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))),
     );
 
     final sendButton = Material(
@@ -91,10 +84,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
         onPressed: changePassword,
         child: Text("Change Password",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white, 
-              fontWeight: FontWeight.bold)
-        ),
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     );
 
@@ -114,7 +104,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 oldPasswordField,
                 SizedBox(height: 25.0),
                 newPasswordField,
-                SizedBox(height: 35.0,),
+                SizedBox(
+                  height: 35.0,
+                ),
                 sendButton,
               ],
             ),

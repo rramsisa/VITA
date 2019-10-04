@@ -16,17 +16,16 @@ class LoginApp extends StatelessWidget {
       title: 'VITA Login',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.purple
-      ),
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+          primarySwatch: Colors.purple),
       home: LoginPage(title: 'VITA Login Page'),
       routes: {
         "/settings": (BuildContext context) => new SettingsPage(),
@@ -66,12 +65,12 @@ class _LoginPageState extends State<LoginPage> {
     //TODO: Dom - Store login information locally
 
     // When successful, route to inner pages
-    Navigator.push(context, MaterialPageRoute(builder: (context) => InnerPage()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => InnerPage()));
   }
 
   @override
   Widget build(BuildContext context) {
-
     final emailField = TextField(
       controller: emailController,
       obscureText: false,
@@ -87,8 +86,7 @@ class _LoginPageState extends State<LoginPage> {
             borderSide: BorderSide(color: Colors.purpleAccent, width: 2.0),
           ),
           border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))
-      ),
+              OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))),
     );
 
     final passwordField = TextField(
@@ -106,10 +104,7 @@ class _LoginPageState extends State<LoginPage> {
             borderSide: BorderSide(color: Colors.purpleAccent, width: 2.0),
           ),
           border:
-              OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0)
-              )
-      ),
+              OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))),
     );
 
     final loginButton = Material(
@@ -121,10 +116,7 @@ class _LoginPageState extends State<LoginPage> {
         onPressed: login,
         child: Text("Login",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white, 
-              fontWeight: FontWeight.bold)
-        ),
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     );
 
@@ -142,10 +134,7 @@ class _LoginPageState extends State<LoginPage> {
         },
         child: Text("Sign Up",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white, 
-              fontWeight: FontWeight.bold)
-        ),
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     );
 
@@ -164,9 +153,8 @@ class _LoginPageState extends State<LoginPage> {
         child: Text("Forgot Password",
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Colors.white.withOpacity(0.5), 
-              fontWeight: FontWeight.bold)
-        ),
+                color: Colors.white.withOpacity(0.5),
+                fontWeight: FontWeight.bold)),
       ),
     );
 
@@ -174,11 +162,10 @@ class _LoginPageState extends State<LoginPage> {
       body: Center(
         child: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [Colors.purple, Colors.deepPurple])
-            ),
+              gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [Colors.purple, Colors.deepPurple])),
           child: Padding(
             padding: const EdgeInsets.all(36.0),
             child: Column(
@@ -202,11 +189,8 @@ class _LoginPageState extends State<LoginPage> {
                 // loginButton,
                 new ButtonTheme.bar(
                   child: new ButtonBar(
-                  alignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    loginButton, signupButton
-                  ]
-                  ),
+                      alignment: MainAxisAlignment.center,
+                      children: <Widget>[loginButton, signupButton]),
                 ),
                 SizedBox(
                   height: 15.0,

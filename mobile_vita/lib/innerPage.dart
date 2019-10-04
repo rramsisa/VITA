@@ -10,17 +10,16 @@ class InnerApp extends StatelessWidget {
     return MaterialApp(
       title: 'VITA Inner Pages',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.purple
-      ),
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+          primarySwatch: Colors.purple),
       home: InnerPage(title: 'VITA Inner Pages'),
     );
   }
@@ -61,7 +60,6 @@ class _InnerPageState extends State<InnerPage> {
 
   @override
   Widget build(BuildContext context) {
-
     final appBar = GradientAppBar(
       title: Text('VITA'),
       automaticallyImplyLeading: false,
@@ -80,21 +78,13 @@ class _InnerPageState extends State<InnerPage> {
       currentIndex: _currentIndex, // new
       items: [
         BottomNavigationBarItem(
-          icon: new Icon(Icons.fastfood),
-          title: Text('Inventory')
-        ),
+            icon: new Icon(Icons.fastfood), title: Text('Inventory')),
         BottomNavigationBarItem(
-          icon: new Icon(Icons.shopping_cart),
-          title: Text('Lists')
-        ),
+            icon: new Icon(Icons.shopping_cart), title: Text('Lists')),
         BottomNavigationBarItem(
-          icon: Icon(Icons.assignment),
-          title: Text('Recipes')
-        ),
+            icon: Icon(Icons.assignment), title: Text('Recipes')),
         BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          title: Text('Settings')
-        )
+            icon: Icon(Icons.settings), title: Text('Settings'))
       ],
     );
 
@@ -107,10 +97,7 @@ class _InnerPageState extends State<InnerPage> {
         onPressed: () {},
         child: Text("Content Coming Soon",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.black, 
-              fontWeight: FontWeight.bold)
-        ),
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
       ),
     );
 
