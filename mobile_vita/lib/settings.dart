@@ -45,12 +45,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-<<<<<<< HEAD
-  void logout() {
-=======
-
-  void logout() async{
->>>>>>> frontendAPI
+  void logout() async {
     print("Logout Requested");
 
     //TODO: Dom - Perform logout requirements (deleting local storage of login info)

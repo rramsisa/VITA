@@ -68,30 +68,21 @@ class _LoginPageState extends State<LoginPage> {
     print("Password: ${passwordController.text}");
 
     //TODO: Dom - Perform login verification here
-<<<<<<< HEAD
-    //TODO: Dom - Store login information locally
-
-    // When successful, route to inner pages
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => InnerPage()));
-=======
     String email = emailController.text;
     String pass = passwordController.text;
     bool success = await loginCall(email, pass);
-    if(success){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => InnerPage()));
-    }
-    else{
+    if (success) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => InnerPage()));
+    } else {
       showDialog(
-        context: context,
-        builder: (BuildContext context){
-          return AlertDialog(
-            title: Text("Login Failed"),
-          );
-        }
-      );
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Login Failed"),
+            );
+          });
     }
->>>>>>> frontendAPI
   }
 
   @override
@@ -193,7 +184,8 @@ class _LoginPageState extends State<LoginPage> {
                   colors: [Colors.purple, Colors.deepPurple])),
           child: Padding(
             padding: const EdgeInsets.all(36.0),
-            child: Column( //column before
+            child: Column(
+              //column before
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[

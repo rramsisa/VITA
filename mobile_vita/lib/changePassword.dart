@@ -25,34 +25,31 @@ class ChangePasswordPage extends StatefulWidget {
 class _ChangePasswordPageState extends State<ChangePasswordPage> {
   TextEditingController oldPasswordController = new TextEditingController();
   TextEditingController newPasswordController = new TextEditingController();
-  TextEditingController confirmNewPasswordController = new TextEditingController();
+  TextEditingController confirmNewPasswordController =
+      new TextEditingController();
 
-<<<<<<< HEAD
-  void changePassword() {
-=======
-  void changePassword() async{
->>>>>>> frontendAPI
+  void changePassword() async {
     print("Change Password Requested");
     print("Old Password: ${oldPasswordController.text}");
     print("New Password: ${newPasswordController.text}");
     print("Confirm New Password: ${confirmNewPasswordController.text}");
 
     //TODO - Dom: Make appropriate request on the server (you'll need the login account info too :) )
-    if(newPasswordController.text != confirmNewPasswordController.text){
+    if (newPasswordController.text != confirmNewPasswordController.text) {
       showDialog(
-        context: context,
-        builder: (BuildContext context){
-          return AlertDialog(
-            title: Text("Passwords do not match"),
-          );
-        }
-        );
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Passwords do not match"),
+            );
+          });
       return;
     }
 
-    bool success = await changePassCall(oldPasswordController.text, newPasswordController.text, emailGlob, context);
+    bool success = await changePassCall(oldPasswordController.text,
+        newPasswordController.text, emailGlob, context);
     //Upon successful return
-    if(success){
+    if (success) {
       Navigator.maybePop(context);
     }
   }
@@ -107,10 +104,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
             borderSide: BorderSide(color: Colors.purpleAccent, width: 2.0),
           ),
           border:
-              OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0)
-              )
-      ),
+              OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))),
     );
 
     final sendButton = Material(
@@ -142,15 +136,11 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 oldPasswordField,
                 SizedBox(height: 25.0),
                 newPasswordField,
-<<<<<<< HEAD
+                SizedBox(height: 25.0),
+                confirmPasswordField,
                 SizedBox(
                   height: 35.0,
                 ),
-=======
-                SizedBox(height: 25.0),
-                confirmPasswordField,
-                SizedBox(height: 35.0,),
->>>>>>> frontendAPI
                 sendButton,
               ],
             ),

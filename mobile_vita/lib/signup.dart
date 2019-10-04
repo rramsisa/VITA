@@ -26,30 +26,21 @@ class _SignupPageState extends State<SignupPage> {
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
 
-<<<<<<< HEAD
-  void createAccount() {
-=======
-  void createAccount() async{
->>>>>>> frontendAPI
+  void createAccount() async {
     print("Create Account Requested");
     print("Name: ${nameController.text}");
     print("Email: ${emailController.text}");
     print("Password: ${passwordController.text}");
 
     //TODO: Dom - Make appropriate call to backend
-<<<<<<< HEAD
+    bool success = await signUpCall(nameController.text, emailController.text,
+        passwordController.text, context);
 
     //Upon successful return
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => LoginPage()));
-=======
-    bool success = await signUpCall(nameController.text, emailController.text, passwordController.text, context);
-
-    //Upon successful return
-    if(success){
-      Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+    if (success) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => LoginPage()));
     }
->>>>>>> frontendAPI
   }
 
   @override
