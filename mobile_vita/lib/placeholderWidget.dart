@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class PlaceholderWidget extends StatelessWidget {
- final Color color;
+  final Color color;
 
- PlaceholderWidget(this.color);
+  PlaceholderWidget(this.color);
 
- @override
- Widget build(BuildContext context) {
-   return Container(
-     color: color,
-   );
- }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: color,
+    );
+  }
 }

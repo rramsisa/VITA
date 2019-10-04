@@ -1,457 +1,618 @@
- 
-var request = require("request"),
-    assert = require('assert'),
-    base_url = "http://localhost:3000/";
-let chai = require('chai');
-let chaiHttp = require('chai-http');
-let server = require('../server');
-let should = chai.should();
-chai.use(chaiHttp);
+ var request = require("request"),
+     assert = require('assert'),
+     base_url = "http://localhost:3000/";
+ let chai = require('chai');
+ let chaiHttp = require('chai-http');
+ let server = require('../server');
+ let should = chai.should();
+ chai.use(chaiHttp);
 
 
-let token_login;
+ let token_login;
 
-    const {
-      app
-    } = require('../server');
+ const {
+     app
+ } = require('../server');
 
-describe('Unit-ish_testning', () => { 
-  after(async () => {
-      server.stop();
-    });
+ describe('Unit-ish_testning', () => {
+     after(async () => {
+         server.stop();
+     });
 
-    
-    describe('register testing', () => {
-      it('register - normal', (done) => {
-          let user = {
-              email: "tester@yahoo.com",
-              password: "tester1234",
-              name: "tester"
-            
-          }
-          chai.request(app)
-              .post('/api/user/register')
-              .send(user)
-              .end((err, res) => {
-                    res.should.have.status(200);
-                done();
-              });
 
-          });
-      it('register - email already exists', (done) => {
-          let user = {
-              email: "tester@yahoo.com",
-              password: "tester1234",
-              name: "tester"
-            
-          }
-           chai.request(app)
-                .post('/api/user/register')
-                .send(user)
-                .end((err, res) => {
-                      res.should.have.status(409);
-                      res.body.should.have.property('message').eql("Email already exists");
+     describe('register testing', () => {
+         it('register - normal', (done) => {
+             let user = {
+                 email: "tester@yahoo.com",
+                 password: "tester1234",
+                 name: "tester"
 
-                  done();
-                });
-
-          });
-      it('register - no password', (done) => {
-          let user = {
-              email: "tester1@yahoo.com",
-              password: "",
-              name: "tester"
-            
-          }
-           chai.request(app)
-                .post('/api/user/register')
-                .send(user)
-                .end((err, res) => {
-                  
-                      res.should.have.status(422);
-                      res.body.should.have.property('message').eql("\"password\" is not allowed to be empty");
-                      
-                  done();
-                });
-
-          });
-      it('register - no email', (done) => {
-          let user = {
-              email: "",
-              password: "tester1234",
-              name: "tester"
-            
-          }
-           chai.request(app)
-                .post('/api/user/register')
-                .send(user)
-                .end((err, res) => {
-                  
-                      res.should.have.status(422);
-                      res.body.should.have.property('message').eql("\"email\" is not allowed to be empty");                  done();
-                });
-
-          });
-      it('register - no name', (done) => {
-          let user = {
-              email: "tester1@yahoo.com",
-              password: "tester1234",
-              name: ""
-            
-           }
-          chai.request(app)
-                .post('/api/user/register')
-                .send(user)
-                .end((err, res) => {
-                  
-                      res.should.have.status(422);
-                      res.body.should.have.property('message').eql("\"name\" is not allowed to be empty"); 
-                  done();
-                });
-
-           });      
-    });
-    describe('login testing', () => {
-      it('login - normal', (done) => {
-        let user = {
-            email: "tester@yahoo.com",
-            password: "tester1234"
-        }
-        chai.request(app)
-            .post('/api/user/login')
-            .send(user)
-            .end((err, res) => {
-                  res.should.have.status(200);                      
-                  token_login = res.body.token
-              done();
-            });
-       });
-      it('login - no email', (done) => {
-        let user = {
-            email: "",
-            password: "tester1234"
-        }
-        chai.request(app)
-            .post('/api/user/login')
-            .send(user)
-            .end((err, res) => {
-                  res.should.have.status(422);    
-                  res.body.should.have.property('message').eql("\"email\" is not allowed to be empty");                   
-                  
-              done();
-            });
-       });
-      it('login - no password', (done) => {
-        let user = {
-              email: "tester@yahoo.com",
-              password: ""
-          }
-        chai.request(app)
-            .post('/api/user/login')
-            .send(user)
-            .end((err, res) => {
-                  res.should.have.status(422); 
-                  res.body.should.have.property('message').eql("\"password\" is not allowed to be empty");                      
-                  
-              done();
-            });
-
-       });
-      it('login - wrong password', (done) => {
-            let user = {
-                email: "tester@yahoo.com",
-                password: "1234tester"
-            }
-            chai.request(app)
-              .post('/api/user/login')
-              .send(user)
-              .end((err, res) => {
-                    res.should.have.status(403); 
-                    res.body.should.have.property('message').eql("Invalid Password");                       
-                done();
-              });
-             });
-    });
-    describe('change passoword testing', () => {
-      it('change passoword - normal 1', (done) => {
-        let user = {
-              email: "tester@yahoo.com",
-              password: "tester1234",
-              newPassword:"tester4321"
-        }
-        chai.request(app)
-            .post('/api/user/changepassword')
-            .set('auth-token', token_login)
-            .send(user)
-            .end((err, res) => {
-                  res.should.have.status(200);                      
-              done();
-            });
-       });
-      it('change passoword - normal 2', (done) => {
-            let user = {
-                email: "tester@yahoo.com",
-                newPassword: "tester1234",
-                password:"tester4321"
-            }
-           chai.request(app)
-              .post('/api/user/changepassword')
-              .set('auth-token', token_login)
-              .send(user)
-              .end((err, res) => {
-                    res.should.have.status(200);                      
-                done();
-              });
-             });
-      it('change passoword - no email', (done) => {
-          let user = {
-              email: "",
-              newPassword: "tester1234",
-              password:"tester4321"
-          }
-         chai.request(app)
-            .post('/api/user/changepassword')
-            .set('auth-token', token_login)
-            .send(user)
-            .end((err, res) => {
-                  res.should.have.status(422);  
-                  res.body.should.have.property('message').eql("\"email\" is not allowed to be empty");                    
-              done();
-            });
+             }
+             chai.request(app)
+                 .post('/api/user/register')
+                 .send(user)
+                 .end((err, res) => {
+                     res.should.have.status(200);
+                     done();
+                 });
 
          });
-      it('change passoword - no password', (done) => {
-          let user = {
-              email: "tester@yahoo.com",
-              newPassword: "tester1234",
-              password:""
-          }
-          chai.request(app)
-            .post('/api/user/changepassword')
-            .set('auth-token', token_login)
-            .send(user)
-            .end((err, res) => {
-                  res.should.have.status(422);   
-                  res.body.should.have.property('message').eql("\"password\" is not allowed to be empty");                   
-              done();
-            });
-           });
-      it('change passoword - no new password', (done) => {
-          let user = {
-              email: "tester@yahoo.com",
-              newPassword: "",
-              password:"tester4321"
-          }
-         chai.request(app)
-            .post('/api/user/changepassword')
-            .set('auth-token', token_login)
-            .send(user)
-            .end((err, res) => {
-            
-                  res.should.have.status(422); 
-                  res.body.should.have.property('message').eql("\"newPassword\" is not allowed to be empty");                     
-              done();
-            });
+         it('register - email already exists', (done) => {
+             let user = {
+                 email: "tester@yahoo.com",
+                 password: "tester1234",
+                 name: "tester"
+
+             }
+             chai.request(app)
+                 .post('/api/user/register')
+                 .send(user)
+                 .end((err, res) => {
+                     res.should.have.status(409);
+                     res.body.should.have.property('message').eql("Email already exists");
+
+                     done();
+                 });
 
          });
-      it('change passoword - same password', (done) => {
-          let user = {
-              email: "tester@yahoo.com",
-              newPassword: "tester1234",
-              password:"tester1234"
-          }
-         chai.request(app)
-            .post('/api/user/changepassword')
-            .set('auth-token', token_login)
-            .send(user)
-            .end((err, res) => {
-          
-                  res.should.have.status(422); 
-                  res.body.should.have.property('message').eql("New password is same as old password");                      
-              done();
-            });
+         it('register - no password', (done) => {
+             let user = {
+                 email: "tester1@yahoo.com",
+                 password: "",
+                 name: "tester"
 
-          });
-      it('change passoword - wrong original password', (done) => {
-          let user = {
-              email: "tester@yahoo.com",
-              newPassword: "tester1234",
-              password:"tester4321"
-          }
-         chai.request(app)
-            .post('/api/user/changepassword')
-            .set('auth-token', token_login)
-            .send(user)
-            .end((err, res) => {
-              
-                  res.should.have.status(403);    
-                   res.body.should.have.property('message').eql("Invalid Password");                      
-              
-              done();
-            });
+             }
+             chai.request(app)
+                 .post('/api/user/register')
+                 .send(user)
+                 .end((err, res) => {
 
-          });
-    });
-    describe('pair device testing', () => {
-      it('pair - no id', (done) => {
-          let device = {
-              device: ""
-          }
-         chai.request(app)
-            .post('/api/raspi/pair')
-            .set('auth-token', token_login)
-            .send(device)
-            .end((err, res) => {
-                  
-                  res.should.have.status(422);
-                  res.body.should.have.property('message').eql("\"device\" is not allowed to be empty"); 
+                     res.should.have.status(422);
+                     res.body.should.have.property('message').eql("\"password\" is not allowed to be empty");
 
-              done();
-            });
+                     done();
+                 });
+
          });
-      it('pair - normal', (done) => {
-          let device = {
-              device: "1234"
-          }
-         chai.request(app)
-            .post('/api/raspi/pair')
-            .set('auth-token', token_login)
-            .send(device)
-            .end((err, res) => {
-                  res.should.have.status(200);
-              done();
-            });
+         it('register - no email', (done) => {
+             let user = {
+                 email: "",
+                 password: "tester1234",
+                 name: "tester"
+
+             }
+             chai.request(app)
+                 .post('/api/user/register')
+                 .send(user)
+                 .end((err, res) => {
+
+                     res.should.have.status(422);
+                     res.body.should.have.property('message').eql("\"email\" is not allowed to be empty");
+                     done();
+                 });
+
          });
-      it('pair - already added', (done) => {
-          let device = {
-              device: "1234"
-          }
-         chai.request(app)
-            .post('/api/raspi/pair')
-            .set('auth-token', token_login)
-            .send(device)
-            .end((err, res) => {
-                  res.should.have.status(400);
-                  res.body.should.have.property('message').eql("Device already added"); 
+         it('register - no name', (done) => {
+             let user = {
+                 email: "tester1@yahoo.com",
+                 password: "tester1234",
+                 name: ""
 
-              done();
-            });
+             }
+             chai.request(app)
+                 .post('/api/user/register')
+                 .send(user)
+                 .end((err, res) => {
+
+                     res.should.have.status(422);
+                     res.body.should.have.property('message').eql("\"name\" is not allowed to be empty");
+                     done();
+                 });
+
          });
-    });
-    describe('unpair device testing', () => {
-      it('unpair - no id', (done) => {
-          let device = {
-              device: ""
-          }
-         chai.request(app)
-            .post('/api/raspi/unpair')
-            .set('auth-token', token_login)
-            .send(device)
-            .end((err, res) => {
-                  
-                  res.should.have.status(422);
-                  res.body.should.have.property('message').eql("\"device\" is not allowed to be empty"); 
+         it('register - short name', (done) => {
+             let user = {
+                 email: "tester1@yahoo.com",
+                 password: "tester1234",
+                 name: "hi"
 
-              done();
-            });
+             }
+             chai.request(app)
+                 .post('/api/user/register')
+                 .send(user)
+                 .end((err, res) => {
+
+                     res.should.have.status(422);
+                     done();
+                 });
+
          });
-      it('unpair - normal', (done) => {
-          let device = {
-              device: "1234"
-          }
-         chai.request(app)
-            .post('/api/raspi/unpair')
-            .set('auth-token', token_login)
-            .send(device)
-            .end((err, res) => {
-                  res.should.have.status(200);
-              done();
-            });
+         it('register - short password', (done) => {
+             let user = {
+                 email: "tester1@yahoo.com",
+                 password: "test",
+                 name: "tester"
+
+             }
+             chai.request(app)
+                 .post('/api/user/register')
+                 .send(user)
+                 .end((err, res) => {
+
+                     res.should.have.status(422);
+                     done();
+                 });
+
          });
-      it('unpair - already removed', (done) => {
-          let device = {
-              device: "1234"
-          }
-         chai.request(app)
-            .post('/api/raspi/unpair')
-            .set('auth-token', token_login)
-            .send(device)
-            .end((err, res) => {
-                  res.should.have.status(404);
-                  res.body.should.have.property('message').eql("Device not found"); 
+         it('register - non email', (done) => {
+             let user = {
+                 email: "tester1",
+                 password: "tester1234",
+                 name: "tester"
 
-              done();
-            });
+             }
+             chai.request(app)
+                 .post('/api/user/register')
+                 .send(user)
+                 .end((err, res) => {
+                     //console.log();
+                     res.should.have.status(422);
+                     done();
+                 });
+
          });
-    });
-    describe('delete testing', () => {
-      it('delete - no password', (done) => {
-          let user = {
-              email: "tester@yahoo.com",
-              password: ""
-          }
-         chai.request(app)
-            .post('/api/user/deleteuser')
-            .set('auth-token', token_login)
-            .send(user)
-            .end((err, res) => {
-                  res.should.have.status(422);
-                  res.body.should.have.property('message').eql("\"password\" is not allowed to be empty"); 
 
-              done();
-            });
+     });
+     describe('login testing', () => {
+         it('login - normal', (done) => {
+             let user = {
+                 email: "tester@yahoo.com",
+                 password: "tester1234"
+             }
+             chai.request(app)
+                 .post('/api/user/login')
+                 .send(user)
+                 .end((err, res) => {
+                     //console.log(res.body)
+                     res.should.have.status(200);
+                     token_login = res.body.token
+                     done();
+                 });
          });
-      it('delete - no email', (done) => {
-          let user = {
-            email: "",
-            password: "tester1234"
-          }
-           chai.request(app)
-                .post('/api/user/deleteuser')
-                .set('auth-token', token_login)
-                .send(user)
-                .end((err, res) => {
-                      res.should.have.status(422);
-                      res.body.should.have.property('message').eql("\"email\" is not allowed to be empty"); 
-                     
-                  done();
-                });
+         it('login - no email', (done) => {
+             let user = {
+                 email: "",
+                 password: "tester1234"
+             }
+             chai.request(app)
+                 .post('/api/user/login')
+                 .send(user)
+                 .end((err, res) => {
+                     res.should.have.status(422);
+                     res.body.should.have.property('message').eql("\"email\" is not allowed to be empty");
 
-          });
-      it('delete - wrong password', (done) => {
-          let user = {
-              email: "tester@yahoo.com",
-              password: "1234tester"
-          }
-           chai.request(app)
-                .post('/api/user/deleteuser')
-                .set('auth-token', token_login)
-                .send(user)
-                .end((err, res) => {
-                      res.should.have.status(403);
-                      res.body.should.have.property('message').eql("Invalid Password"); 
+                     done();
+                 });
+         });
+         it('login - no password', (done) => {
+             let user = {
+                 email: "tester@yahoo.com",
+                 password: ""
+             }
+             chai.request(app)
+                 .post('/api/user/login')
+                 .send(user)
+                 .end((err, res) => {
+                     res.should.have.status(422);
+                     res.body.should.have.property('message').eql("\"password\" is not allowed to be empty");
 
-                     
-                  done();
-                });
+                     done();
+                 });
 
-          });
-      it('delete - normal', (done) => {
-          let user = {
-              email: "tester@yahoo.com",
-              password: "tester1234"
-          }
-           chai.request(app)
-                .post('/api/user/deleteuser')
-                .set('auth-token', token_login)
-                .send(user)
-                .end((err, res) => {
-                      res.should.have.status(200);
-                     
-                  done();
-                });
+         });
+         it('login - wrong password', (done) => {
+             let user = {
+                 email: "tester@yahoo.com",
+                 password: "1234tester"
+             }
+             chai.request(app)
+                 .post('/api/user/login')
+                 .send(user)
+                 .end((err, res) => {
+                     res.should.have.status(403);
+                     res.body.should.have.property('message').eql("Invalid Password");
+                     done();
+                 });
+         });
+         it('login - short password', (done) => {
+             let user = {
+                 email: "tester@yahoo.com",
+                 password: "test"
+             }
+             chai.request(app)
+                 .post('/api/user/login')
+                 .send(user)
+                 .end((err, res) => {
+                     res.should.have.status(422);
 
-          });
-    });
+                     done();
+                 });
 
-});
+         });
+         it('login - non email', (done) => {
+             let user = {
+                 email: "tester",
+                 password: "tester123"
+             }
+             chai.request(app)
+                 .post('/api/user/login')
+                 .send(user)
+                 .end((err, res) => {
+                     res.should.have.status(422);
+
+                     done();
+                 });
+
+         });
+
+
+
+     });
+     describe('change passoword testing', () => {
+         it('change passoword - normal 1', (done) => {
+             let user = {
+                 email: "tester@yahoo.com",
+                 password: "tester1234",
+                 newPassword: "tester4321"
+             }
+             chai.request(app)
+                 .post('/api/user/changepassword')
+                 .set('auth-token', token_login)
+                 .send(user)
+                 .end((err, res) => {
+                     res.should.have.status(200);
+                     done();
+                 });
+         });
+         it('change passoword - normal 2', (done) => {
+             let user = {
+                 email: "tester@yahoo.com",
+                 newPassword: "tester1234",
+                 password: "tester4321"
+             }
+             chai.request(app)
+                 .post('/api/user/changepassword')
+                 .set('auth-token', token_login)
+                 .send(user)
+                 .end((err, res) => {
+                     res.should.have.status(200);
+                     done();
+                 });
+         });
+         it('change passoword - no email', (done) => {
+             let user = {
+                 email: "",
+                 newPassword: "tester1234",
+                 password: "tester4321"
+             }
+             chai.request(app)
+                 .post('/api/user/changepassword')
+                 .set('auth-token', token_login)
+                 .send(user)
+                 .end((err, res) => {
+                     res.should.have.status(422);
+                     res.body.should.have.property('message').eql("\"email\" is not allowed to be empty");
+                     done();
+                 });
+
+         });
+         it('change passoword - no password', (done) => {
+             let user = {
+                 email: "tester@yahoo.com",
+                 newPassword: "tester1234",
+                 password: ""
+             }
+             chai.request(app)
+                 .post('/api/user/changepassword')
+                 .set('auth-token', token_login)
+                 .send(user)
+                 .end((err, res) => {
+                     res.should.have.status(422);
+                     res.body.should.have.property('message').eql("\"password\" is not allowed to be empty");
+                     done();
+                 });
+         });
+         it('change passoword - no new password', (done) => {
+             let user = {
+                 email: "tester@yahoo.com",
+                 newPassword: "",
+                 password: "tester4321"
+             }
+             chai.request(app)
+                 .post('/api/user/changepassword')
+                 .set('auth-token', token_login)
+                 .send(user)
+                 .end((err, res) => {
+
+                     res.should.have.status(422);
+                     res.body.should.have.property('message').eql("\"newPassword\" is not allowed to be empty");
+                     done();
+                 });
+
+         });
+         it('change passoword - same password', (done) => {
+             let user = {
+                 email: "tester@yahoo.com",
+                 newPassword: "tester1234",
+                 password: "tester1234"
+             }
+             chai.request(app)
+                 .post('/api/user/changepassword')
+                 .set('auth-token', token_login)
+                 .send(user)
+                 .end((err, res) => {
+
+                     res.should.have.status(422);
+                     res.body.should.have.property('message').eql("New password is same as old password");
+                     done();
+                 });
+
+         });
+         it('change passoword - wrong original password', (done) => {
+             let user = {
+                 email: "tester@yahoo.com",
+                 newPassword: "tester1234",
+                 password: "tester4321"
+             }
+             chai.request(app)
+                 .post('/api/user/changepassword')
+                 .set('auth-token', token_login)
+                 .send(user)
+                 .end((err, res) => {
+                     res.should.have.status(403);
+                     res.body.should.have.property('message').eql("Invalid Password");
+
+                     done();
+                 });
+
+         });
+         it('change passoword - short password', (done) => {
+             let user = {
+                 email: "tester@yahoo.com",
+                 newPassword: "tester",
+                 password: "test"
+             }
+             chai.request(app)
+                 .post('/api/user/changepassword')
+                 .set('auth-token', token_login)
+                 .send(user)
+                 .end((err, res) => {
+                     res.should.have.status(422);
+                     done();
+                 });
+
+         });
+         it('change passoword - short new password', (done) => {
+             let user = {
+                 email: "tester@yahoo.com",
+                 newPassword: "test",
+                 password: "tester4321"
+             }
+             chai.request(app)
+                 .post('/api/user/changepassword')
+                 .set('auth-token', token_login)
+                 .send(user)
+                 .end((err, res) => {
+                     res.should.have.status(422);
+                     done();
+                 });
+
+         });
+         it('change passoword - non email', (done) => {
+             let user = {
+                 email: "tester",
+                 newPassword: "tester4321",
+                 password: "tester4321"
+             }
+             chai.request(app)
+                 .post('/api/user/changepassword')
+                 .set('auth-token', token_login)
+                 .send(user)
+                 .end((err, res) => {
+                     res.should.have.status(422);
+                     done();
+                 });
+
+         });
+     });
+     describe('pair device testing', () => {
+         it('pair - no id', (done) => {
+             let device = {
+                 device: ""
+             }
+             chai.request(app)
+                 .post('/api/raspi/pair')
+                 .set('auth-token', token_login)
+                 .send(device)
+                 .end((err, res) => {
+
+                     res.should.have.status(422);
+                     res.body.should.have.property('message').eql("\"device\" is not allowed to be empty");
+
+                     done();
+                 });
+         });
+         it('pair - normal', (done) => {
+             let device = {
+                 device: "987654321"
+             }
+             chai.request(app)
+                 .post('/api/raspi/pair')
+                 .set('auth-token', token_login)
+                 .send(device)
+                 .end((err, res) => {
+                     res.should.have.status(200);
+                     done();
+                 });
+         });
+         it('pair - already added', (done) => {
+             let device = {
+                 device: "987654321"
+             }
+             chai.request(app)
+                 .post('/api/raspi/pair')
+                 .set('auth-token', token_login)
+                 .send(device)
+                 .end((err, res) => {
+                     res.should.have.status(400);
+                     res.body.should.have.property('message').eql("Device already paired to this account");
+                     done();
+                 });
+         });
+     });
+     describe('unpair device testing', () => {
+         it('unpair - no id', (done) => {
+             let device = {
+                 device: ""
+             }
+             chai.request(app)
+                 .post('/api/raspi/unpair')
+                 .set('auth-token', token_login)
+                 .send(device)
+                 .end((err, res) => {
+
+                     res.should.have.status(422);
+                     res.body.should.have.property('message').eql("\"device\" is not allowed to be empty");
+
+                     done();
+                 });
+         });
+         it('unpair - normal', (done) => {
+             let device = {
+                 device: "987654321"
+             }
+             chai.request(app)
+                 .post('/api/raspi/unpair')
+                 .set('auth-token', token_login)
+                 .send(device)
+                 .end((err, res) => {
+                     res.should.have.status(200);
+                     done();
+                 });
+         });
+         it('unpair - already removed', (done) => {
+             let device = {
+                 device: "987654321"
+             }
+             chai.request(app)
+                 .post('/api/raspi/unpair')
+                 .set('auth-token', token_login)
+                 .send(device)
+                 .end((err, res) => {
+                     res.should.have.status(404);
+                     res.body.should.have.property('message').eql("Device not found");
+
+                     done();
+                 });
+         });
+     });
+     describe('delete testing', () => {
+         it('delete - no password', (done) => {
+             let user = {
+                 email: "tester@yahoo.com",
+                 password: ""
+             }
+             chai.request(app)
+                 .post('/api/user/deleteuser')
+                 .set('auth-token', token_login)
+                 .send(user)
+                 .end((err, res) => {
+                     res.should.have.status(422);
+                     res.body.should.have.property('message').eql("\"password\" is not allowed to be empty");
+
+                     done();
+                 });
+         });
+         it('delete - no email', (done) => {
+             let user = {
+                 email: "",
+                 password: "tester1234"
+             }
+             chai.request(app)
+                 .post('/api/user/deleteuser')
+                 .set('auth-token', token_login)
+                 .send(user)
+                 .end((err, res) => {
+                     res.should.have.status(422);
+                     res.body.should.have.property('message').eql("\"email\" is not allowed to be empty");
+
+                     done();
+                 });
+
+         });
+         it('delete - short password', (done) => {
+             let user = {
+                 email: "tester@yahoo.com",
+                 password: "test"
+             }
+             chai.request(app)
+                 .post('/api/user/deleteuser')
+                 .set('auth-token', token_login)
+                 .send(user)
+                 .end((err, res) => {
+                     res.should.have.status(422);
+                     done();
+                 });
+         });
+         it('delete - non email', (done) => {
+             let user = {
+                 email: "test",
+                 password: "tester1234"
+             }
+             chai.request(app)
+                 .post('/api/user/deleteuser')
+                 .set('auth-token', token_login)
+                 .send(user)
+                 .end((err, res) => {
+                     res.should.have.status(422);
+                     done();
+                 });
+
+         });
+         it('delete - wrong password', (done) => {
+             let user = {
+                 email: "tester@yahoo.com",
+                 password: "1234tester"
+             }
+             chai.request(app)
+                 .post('/api/user/deleteuser')
+                 .set('auth-token', token_login)
+                 .send(user)
+                 .end((err, res) => {
+                     res.should.have.status(403);
+                     res.body.should.have.property('message').eql("Invalid Password");
+
+
+                     done();
+                 });
+
+         });
+         it('delete - normal', (done) => {
+             let user = {
+                 email: "tester@yahoo.com",
+                 password: "tester1234"
+             }
+             chai.request(app)
+                 .post('/api/user/deleteuser')
+                 .set('auth-token', token_login)
+                 .send(user)
+                 .end((err, res) => {
+                     res.should.have.status(200);
+
+                     done();
+                 });
+
+         });
+     });
+
+ });

@@ -3,7 +3,7 @@
 This is a server that uses node.js to run an express server with a Mongo DB database
 
 To run the server, run <b>npm start</b><endl>
-  
+
 It will run on <b>localhost:3000</b>
 
 <b>Packages:</b>
@@ -18,19 +18,19 @@ When logging out, this token must be deleted.
 
 1. /api/user/register/
 2. /api/user/login/
-3. /api/user/changepassword/
+3. /api/user/changePassword/
 
-
-| Type  | Path                      | Parameters                                               |
-| ---   | ---                       | ---                                                      |
-| POST  | /api/user/register/       | name (string), email (string), password (string)         |
-| POST  | /api/user/login/          | email (string), password (string)                        |
-| POST  | /api/user/changepassword/ | email (string), password (string), new_password (string) |
-| POST  | /api/user/deleteuser/     | email (string), password (string)                        |
-| POST  | /api/raspi/pair/          | device(string id)                                        |
-| POST  | /api/raspi/unpair/        | device(string id)                                        |
-
-
+| Type | Path                       | Parameters                                                     |
+| ---- | -------------------------- | -------------------------------------------------------------- |
+| POST | /api/user/register/        | name (string), email (string), password (string)               |
+| POST | /api/user/login/           | email (string), password (string)                              |
+| POST | /api/user/changePassword/  | email (string), password (string), newPassword (string)        |
+| POST | /api/user/deleteUser/      | email (string), password (string)                              |
+| POST | /api/raspi/pair/           | device(string id)                                              |
+| POST | /api/raspi/unpair/         | device(string id)                                              |
+| GET  | /api/user/                 | None                                                           |
+| GET  | /api/item/                 | None                                                           |
+| POST | /api/raspi/postBarCodeData | name (string), flag (0 or 1), barCode(12 characters, optional) |
 
 <b> PostMan test cases </b>
 https://app.getpostman.com/join-team?invite_code=f7a228669babd77bdd2a5ae7c1dac92d
@@ -41,6 +41,6 @@ run : npm test
 <b>To Do:</b>
 
 1. Update Schema to accomodate paired devices as well as the inventory items (Finished)
-2. Make change password api endpoint (POST)
+2. Make change password api endpoint (POST) (finished)
 3. Basic POST API call to receive bar code from Raspi. No association with accounts needed right now.
-4. Make pair/unpair scanner endpoints
+4. Make pair/unpair scanner endpoints (finished)
