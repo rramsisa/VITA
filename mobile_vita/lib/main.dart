@@ -1,10 +1,16 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
+import 'package:http/http.dart';
 import 'signup.dart';
 import 'forgotPassword.dart';
 import 'innerPage.dart';
 import 'changePassword.dart';
 import 'settings.dart';
+import 'api.dart';
+import 'globals.dart' as globals;
 
 void main() => runApp(LoginApp());
 
@@ -57,16 +63,28 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
 
-  void login() {
+  void login() async {
     print("Login Requested");
     print("Email: ${emailController.text}");
     print("Password: ${passwordController.text}");
 
     //TODO: Dom - Perform login verification here
-    //TODO: Dom - Store login information locally
-
-    // When successful, route to inner pages
-    Navigator.push(context, MaterialPageRoute(builder: (context) => InnerPage()));
+    String email = emailController.text;
+    String pass = passwordController.text;
+    bool success = await loginCall(email, pass);
+    if(success){
+        Navigator.push(context, MaterialPageRoute(builder: (context) => InnerPage()));
+    }
+    else{
+      showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return AlertDialog(
+            title: Text("Login Failed"),
+          );
+        }
+      );
+    }
   }
 
   @override
@@ -181,7 +199,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           child: Padding(
             padding: const EdgeInsets.all(36.0),
-            child: Column(
+            child: Column( //column before
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[

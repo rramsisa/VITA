@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_vita/api.dart';
 import 'package:mobile_vita/main.dart';
 import 'changePassword.dart';
 
@@ -45,11 +46,11 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
 
-  void logout(){
+  void logout() async{
     print("Logout Requested");
 
     //TODO: Dom - Perform logout requirements (deleting local storage of login info)
-
+    await logoutCall();
     //After successful logout
     Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
   }

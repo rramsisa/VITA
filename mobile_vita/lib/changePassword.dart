@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
+import 'package:mobile_vita/api.dart';
 import 'settings.dart';
+import 'globals.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   ChangePasswordPage({Key key, this.title}) : super(key: key);
@@ -23,16 +25,32 @@ class ChangePasswordPage extends StatefulWidget {
 class _ChangePasswordPageState extends State<ChangePasswordPage> {
   TextEditingController oldPasswordController = new TextEditingController();
   TextEditingController newPasswordController = new TextEditingController();
+  TextEditingController confirmNewPasswordController = new TextEditingController();
 
-  void changePassword(){
+  void changePassword() async{
     print("Change Password Requested");
     print("Old Password: ${oldPasswordController.text}");
     print("New Password: ${newPasswordController.text}");
+    print("Confirm New Password: ${confirmNewPasswordController.text}");
 
     //TODO - Dom: Make appropriate request on the server (you'll need the login account info too :) )
+    if(newPasswordController.text != confirmNewPasswordController.text){
+      showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return AlertDialog(
+            title: Text("Passwords do not match"),
+          );
+        }
+        );
+      return;
+    }
 
+    bool success = await changePassCall(oldPasswordController.text, newPasswordController.text, emailGlob, context);
     //Upon successful return
-    Navigator.maybePop(context);
+    if(success){
+      Navigator.maybePop(context);
+    }
   }
 
   @override
@@ -82,6 +100,22 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
       ),
     );
 
+    final confirmPasswordField = TextField(
+      controller: confirmNewPasswordController,
+      obscureText: true,
+      decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          hintText: "Confirm New Password",
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.purpleAccent, width: 2.0),
+          ),
+          border:
+              OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0)
+              )
+      ),
+    );
+
     final sendButton = Material(
       borderRadius: BorderRadius.circular(10.0),
       color: Colors.purple,
@@ -114,6 +148,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 oldPasswordField,
                 SizedBox(height: 25.0),
                 newPasswordField,
+                SizedBox(height: 25.0),
+                confirmPasswordField,
                 SizedBox(height: 35.0,),
                 sendButton,
               ],

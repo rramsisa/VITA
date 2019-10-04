@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
+import 'package:mobile_vita/api.dart';
 import 'main.dart';
 
 class SignupPage extends StatefulWidget {
@@ -25,16 +26,19 @@ class _SignupPageState extends State<SignupPage> {
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
 
-  void createAccount(){
+  void createAccount() async{
     print("Create Account Requested");
     print("Name: ${nameController.text}");
     print("Email: ${emailController.text}");
     print("Password: ${passwordController.text}");
 
-    //TODO: Dom - Make appropriate call to backend 
+    //TODO: Dom - Make appropriate call to backend
+    bool success = await signUpCall(nameController.text, emailController.text, passwordController.text, context);
 
     //Upon successful return
-    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+    if(success){
+      Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+    }
   }
 
   @override
