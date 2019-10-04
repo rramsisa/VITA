@@ -107,7 +107,6 @@ async function postBarCodeData(req, res) {
 
     // console.log(user.listOfItems);
 
-    // TODO: Update for in and out of stock
     for (i = 0; i < user.listOfItems.length; i++) {
         // console.log(user.listOfItems[i]);
         const item = await Item.findOne({
