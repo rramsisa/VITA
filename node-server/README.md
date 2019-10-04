@@ -24,7 +24,7 @@ When logging out, this token must be deleted.
 | ---- | -------------------------- | -------------------------------------------------------------- |
 | POST | /api/user/register/        | name (string), email (string), password (string)               |
 | POST | /api/user/login/           | email (string), password (string)                              |
-| POST | /api/user/changePassword/  | email (string), password (string), new_password (string)       |
+| POST | /api/user/changePassword/  | email (string), password (string), newPassword (string)        |
 | POST | /api/user/deleteUser/      | email (string), password (string)                              |
 | POST | /api/raspi/pair/           | device(string id)                                              |
 | POST | /api/raspi/unpair/         | device(string id)                                              |
