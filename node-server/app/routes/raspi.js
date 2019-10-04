@@ -113,12 +113,12 @@ async function postBarCodeData(req, res) {
         const item = await Item.findOne({
             userID: user._id
         });
-        console.log(item == null);
+        // console.log(item == null);
         if (item != null && item.name == req.body.name) {
             if (req.body.flag == 1) {
                 item.quantity = item.quantity + 1
             } else if (item.quantity == 0) {
-                res.status(400).send({
+                return res.status(400).send({
                     "message": "Item is out of stock"
                 });
             } else {
