@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const authRoute = require('./app/routes/auth')
 const raspiRoute = require('./app/routes/raspi');
+const recipesRoute = require('./app/routes/recipes');
 const verify = require('./app/routes/verifyToken').validateToken;
 
 
@@ -36,6 +37,9 @@ mongoose.connect(process.env.DB_CONNECT, {
 
 app.use(express.json());
 
+app.route("/api/recipes/recipe")
+    .get(recipesRoute.recipe)
+
 app.route("/api/user/")
     .get(authRoute.getUsers);
 app.route("/api/item/")
@@ -54,6 +58,7 @@ app.route("/api/raspi/unpair")
     .post(verify, raspiRoute.unpair)
 app.route("/api/raspi/postBarCodeData")
     .post(verify, raspiRoute.postBarCodeData)
+
 
 
 // listen for requests

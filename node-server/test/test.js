@@ -18,8 +18,6 @@
      after(async () => {
          server.stop();
      });
-
-
      describe('register testing', () => {
          it('register - normal', (done) => {
              let user = {
@@ -161,7 +159,6 @@
                  });
 
          });
-
      });
      describe('login testing', () => {
          it('login - normal', (done) => {
@@ -254,9 +251,6 @@
                  });
 
          });
-
-
-
      });
      describe('change passoword testing', () => {
          it('change passoword - normal 1', (done) => {
