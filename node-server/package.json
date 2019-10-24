@@ -29,6 +29,7 @@
     "node-fetch": "^2.6.0",
     "nodemon": "^1.19.3",
     "request": "^2.88.0",
+    "spoonacular_api": "^1.0.0",
     "unirest": "^0.6.0"
   },
   "devDependencies": {

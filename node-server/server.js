@@ -39,6 +39,8 @@ app.use(express.json());
 
 app.route("/api/recipes/recipe")
     .get(recipesRoute.recipe)
+app.route("/api/recipes/simplify")
+    .post(recipesRoute.get_basic_pantry_item_name)
 
 app.route("/api/user/")
     .get(authRoute.getUsers);

@@ -6,48 +6,74 @@ const verify = require('./verifyToken');
 const unirest = require('unirest')
 
 
+const url = "https://api.spoonacular.com/"
+
+
+async function get_basic_pantry_item_name(req, res) {
+	
+	let requestString = "food/products/classify?apiKey="+process.env.API_KEY
+
+
+	try {
+	        unirest.post(url+requestString)
+			.header("apiKey", process.env.API_KEY)
+			.header('Content-Type', 'application/json')
+			.send(
+			{
+				"title": "Lay's Classic Potato Chips",
+				"upc": "0", 
+				"plu_code": "0" 
+				
+			}
+			)
+			.end(result=>{
+				console.log(result.body);
+				return res.send({
+			            message: result.body
+			        });
+			})
+	} catch (err) {
+	        res.status(400).send({
+	            message: err
+	        });
+	}
+
+ 
+}
 
 async function recipe(req, res) {
-    
-API_KEY = "9b5ecff8fff943469dd03be5b4435aea"
-// API_KEY ="eb657c88ffmshdbfcc54cc731649p18307djsneb64dde562f7"
-    
-const url = 'https://api.spoonacular.com/recipes/search';
+    console.log("reached")
+	
+	let requestString = "recipes/findByIngredients?apiKey="+process.env.API_KEY
 
 
+	try {
+	        unirest.get(url+requestString)
+			.header("apiKey", process.env.API_KEY)
+			.header('Content-Type', 'application/json')
+			.query({
+				"ingredients":[  "potato chips",
+            "chips",
+            "ingredient"],
+				"number":2,
+				"ranking":2
+			})
+			.end(result=>{
+				console.log(result.body);
+				return res.send({
+			            message: result.body
+			        });
+			})
+	} catch (err) {
+	        res.status(400).send({
+	            message: err
+	        });
+	}
 
-// 	const data = {  };
-
-// try {
-//   const response = await fetch(url, {
-//     method: 'GET', // or 'PUT'
-//     // body: JSON.stringify(data), // data can be `string` or {object}!
-//     headers: {
-//       'Content-Type': 'application/json',
-//       'X-RapidAPI-Key': API_KEY
-//     }
-//   });
-//   const json = await response.json();
-
-//   console.log('Success:', JSON.stringify(json));
-// } catch (error) {
-//   console.error('Error:', error);
-// }
-
-const ingredient = 'cheddar';
-let requestString = "https://api.spoonacular.com/recipes/search?apiKey="+API_KEY
-unirest.get(requestString)
-.header("apiKey", API_KEY)
-.header('Content-Type', 'application/json')
-.end(result=>{
-	console.log(result.body);
-	return res.send({
-            message: result.body
-        });
-})
-
+ 
 }
 
 module.exports = {
-   recipe
+   recipe,
+   get_basic_pantry_item_name
 };
