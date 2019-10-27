@@ -573,8 +573,11 @@
                  });
          });
         
+
+
+        
      });
-      describe('adding items testing', () => {
+      describe('removing items testing', () => {
          it('add item - normal', (done) => {
              let data = {
                  name: "milk", 

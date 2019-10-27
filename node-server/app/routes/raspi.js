@@ -247,11 +247,11 @@ let requestString = "https://api.spoonacular.com/food/products/classify?apiKey="
             )
             .end(result=>{
                 breadList = result.body.breadcrumbs
-                console.log(breadList);
+                // console.log(breadList);
                 if(breadList.indexOf("non food item") >= 0){
                     breadList = []
                 }
-                                console.log(breadList);
+                                // console.log(breadList);
 
                 const newItem = new Item({
                         name: req.body.name,
