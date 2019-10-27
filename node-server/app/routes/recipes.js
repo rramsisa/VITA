@@ -9,7 +9,8 @@ const unirest = require('unirest')
 const url = "https://api.spoonacular.com/"
 
 
-async function get_basic_pantry_item_name(req, res) {
+
+async function get_basic_pantry_item_name(name) {
 	
 	let requestString = "food/products/classify?apiKey="+process.env.API_KEY
 
@@ -20,16 +21,16 @@ async function get_basic_pantry_item_name(req, res) {
 			.header('Content-Type', 'application/json')
 			.send(
 			{
-				"title": "Lay's Classic Potato Chips",
+				"title": name,
 				"upc": "0", 
 				"plu_code": "0" 
 				
 			}
 			)
 			.end(result=>{
-				console.log(result.body);
+				console.log(result.body.breadcrumbs);
 				return res.send({
-			            message: result.body
+			            message: result.body.breadcrumbs
 			        });
 			})
 	} catch (err) {
@@ -40,6 +41,38 @@ async function get_basic_pantry_item_name(req, res) {
 
  
 }
+// async function get_basic_pantry_item_name1(name) {
+	
+// 	var quote;
+// 	  return new Promise(function(resolve, reject) {
+// 		let requestString = "food/products/classify?apiKey="+process.env.API_KEY
+// 			try {
+// 			        unirest.post(url+requestString)
+// 					.header("apiKey", process.env.API_KEY)
+// 					.header('Content-Type', 'application/json')
+// 					.send(
+// 					{
+// 						"title": name,
+// 						"upc": "0", 
+// 						"plu_code": "0" 
+						
+// 					}
+// 					)
+// 					.end(result=>{
+// 						//console.log(result.body.breadcrumbs);
+						
+// 					          resolve(  result.body.breadcrumbs)
+					        
+// 					})
+// 			} catch (err) {
+// 			        res.status(400).send({
+// 			            message: err
+// 			        });
+// 			}
+
+// 	  });
+ 
+// }
 
 async function recipe(req, res) {
     console.log("reached")
@@ -75,5 +108,6 @@ async function recipe(req, res) {
 
 module.exports = {
    recipe,
-   get_basic_pantry_item_name
+   get_basic_pantry_item_name, 
+   // get_basic_pantry_item_name11
 };
