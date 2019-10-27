@@ -21,9 +21,9 @@
      describe('register testing', () => {
          it('register - normal', (done) => {
              let user = {
-                 email: "tester@yahoo.com",
+                 email: "unit_test@yahoo.com",
                  password: "tester1234",
-                 name: "tester"
+                 name: "unit_test"
 
              }
              chai.request(app)
@@ -37,9 +37,9 @@
          });
          it('register - email already exists', (done) => {
              let user = {
-                 email: "tester@yahoo.com",
+                 email: "unit_test@yahoo.com",
                  password: "tester1234",
-                 name: "tester"
+                 name: "unit_test"
 
              }
              chai.request(app)
@@ -55,9 +55,9 @@
          });
          it('register - no password', (done) => {
              let user = {
-                 email: "tester1@yahoo.com",
+                 email: "unit_test1@yahoo.com",
                  password: "",
-                 name: "tester"
+                 name: "unit_test"
 
              }
              chai.request(app)
@@ -76,7 +76,7 @@
              let user = {
                  email: "",
                  password: "tester1234",
-                 name: "tester"
+                 name: "unit_test"
 
              }
              chai.request(app)
@@ -92,7 +92,7 @@
          });
          it('register - no name', (done) => {
              let user = {
-                 email: "tester1@yahoo.com",
+                 email: "unit_test1@yahoo.com",
                  password: "tester1234",
                  name: ""
 
@@ -110,7 +110,7 @@
          });
          it('register - short name', (done) => {
              let user = {
-                 email: "tester1@yahoo.com",
+                 email: "unit_test1@yahoo.com",
                  password: "tester1234",
                  name: "hi"
 
@@ -127,9 +127,9 @@
          });
          it('register - short password', (done) => {
              let user = {
-                 email: "tester1@yahoo.com",
+                 email: "unit_test1@yahoo.com",
                  password: "test",
-                 name: "tester"
+                 name: "unit_test"
 
              }
              chai.request(app)
@@ -144,9 +144,9 @@
          });
          it('register - non email', (done) => {
              let user = {
-                 email: "tester1",
+                 email: "unit_test1",
                  password: "tester1234",
-                 name: "tester"
+                 name: "unit_test"
 
              }
              chai.request(app)
@@ -163,7 +163,7 @@
      describe('login testing', () => {
          it('login - normal', (done) => {
              let user = {
-                 email: "tester@yahoo.com",
+                 email: "unit_test@yahoo.com",
                  password: "tester1234"
              }
              chai.request(app)
@@ -193,7 +193,7 @@
          });
          it('login - no password', (done) => {
              let user = {
-                 email: "tester@yahoo.com",
+                 email: "unit_test@yahoo.com",
                  password: ""
              }
              chai.request(app)
@@ -209,7 +209,7 @@
          });
          it('login - wrong password', (done) => {
              let user = {
-                 email: "tester@yahoo.com",
+                 email: "unit_test@yahoo.com",
                  password: "1234tester"
              }
              chai.request(app)
@@ -223,7 +223,7 @@
          });
          it('login - short password', (done) => {
              let user = {
-                 email: "tester@yahoo.com",
+                 email: "unit_test@yahoo.com",
                  password: "test"
              }
              chai.request(app)
@@ -238,7 +238,7 @@
          });
          it('login - non email', (done) => {
              let user = {
-                 email: "tester",
+                 email: "unit_test",
                  password: "tester123"
              }
              chai.request(app)
@@ -255,7 +255,7 @@
      describe('change passoword testing', () => {
          it('change passoword - normal 1', (done) => {
              let user = {
-                 email: "tester@yahoo.com",
+                 email: "unit_test@yahoo.com",
                  password: "tester1234",
                  newPassword: "tester4321"
              }
@@ -270,7 +270,7 @@
          });
          it('change passoword - normal 2', (done) => {
              let user = {
-                 email: "tester@yahoo.com",
+                 email: "unit_test@yahoo.com",
                  newPassword: "tester1234",
                  password: "tester4321"
              }
@@ -302,7 +302,7 @@
          });
          it('change passoword - no password', (done) => {
              let user = {
-                 email: "tester@yahoo.com",
+                 email: "unit_test@yahoo.com",
                  newPassword: "tester1234",
                  password: ""
              }
@@ -318,7 +318,7 @@
          });
          it('change passoword - no new password', (done) => {
              let user = {
-                 email: "tester@yahoo.com",
+                 email: "unit_test@yahoo.com",
                  newPassword: "",
                  password: "tester4321"
              }
@@ -336,7 +336,7 @@
          });
          it('change passoword - same password', (done) => {
              let user = {
-                 email: "tester@yahoo.com",
+                 email: "unit_test@yahoo.com",
                  newPassword: "tester1234",
                  password: "tester1234"
              }
@@ -354,7 +354,7 @@
          });
          it('change passoword - wrong original password', (done) => {
              let user = {
-                 email: "tester@yahoo.com",
+                 email: "unit_test@yahoo.com",
                  newPassword: "tester1234",
                  password: "tester4321"
              }
@@ -372,8 +372,8 @@
          });
          it('change passoword - short password', (done) => {
              let user = {
-                 email: "tester@yahoo.com",
-                 newPassword: "tester",
+                 email: "unit_test@yahoo.com",
+                 newPassword: "unit_test",
                  password: "test"
              }
              chai.request(app)
@@ -388,7 +388,7 @@
          });
          it('change passoword - short new password', (done) => {
              let user = {
-                 email: "tester@yahoo.com",
+                 email: "unit_test@yahoo.com",
                  newPassword: "test",
                  password: "tester4321"
              }
@@ -404,7 +404,7 @@
          });
          it('change passoword - non email', (done) => {
              let user = {
-                 email: "tester",
+                 email: "unit_test",
                  newPassword: "tester4321",
                  password: "tester4321"
              }
@@ -510,10 +510,140 @@
                  });
          });
      });
+
+     describe('adding items testing', () => {
+         it('add item - normal', (done) => {
+             let data = {
+                 name: "milk", 
+                 barCode:"123456789012",
+                 flag: "1"
+             }
+             chai.request(app)
+                 .post('/api/raspi/postBarCodeData')
+                 .set('auth-token', token_login)
+                 .send(data)
+                 .end((err, res) => {
+                     res.should.have.status(200);
+                     done();
+                 });
+         });
+         it('add item - missing name', (done) => {
+             let data = {
+                 name: "", 
+                 barCode:"123456789012",
+                 flag: "1"
+             }
+             chai.request(app)
+                 .post('/api/raspi/postBarCodeData')
+                 .set('auth-token', token_login)
+                 .send(data)
+                 .end((err, res) => {
+                     res.should.have.status(422);
+                     done();
+                 });
+         });
+         it('add item - missing barcode', (done) => {
+             let data = {
+                 name: "milk", 
+                 barCode:"",
+                 flag: "1"
+             }
+             chai.request(app)
+                 .post('/api/raspi/postBarCodeData')
+                 .set('auth-token', token_login)
+                 .send(data)
+                 .end((err, res) => {
+                     res.should.have.status(422);
+                     done();
+                 });
+         });
+         it('add item - missing flag', (done) => {
+             let data = {
+                 name: "milk", 
+                 barCode:"123456789012",
+                 flag: ""
+             }
+             chai.request(app)
+                 .post('/api/raspi/postBarCodeData')
+                 .set('auth-token', token_login)
+                 .send(data)
+                 .end((err, res) => {
+                     res.should.have.status(422);
+                     done();
+                 });
+         });
+        
+     });
+      describe('adding items testing', () => {
+         it('add item - normal', (done) => {
+             let data = {
+                 name: "milk", 
+                 barCode:"123456789012",
+                 flag: "0"
+             }
+             chai.request(app)
+                 .post('/api/raspi/postBarCodeData')
+                 .set('auth-token', token_login)
+                 .send(data)
+                 .end((err, res) => {
+                     res.should.have.status(200);
+                     done();
+                 });
+         });
+         it('add item - missing name', (done) => {
+             let data = {
+                 name: "", 
+                 barCode:"123456789012",
+                 flag: "0"
+             }
+             chai.request(app)
+                 .post('/api/raspi/postBarCodeData')
+                 .set('auth-token', token_login)
+                 .send(data)
+                 .end((err, res) => {
+                     res.should.have.status(422);
+                     done();
+                 });
+         });
+         it('add item - missing barcode', (done) => {
+             let data = {
+                 name: "milk", 
+                 barCode:"",
+                 flag: "0"
+             }
+             chai.request(app)
+                 .post('/api/raspi/postBarCodeData')
+                 .set('auth-token', token_login)
+                 .send(data)
+                 .end((err, res) => {
+                     res.should.have.status(422);
+                     done();
+                 });
+         });
+         it('add item - missing flag', (done) => {
+             let data = {
+                 name: "milk", 
+                 barCode:"123456789012",
+                 flag: ""
+             }
+             chai.request(app)
+                 .post('/api/raspi/postBarCodeData')
+                 .set('auth-token', token_login)
+                 .send(data)
+                 .end((err, res) => {
+                     res.should.have.status(422);
+                     done();
+                 });
+         });
+        
+     });
+
+
+
      describe('delete testing', () => {
          it('delete - no password', (done) => {
              let user = {
-                 email: "tester@yahoo.com",
+                 email: "unit_test@yahoo.com",
                  password: ""
              }
              chai.request(app)
@@ -546,7 +676,7 @@
          });
          it('delete - short password', (done) => {
              let user = {
-                 email: "tester@yahoo.com",
+                 email: "unit_test@yahoo.com",
                  password: "test"
              }
              chai.request(app)
@@ -575,7 +705,7 @@
          });
          it('delete - wrong password', (done) => {
              let user = {
-                 email: "tester@yahoo.com",
+                 email: "unit_test@yahoo.com",
                  password: "1234tester"
              }
              chai.request(app)
@@ -593,7 +723,7 @@
          });
          it('delete - normal', (done) => {
              let user = {
-                 email: "tester@yahoo.com",
+                 email: "unit_test@yahoo.com",
                  password: "tester1234"
              }
              chai.request(app)
