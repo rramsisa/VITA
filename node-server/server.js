@@ -38,16 +38,19 @@ mongoose.connect(process.env.DB_CONNECT, {
 app.use(express.json());
 
 app.route("/api/recipes/recipe")
-    .get(recipesRoute.recipe)
-app.route("/api/recipes/simplify")
-    .post(recipesRoute.get_basic_pantry_item_name)
+    .get(verify, recipesRoute.GetRecipe)
+
 
 app.route("/api/user/")
     .get(authRoute.getUsers);
-app.route("/api/item/")
-    .get(raspiRoute.getItems);
-app.route("/api/myitem/")
+app.route("/api/items/")
+    .get(verify, raspiRoute.getItems);
+    app.route("/api/item/")
+    .post(verify, raspiRoute.getItem);
+app.route("/api/myitems/")
     .get(verify, raspiRoute.getMyItems);
+app.route("/api/myitemsInfo/")
+    .get(verify, raspiRoute.getMyItemsInfo);
 app.route("/api/user/login")
     .post(authRoute.login);
 app.route("/api/user/register")
@@ -61,7 +64,7 @@ app.route("/api/raspi/pair")
 app.route("/api/raspi/unpair")
     .post(verify, raspiRoute.unpair)
 app.route("/api/raspi/postBarCodeData")
-    .post(verify, raspiRoute.postBarCodeData1)
+    .post(verify, raspiRoute.postBarCodeData)
 
 
 

@@ -4,6 +4,7 @@
  let chai = require('chai');
  let chaiHttp = require('chai-http');
  let server = require('../server');
+
  let should = chai.should();
  chai.use(chaiHttp);
 
@@ -572,11 +573,10 @@
                      done();
                  });
          });
-        
-
-
-        
+             
      });
+      
+
       describe('removing items testing', () => {
          it('add item - normal', (done) => {
              let data = {
@@ -640,8 +640,6 @@
          });
         
      });
-
-
 
      describe('delete testing', () => {
          it('delete - no password', (done) => {

@@ -2,7 +2,6 @@ const router = require('express').Router();
 const verify = require('./verifyToken');
 const User = require('../models/User');
 const Item = require('../models/Item');
-const recipesRoute = require('./recipes');
 const unirest = require('unirest')
 
 
@@ -95,7 +94,7 @@ async function unpair(req, res) {
 }
 
 //do not delete for now. 
-async function postBarCodeData(req, res) {
+async function postBarCodeData1(req, res) {
     const {
         error
     } = barCodeValidation(req.body);
@@ -180,7 +179,7 @@ async function postBarCodeData(req, res) {
 }
 
 
-async function postBarCodeData1(req, res) {
+async function postBarCodeData(req, res) {
     const {
         error
     } = barCodeValidation(req.body);
@@ -189,16 +188,14 @@ async function postBarCodeData1(req, res) {
             message: error.details[0].message
         });
     }
-
-    const user = await User.findOne({
+ const user = await User.findOne({
         _id: req.user._id
     })
-
-
     for (i = 0; i < user.listOfItems.length; i++) {
-        // console.log(user.listOfItems[i]);
+
+        console.log(user.listOfItems[i]);
         const item = await Item.findOne({
-            userID: user._id
+            _id: user.listOfItems[i]
         });
         // console.log(item == null);
         if (item != null && item.name == req.body.name) {
@@ -229,11 +226,11 @@ async function postBarCodeData1(req, res) {
     }
 
 
-let requestString = "https://api.spoonacular.com/food/products/classify?apiKey="+process.env.API_KEY
+    let requestString = "https://api.spoonacular.com/food/products/classify?apiKey="+process.env.API_KEY
 
 
     try {
-        // console.log(name)
+        console.log("name")
             unirest.post(requestString)
             .header("apiKey", process.env.API_KEY)
             .header('Content-Type', 'application/json')
@@ -251,8 +248,6 @@ let requestString = "https://api.spoonacular.com/food/products/classify?apiKey="
                 if(breadList.indexOf("non food item") >= 0){
                     breadList = []
                 }
-                                // console.log(breadList);
-
                 const newItem = new Item({
                         name: req.body.name,
                         status: true,
@@ -263,16 +258,14 @@ let requestString = "https://api.spoonacular.com/food/products/classify?apiKey="
                     });
 
                     const savedItem =  newItem.save();
-                    user.listOfItems.push(newItem);
+                    user.listOfItems.push(newItem._id);
                     const savedUser =  user.save();
                     // console.log("saved item")
                     // console.log(breadcrumbsList)
-                    res.send({
+                    return res.send({
                         item: newItem._id,
                         message: "Item Request received!"
                      });
-
-                
                    
             })
     } catch (err) {
@@ -289,40 +282,6 @@ let requestString = "https://api.spoonacular.com/food/products/classify?apiKey="
 }
 
 
-
-
-
-async function get_basic_pantry_item_name1(name) {
-    
-    let requestString = "food/products/classify?apiKey="+process.env.API_KEY
-
-
-    try {
-        // console.log(name)
-            unirest.post(url+requestString)
-            .header("apiKey", process.env.API_KEY)
-            .header('Content-Type', 'application/json')
-            .send(
-            {
-                "title": name,
-                "upc": "0", 
-                "plu_code": "0" 
-                
-            }
-            )
-            .end(result=>{
-                console.log(result.body.breadcrumbs);
-                return result.body.breadcrumbs
-                   
-            })
-    } catch (err) {
-        return  err
-            
-    }
-
- 
-}
-
 async function getItems(req, res) {
     try {
         const listOfItems = await Item.find();
@@ -333,12 +292,56 @@ async function getItems(req, res) {
         })
     }
 }
+
+async function getItem(req, res) {
+    try {
+        console.log(req.body.id)
+        const item = await Item.findOne({
+            _id: req.body.id
+         })
+        return res.send({
+            item
+        });
+    } catch (err) {
+        res.status(400).send({
+            message: err
+        })
+    }
+}
+
 async function getMyItems(req, res) {
     try {
         const user = await User.findOne({
             _id: req.user._id
          })
+        
          return res.send(user.listOfItems);
+        
+    } catch (err) {
+        res.status(400).send({
+            message: err
+        })
+    }
+}
+
+async function getMyItemsInfo(req, res) {
+    try {
+        const user = await User.findOne({
+            _id: req.user._id
+         })
+        const values = Object.values(user.listOfItems)
+
+        itemInfo = []
+        for (var property in values){
+             const item = await Item.findOne({
+                _id: values[property]
+             })
+             itemInfo.push(item)
+        }
+
+
+        return res.send(itemInfo);
+
 
         
     } catch (err) {
@@ -349,11 +352,14 @@ async function getMyItems(req, res) {
 }
 
 
+
+
 module.exports = {
     pair,
     unpair,
     postBarCodeData,
     getItems,
+    getItem,
     getMyItems,
-    postBarCodeData1
+    getMyItemsInfo
 };

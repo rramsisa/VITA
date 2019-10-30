@@ -3,6 +3,7 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const verify = require('./verifyToken');
+const Item = require('../models/Item');
 const unirest = require('unirest')
 
 
@@ -13,8 +14,6 @@ const url = "https://api.spoonacular.com/"
 async function get_basic_pantry_item_name(name) {
 	
 	let requestString = "food/products/classify?apiKey="+process.env.API_KEY
-
-
 	try {
 	        unirest.post(url+requestString)
 			.header("apiKey", process.env.API_KEY)
@@ -38,58 +37,43 @@ async function get_basic_pantry_item_name(name) {
 	            message: err
 	        });
 	}
-
- 
 }
-// async function get_basic_pantry_item_name1(name) {
-	
-// 	var quote;
-// 	  return new Promise(function(resolve, reject) {
-// 		let requestString = "food/products/classify?apiKey="+process.env.API_KEY
-// 			try {
-// 			        unirest.post(url+requestString)
-// 					.header("apiKey", process.env.API_KEY)
-// 					.header('Content-Type', 'application/json')
-// 					.send(
-// 					{
-// 						"title": name,
-// 						"upc": "0", 
-// 						"plu_code": "0" 
-						
-// 					}
-// 					)
-// 					.end(result=>{
-// 						//console.log(result.body.breadcrumbs);
-						
-// 					          resolve(  result.body.breadcrumbs)
-					        
-// 					})
-// 			} catch (err) {
-// 			        res.status(400).send({
-// 			            message: err
-// 			        });
-// 			}
 
-// 	  });
- 
-// }
-
-async function recipe(req, res) {
+async function GetRecipe(req, res) {
     console.log("reached")
 	
 	let requestString = "recipes/findByIngredients?apiKey="+process.env.API_KEY
 
 
-	try {
-	        unirest.get(url+requestString)
+
+    try {
+        const user = await User.findOne({
+            _id: req.user._id
+         })
+        console.log(typeof (user.listOfItems))
+        const values = Object.values(user.listOfItems)
+        // const entries = Object.entries(user.listOfItems)
+
+        console.log(values)
+        breadcrumbs = []
+        for (var property in values){
+
+			const item = await Item.findOne({
+            	_id: values[property]
+        	 })
+
+        	breadcrumbs.push.apply(breadcrumbs, item.breadcrumbs)
+            
+        }
+       console.log(breadcrumbs)
+
+         unirest.get(url+requestString)
 			.header("apiKey", process.env.API_KEY)
 			.header('Content-Type', 'application/json')
 			.query({
-				"ingredients":[  "potato chips",
-            "chips",
-            "ingredient"],
-				"number":2,
-				"ranking":2
+				"ingredients": breadcrumbs,
+				"number":5,
+				"ranking":1
 			})
 			.end(result=>{
 				console.log(result.body);
@@ -97,17 +81,22 @@ async function recipe(req, res) {
 			            message: result.body
 			        });
 			})
-	} catch (err) {
-	        res.status(400).send({
-	            message: err
-	        });
-	}
+        
+
+        
+    } catch (err) {
+        res.status(400).send({
+            message: err
+        })
+    }
+
 
  
 }
 
+
+
 module.exports = {
-   recipe,
    get_basic_pantry_item_name, 
-   // get_basic_pantry_item_name11
+   GetRecipe
 };

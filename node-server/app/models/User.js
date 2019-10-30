@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const Item = require('../models/Item');
 
 
 const userSchema = new mongoose.Schema({
@@ -35,7 +34,7 @@ const userSchema = new mongoose.Schema({
     listOfItems: {
         type: Array,
         value: [{
-            type: Item,
+            type: Number,
         }],
         default: []
     }
