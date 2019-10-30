@@ -93,7 +93,19 @@ const barCodeValidation = (data) => {
 
     return Joi.validate(data, schema);
 };
+// Bar Code Validation
+const manualValidation = (data) => {
+    const schema = {
+        name: Joi.string()
+            .required(),
+        quantity: Joi.number()
+            .required(),
+        flag: Joi.number() // 0 = remove item, 1 = add item
+            .required(),
+    };
 
+    return Joi.validate(data, schema);
+};
 
 module.exports.registerValidation = registerValidation;
 module.exports.loginValidation = loginValidation;
@@ -101,3 +113,4 @@ module.exports.changePasswordValidation = changePasswordValidation;
 module.exports.deleteUserValidation = deleteUserValidation;
 module.exports.pairPiValidation = pairPiValidation;
 module.exports.barCodeValidation = barCodeValidation;
+module.exports.manualValidation = manualValidation;

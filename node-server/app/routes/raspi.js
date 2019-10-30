@@ -336,13 +336,12 @@ async function getMyItemsInfo(req, res) {
              const item = await Item.findOne({
                 _id: values[property]
              })
-             itemInfo.push(item)
+             if(item.status){
+                itemInfo.push(item)
+             }
+             
         }
-
-
         return res.send(itemInfo);
-
-
         
     } catch (err) {
         res.status(400).send({

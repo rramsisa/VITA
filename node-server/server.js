@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const authRoute = require('./app/routes/auth')
 const raspiRoute = require('./app/routes/raspi');
 const recipesRoute = require('./app/routes/recipes');
+const manualRoute = require('./app/routes/manual');
 const verify = require('./app/routes/verifyToken').validateToken;
 
 
@@ -45,7 +46,7 @@ app.route("/api/user/")
     .get(authRoute.getUsers);
 app.route("/api/items/")
     .get(verify, raspiRoute.getItems);
-    app.route("/api/item/")
+app.route("/api/item/")
     .post(verify, raspiRoute.getItem);
 app.route("/api/myitems/")
     .get(verify, raspiRoute.getMyItems);
@@ -65,7 +66,8 @@ app.route("/api/raspi/unpair")
     .post(verify, raspiRoute.unpair)
 app.route("/api/raspi/postBarCodeData")
     .post(verify, raspiRoute.postBarCodeData)
-
+app.route("/api/manual/add")
+    .post(verify, manualRoute.manualAdd)
 
 
 // listen for requests
