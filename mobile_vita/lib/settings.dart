@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_vita/api.dart';
 import 'package:mobile_vita/main.dart';
 import 'changePassword.dart';
+import 'scanners.dart';
 
 // class SettingsApp extends StatelessWidget {
 //   // This widget is the root of your application.
@@ -80,7 +81,12 @@ class _SettingsPageState extends State<SettingsPage> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ScannerPage()),
+          );
+        },
         child: Text("Manage Scanners",
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
