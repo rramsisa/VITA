@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_vita/api.dart';
 import 'package:mobile_vita/main.dart';
 import 'addItem.dart';
+import 'modifyItem.dart';
 
 class InventoryPage extends StatefulWidget {
   InventoryPage({Key key, this.title}) : super(key: key);
@@ -22,11 +23,18 @@ class InventoryPage extends StatefulWidget {
 }
 
 class _InventoryPageState extends State<InventoryPage> {
-  void removeItem(itemName) async {
-    print("Remove Item Requested");
-    print("Item to remove: " + itemName);
 
-    //TODO - Make appropriate API call to remove item from list (& Refresh)
+  void modifyMove(itemName) async {
+    print("Modify Item Requested");
+    print("Item to modify: " + itemName);
+
+    // TODO: Store item information as a global
+
+    //TODO: Navigate to modify screen and populate
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ModifyItemPage()),
+    );
   }
 
   @override
@@ -39,15 +47,12 @@ class _InventoryPageState extends State<InventoryPage> {
               // leading: FlutterLogo(size: 72.0),
               title: Text('Food Item Name'),
               subtitle: Text(
-                'Quantity: ## \nLast Added: ##/##/####'
+                'Quantity: ## \nLast Modified: ##/##/####'
               ),
-              trailing: IconButton(
-                icon: Icon(Icons.clear),
-                tooltip: 'Remove Item',
-                onPressed: () {
-                  removeItem("Food Item Name 1");
-                },
-              ),
+              trailing: Icon(Icons.arrow_forward_ios),
+              onTap: (){
+                modifyMove("Food Item 1");
+              },
               isThreeLine: true,
             )
           ),
@@ -56,15 +61,12 @@ class _InventoryPageState extends State<InventoryPage> {
               // leading: FlutterLogo(size: 72.0),
               title: Text('Food Item Name'),
               subtitle: Text(
-                'Quantity: ## \nLast Added: ##/##/####'
+                'Quantity: ## \nLast Modified: ##/##/####'
               ),
-              trailing: IconButton(
-                icon: Icon(Icons.clear),
-                tooltip: 'Remove Item',
-                onPressed: () {
-                  removeItem("Food Item Name 2");
-                },
-              ),
+              trailing: Icon(Icons.arrow_forward_ios),
+              onTap: (){
+                modifyMove("Food Item 1");
+              },
               isThreeLine: true,
             )
           ),
@@ -73,18 +75,15 @@ class _InventoryPageState extends State<InventoryPage> {
               // leading: FlutterLogo(size: 72.0),
               title: Text('Food Item Name'),
               subtitle: Text(
-                'Quantity: ## \nLast Added: ##/##/####'
+                'Quantity: ## \nLast Modified: ##/##/####'
               ),
-              trailing: IconButton(
-                icon: Icon(Icons.clear),
-                tooltip: 'Remove Item',
-                onPressed: () {
-                  removeItem("Food Item Name 3");
-                },
-              ),
+              trailing: Icon(Icons.arrow_forward_ios),
+              onTap: (){
+                modifyMove("Food Item 1");
+              },
               isThreeLine: true,
             )
-          )
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
