@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const authRoute = require('./app/routes/auth')
 const raspiRoute = require('./app/routes/raspi');
+const recipesRoute = require('./app/routes/recipes');
+const manualRoute = require('./app/routes/manual');
 const verify = require('./app/routes/verifyToken').validateToken;
 
 
@@ -36,19 +38,34 @@ mongoose.connect(process.env.DB_CONNECT, {
 
 app.use(express.json());
 
+app.route("/api/recipes/recipe")
+    .get(verify, recipesRoute.GetRecipe)
+app.route("/api/user/")
+    .get(authRoute.getUsers);
+app.route("/api/items/")
+    .get(verify, raspiRoute.getItems);
+app.route("/api/item/")
+    .post(verify, raspiRoute.getItem);
+app.route("/api/myitems/")
+    .get(verify, raspiRoute.getMyItems);
+app.route("/api/myitemsInfo/")
+    .get(verify, raspiRoute.getMyItemsInfo);
 app.route("/api/user/login")
-	.post(authRoute.login);
+    .post(authRoute.login);
 app.route("/api/user/register")
     .post(authRoute.register);
-app.route("/api/user/deleteuser" )
-    .post(verify, authRoute.deleteuser);
-app.route("/api/user/changepassword" )
-    .post(verify, authRoute.changepassword);
-
+app.route("/api/user/deleteUser")
+    .post(verify, authRoute.deleteUser);
+app.route("/api/user/changePassword")
+    .post(verify, authRoute.changePassword);
 app.route("/api/raspi/pair")
     .post(verify, raspiRoute.pair)
 app.route("/api/raspi/unpair")
     .post(verify, raspiRoute.unpair)
+app.route("/api/raspi/postBarCodeData")
+    .post(verify, raspiRoute.postBarCodeData)
+app.route("/api/manual")
+    .post(verify, manualRoute.manual)
 
 
 // listen for requests
@@ -59,12 +76,12 @@ const server = app.listen(3000, () => {
 
 
 function stop() {
-  server.close(() => {
-            process.exit(0);
-        
+    server.close(() => {
+        process.exit(0);
+
     });
 }
 module.exports = {
-	app
+    app
 };
 module.exports.stop = stop;

@@ -1,32 +1,47 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:gradient_app_bar/gradient_app_bar.dart';
+import 'package:http/http.dart';
+import 'signup.dart';
+import 'forgotPassword.dart';
+import 'innerPage.dart';
+import 'changePassword.dart';
+import 'settings.dart';
+import 'api.dart';
+import 'globals.dart' as globals;
 
-void main() => runApp(MyApp());
+void main() => runApp(LoginApp());
 
-class MyApp extends StatelessWidget {
+class LoginApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'VITA Login',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+          primarySwatch: Colors.purple),
+      home: LoginPage(title: 'VITA Login Page'),
+      routes: {
+        "/settings": (BuildContext context) => new SettingsPage(),
+      },
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class LoginPage extends StatefulWidget {
+  LoginPage({Key key, this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -40,72 +55,161 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _LoginPageState extends State<LoginPage> {
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController passwordController = new TextEditingController();
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  void login() async {
+    print("Login Requested");
+    print("Email: ${emailController.text}");
+    print("Password: ${passwordController.text}");
+
+    //TODO: Dom - Perform login verification here
+    String email = emailController.text;
+    String pass = passwordController.text;
+    bool success = await loginCall(email, pass, context);
+    if (success) {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => InnerPage()));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+    final emailField = TextField(
+      controller: emailController,
+      obscureText: false,
+      style: TextStyle(color: Colors.white),
+      decoration: InputDecoration(
+          enabledBorder: const OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.white, width: 1.0),
+          ),
+          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          hintText: "Email",
+          hintStyle: TextStyle(fontSize: 15.0, color: Colors.white),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.purpleAccent, width: 2.0),
+          ),
+          border:
+              OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))),
+    );
+
+    final passwordField = TextField(
+      controller: passwordController,
+      style: TextStyle(color: Colors.white),
+      obscureText: true,
+      decoration: InputDecoration(
+          enabledBorder: const OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.white, width: 1.0),
+          ),
+          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          hintText: "Password",
+          hintStyle: TextStyle(fontSize: 15.0, color: Colors.white),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.purpleAccent, width: 2.0),
+          ),
+          border:
+              OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))),
+    );
+
+    final loginButton = Material(
+      borderRadius: BorderRadius.circular(10.0),
+      color: Colors.white.withOpacity(0.25),
+      child: MaterialButton(
+        minWidth: MediaQuery.of(context).size.width / 3,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: login,
+        child: Text("Login",
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       ),
+    );
+
+    final signupButton = Material(
+      borderRadius: BorderRadius.circular(10.0),
+      color: Colors.white.withOpacity(0.25),
+      child: MaterialButton(
+        minWidth: MediaQuery.of(context).size.width / 3,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SignupPage()),
+          );
+        },
+        child: Text("Sign Up",
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    );
+
+    final forgotPasswordButton = Material(
+      borderRadius: BorderRadius.circular(10.0),
+      color: Colors.white.withOpacity(0.125),
+      child: MaterialButton(
+        minWidth: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ForgotPasswordPage()),
+          );
+        },
+        child: Text("Forgot Password",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Colors.white.withOpacity(0.5),
+                fontWeight: FontWeight.bold)),
+      ),
+    );
+
+    return Scaffold(
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+        child: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [Colors.purple, Colors.deepPurple])),
+          child: Padding(
+            padding: const EdgeInsets.all(36.0),
+            child: Center(
+              child: ListView(
+                shrinkWrap: true,
+                children: <Widget>[
+                  SizedBox(
+                    height: 155.0,
+                    child: Image.asset(
+                      "assets/logo-white.png",
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  SizedBox(height: 45.0),
+                  emailField,
+                  SizedBox(height: 25.0),
+                  passwordField,
+                  SizedBox(
+                    height: 35.0,
+                  ),
+                  // loginButton,
+                  new ButtonTheme.bar(
+                    child: new ButtonBar(
+                        alignment: MainAxisAlignment.center,
+                        children: <Widget>[loginButton, signupButton]),
+                  ),
+                  SizedBox(
+                    height: 15.0,
+                  ),
+                  forgotPasswordButton,
+                ],
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
