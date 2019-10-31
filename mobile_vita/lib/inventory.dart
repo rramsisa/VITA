@@ -22,13 +22,11 @@ class InventoryPage extends StatefulWidget {
 }
 
 class _InventoryPageState extends State<InventoryPage> {
-  void logout() async {
-    print("Logout Requested");
+  void removeItem(itemName) async {
+    print("Remove Item Requested");
+    print("Item to remove: " + itemName);
 
-    await logoutCall();
-    //After successful logout
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => LoginPage()));
+    //TODO - Make appropriate API call to remove item from list (& Refresh)
   }
 
   @override
@@ -36,18 +34,57 @@ class _InventoryPageState extends State<InventoryPage> {
     return Scaffold(
       body: ListView(
         children: <Widget>[
-          ListTile(
-            leading: Icon(Icons.map),
-            title: Text('Map'),
+          Card(
+            child: ListTile(
+              // leading: FlutterLogo(size: 72.0),
+              title: Text('Food Item Name'),
+              subtitle: Text(
+                'Quantity: ## \nLast Added: ##/##/####'
+              ),
+              trailing: IconButton(
+                icon: Icon(Icons.clear),
+                tooltip: 'Remove Item',
+                onPressed: () {
+                  removeItem("Food Item Name 1");
+                },
+              ),
+              isThreeLine: true,
+            )
           ),
-          ListTile(
-            leading: Icon(Icons.photo_album),
-            title: Text('Album'),
+          Card(
+            child: ListTile(
+              // leading: FlutterLogo(size: 72.0),
+              title: Text('Food Item Name'),
+              subtitle: Text(
+                'Quantity: ## \nLast Added: ##/##/####'
+              ),
+              trailing: IconButton(
+                icon: Icon(Icons.clear),
+                tooltip: 'Remove Item',
+                onPressed: () {
+                  removeItem("Food Item Name 2");
+                },
+              ),
+              isThreeLine: true,
+            )
           ),
-          ListTile(
-            leading: Icon(Icons.phone),
-            title: Text('Phone'),
-          ),
+          Card(
+            child: ListTile(
+              // leading: FlutterLogo(size: 72.0),
+              title: Text('Food Item Name'),
+              subtitle: Text(
+                'Quantity: ## \nLast Added: ##/##/####'
+              ),
+              trailing: IconButton(
+                icon: Icon(Icons.clear),
+                tooltip: 'Remove Item',
+                onPressed: () {
+                  removeItem("Food Item Name 3");
+                },
+              ),
+              isThreeLine: true,
+            )
+          )
         ],
       ),
       floatingActionButton: FloatingActionButton(
