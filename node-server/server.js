@@ -40,8 +40,6 @@ app.use(express.json());
 
 app.route("/api/recipes/recipe")
     .get(verify, recipesRoute.GetRecipe)
-
-
 app.route("/api/user/")
     .get(authRoute.getUsers);
 app.route("/api/items/")
@@ -66,8 +64,8 @@ app.route("/api/raspi/unpair")
     .post(verify, raspiRoute.unpair)
 app.route("/api/raspi/postBarCodeData")
     .post(verify, raspiRoute.postBarCodeData)
-app.route("/api/manual/add")
-    .post(verify, manualRoute.manualAdd)
+app.route("/api/manual")
+    .post(verify, manualRoute.manual)
 
 
 // listen for requests

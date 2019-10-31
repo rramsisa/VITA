@@ -29,13 +29,21 @@ When logging out, this token must be deleted.
 | POST | /api/raspi/pair/           | device(string id)                                              |
 | POST | /api/raspi/unpair/         | device(string id)                                              |
 | GET  | /api/user/                 | None                                                           |
-| GET  | /api/item/                 | None                                                           |
 | POST | /api/raspi/postBarCodeData | name (string), flag (0 or 1), barCode(12 characters, optional) |
+| POST | /api/manual                | name (string), flag (0 or 1), quantity(integer)                |
+| GET  | /api/items/                | None                                                           |
+| POST | /api/item/                 | item id (string)                                               |
+| GET  | /api/myitems/              | None                                                           |
+| GET  | /api/myitemsInfo/          | None                                                           |
+| GET  | /api/recipes/recipe        | None                                                           |
+
+
+
 
 <b> PostMan test cases </b>
 https://app.getpostman.com/join-team?invite_code=f7a228669babd77bdd2a5ae7c1dac92d
 
-<b> Unit-ish testing</b>
+<b> Unit testing</b>
 run : npm test
 
 <b>To Do:</b>

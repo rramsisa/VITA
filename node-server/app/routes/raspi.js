@@ -93,92 +93,6 @@ async function unpair(req, res) {
     }
 }
 
-//do not delete for now. 
-async function postBarCodeData1(req, res) {
-    const {
-        error
-    } = barCodeValidation(req.body);
-    if (error) {
-        return res.status(422).send({
-            message: error.details[0].message
-        });
-    }
-
-    const user = await User.findOne({
-        _id: req.user._id
-    })
-
-    // console.log(user.listOfItems);
-
-    for (i = 0; i < user.listOfItems.length; i++) {
-        // console.log(user.listOfItems[i]);
-        const item = await Item.findOne({
-            userID: user._id
-        });
-        // console.log(item == null);
-        if (item != null && item.name == req.body.name) {
-            if (req.body.flag == 1) {
-                item.quantity = item.quantity + 1
-            } else if (item.quantity == 0) {
-                return res.status(400).send({
-                    "message": "Item is out of stock"
-                });
-            } else {
-                item.quantity = item.quantity - 1
-            }
-            if (item.quantity == 0) {
-                item.status = false;
-            }
-            // console.log("Item exists")
-            try {
-                const savedItem = item.save();
-                return res.send({
-                    message: "Quantity Updated"
-                });
-            } catch (err) {
-                return res.status(400).send({
-                    message: err
-                });
-            }
-        }
-    }
-
-    
-    const newItem = new Item({
-        name: req.body.name,
-        status: true,
-        quantity: 1,
-        barCode: req.body.barCode,
-        userID: user._id,
-        //breadcrumbs: "breadcrumbsList"
-    });
-
-   
-
-    try {
-       
-
-    // console.log(breadcrumbsList)
-
-        const savedItem = await newItem.save();
-        user.listOfItems.push(newItem);
-        const savedUser = await user.save();
-        // console.log("saved item")
-        // console.log(breadcrumbsList)
-        res.send({
-            item: newItem._id,
-            message: "Item Request received!"
-        });
-    } catch (err) {
-        console.log("caught exception")
-
-        res.status(400).send({
-            message: err
-        });
-    }
-}
-
-
 async function postBarCodeData(req, res) {
     const {
         error
@@ -193,7 +107,7 @@ async function postBarCodeData(req, res) {
     })
     for (i = 0; i < user.listOfItems.length; i++) {
 
-        console.log(user.listOfItems[i]);
+        // console.log(user.listOfItems[i]);
         const item = await Item.findOne({
             _id: user.listOfItems[i]
         });
@@ -201,6 +115,7 @@ async function postBarCodeData(req, res) {
         if (item != null && item.name == req.body.name) {
             if (req.body.flag == 1) {
                 item.quantity = item.quantity + 1
+                item.status = true;
             } else if (item.quantity == 0) {
                 return res.status(400).send({
                     "message": "Item is out of stock"
@@ -230,7 +145,6 @@ async function postBarCodeData(req, res) {
 
 
     try {
-        console.log("name")
             unirest.post(requestString)
             .header("apiKey", process.env.API_KEY)
             .header('Content-Type', 'application/json')
@@ -269,8 +183,8 @@ async function postBarCodeData(req, res) {
                    
             })
     } catch (err) {
-        console.log("caught exception")
-        console.log(err)
+        // console.log("caught exception")
+        // console.log(err)
 
         res.status(400).send({
             message: err
@@ -281,7 +195,7 @@ async function postBarCodeData(req, res) {
 
 }
 
-
+//get all items across the app 
 async function getItems(req, res) {
     try {
         const listOfItems = await Item.find();
@@ -292,10 +206,10 @@ async function getItems(req, res) {
         })
     }
 }
-
+//get informatio on a specific item
 async function getItem(req, res) {
     try {
-        console.log(req.body.id)
+        // console.log(req.body.id)
         const item = await Item.findOne({
             _id: req.body.id
          })
@@ -308,7 +222,7 @@ async function getItem(req, res) {
         })
     }
 }
-
+//get list of my items' ids
 async function getMyItems(req, res) {
     try {
         const user = await User.findOne({
@@ -323,7 +237,7 @@ async function getMyItems(req, res) {
         })
     }
 }
-
+//get list of my items' object
 async function getMyItemsInfo(req, res) {
     try {
         const user = await User.findOne({

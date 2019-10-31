@@ -12,7 +12,7 @@ const {
 
 
 
-async function manualAdd(req, res) {
+async function manual(req, res) {
     const {
         error
     } = manualValidation(req.body);
@@ -35,6 +35,8 @@ async function manualAdd(req, res) {
         if (item != null && item.name == req.body.name) {
             if (req.body.flag == 1) {
                 item.quantity = parseInt(item.quantity) + parseInt(req.body.quantity)
+                                item.status = true;
+
             } else if (item.quantity == 0) {
                 return res.status(400).send({
                     "message": "Item is out of stock"
@@ -120,5 +122,5 @@ async function manualAdd(req, res) {
 
 
 module.exports = {
-   manualAdd
+   manual
 };
