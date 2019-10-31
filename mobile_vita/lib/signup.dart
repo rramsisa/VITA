@@ -32,7 +32,6 @@ class _SignupPageState extends State<SignupPage> {
     print("Email: ${emailController.text}");
     print("Password: ${passwordController.text}");
 
-    //TODO: Dom - Make appropriate call to backend
     bool success = await signUpCall(nameController.text, emailController.text,
         passwordController.text, context);
 

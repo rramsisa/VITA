@@ -67,7 +67,6 @@ class _LoginPageState extends State<LoginPage> {
     print("Email: ${emailController.text}");
     print("Password: ${passwordController.text}");
 
-    //TODO: Dom - Perform login verification here
     String email = emailController.text;
     String pass = passwordController.text;
     bool success = await loginCall(email, pass, context);

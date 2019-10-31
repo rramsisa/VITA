@@ -3,31 +3,8 @@ import 'package:mobile_vita/api.dart';
 import 'package:mobile_vita/main.dart';
 import 'changePassword.dart';
 
-// class SettingsApp extends StatelessWidget {
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'VITA Settings',
-//       theme: ThemeData(
-//         // This is the theme of your application.
-//         //
-//         // Try running your application with "flutter run". You'll see the
-//         // application has a blue toolbar. Then, without quitting the app, try
-//         // changing the primarySwatch below to Colors.green and then invoke
-//         // "hot reload" (press "r" in the console where you ran "flutter run",
-//         // or simply save your changes to "hot reload" in a Flutter IDE).
-//         // Notice that the counter didn't reset back to zero; the application
-//         // is not restarted.
-//         primarySwatch: Colors.purple
-//       ),
-//       home: SettingsPage(title: 'VITA Settings Page'),
-//     );
-//   }
-// }
-
-class SettingsPage extends StatefulWidget {
-  SettingsPage({Key key, this.title}) : super(key: key);
+class InventoryPage extends StatefulWidget {
+  InventoryPage({Key key, this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -41,10 +18,10 @@ class SettingsPage extends StatefulWidget {
   final String title;
 
   @override
-  _SettingsPageState createState() => _SettingsPageState();
+  _InventoryPageState createState() => _InventoryPageState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
+class _InventoryPageState extends State<InventoryPage> {
   void logout() async {
     print("Logout Requested");
 
@@ -101,28 +78,22 @@ class _SettingsPageState extends State<SettingsPage> {
     );
 
     return Scaffold(
-      body: Center(
-        child: Container(
-          color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.all(36.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(height: 25.0),
-                scannersButton,
-                SizedBox(height: 25.0),
-                changePasswordButton,
-                SizedBox(
-                  height: 35.0,
-                ),
-                logoutButton,
-              ],
-            ),
+      body: ListView(
+        children: <Widget>[
+          ListTile(
+            leading: Icon(Icons.map),
+            title: Text('Map'),
           ),
-        ),
-      ),
+          ListTile(
+            leading: Icon(Icons.photo_album),
+            title: Text('Album'),
+          ),
+          ListTile(
+            leading: Icon(Icons.phone),
+            title: Text('Phone'),
+          ),
+        ],
+      )
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'settings.dart';
+import 'inventory.dart';
 import 'placeholderWidget.dart';
 
 class InnerApp extends StatelessWidget {
@@ -46,7 +47,7 @@ class InnerPage extends StatefulWidget {
 class _InnerPageState extends State<InnerPage> {
   int _currentIndex = 0;
   final List<Widget> _children = [
-    PlaceholderWidget(Colors.white), // Inventory Page
+    InventoryPage(), // Inventory Page
     PlaceholderWidget(Colors.grey[100]), // Lists Page
     PlaceholderWidget(Colors.grey[200]), // Recipes Page
     SettingsPage(),
@@ -86,19 +87,6 @@ class _InnerPageState extends State<InnerPage> {
         BottomNavigationBarItem(
             icon: Icon(Icons.settings), title: Text('Settings'))
       ],
-    );
-
-    final tempButton = Material(
-      borderRadius: BorderRadius.circular(10.0),
-      color: Colors.white,
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {},
-        child: Text("Content Coming Soon",
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
-      ),
     );
 
     return Scaffold(

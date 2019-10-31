@@ -34,7 +34,6 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     print("New Password: ${newPasswordController.text}");
     print("Confirm New Password: ${confirmNewPasswordController.text}");
 
-    //TODO - Dom: Make appropriate request on the server (you'll need the login account info too :) )
     if (newPasswordController.text != confirmNewPasswordController.text) {
       showDialog(
           context: context,
