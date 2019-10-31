@@ -36,6 +36,9 @@ class _InventoryPageState extends State<InventoryPage> {
     bool success = await getPantryItems(context);
     if(success){
       // Generate list on page done below
+      setState(() {
+        // Used to refresh the UI once the update is finished :)
+      });
     }
   }
 
