@@ -3,6 +3,7 @@ import 'package:mobile_vita/api.dart';
 import 'package:mobile_vita/main.dart';
 import 'addItem.dart';
 import 'modifyItem.dart';
+import 'globals.dart';
 
 class InventoryPage extends StatefulWidget {
   InventoryPage({Key key, this.title}) : super(key: key);
@@ -23,14 +24,28 @@ class InventoryPage extends StatefulWidget {
 }
 
 class _InventoryPageState extends State<InventoryPage> {
+  void initState() {
+    updatePantry();
+  }
 
-  void modifyMove(itemName) async {
+  void updatePantry() async {
+    print("Updating Pantry");
+
+    //Make API call to get pantry & update list
+    bool success = await getPantryItems(context);
+    if(success){
+      //TODO: Generate list on page
+    }
+  }
+
+  void modifyMove(itemID) async {
     print("Modify Item Requested");
-    print("Item to modify: " + itemName);
+    print("Item to modify: " + itemID);
 
-    // TODO: Store item information as a global
+    //Store item information as a global (logic to get actual item in globals)
+    setSelectedItem(itemID);
 
-    //TODO: Navigate to modify screen and populate
+    //Navigate to modify screen and populate
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => ModifyItemPage()),
@@ -51,7 +66,7 @@ class _InventoryPageState extends State<InventoryPage> {
               ),
               trailing: Icon(Icons.arrow_forward_ios),
               onTap: (){
-                modifyMove("Food Item 1");
+                modifyMove("5dba3e6bae7b733259ffa6aa");
               },
               isThreeLine: true,
             )
@@ -65,7 +80,7 @@ class _InventoryPageState extends State<InventoryPage> {
               ),
               trailing: Icon(Icons.arrow_forward_ios),
               onTap: (){
-                modifyMove("Food Item 1");
+                modifyMove("ItemID2");
               },
               isThreeLine: true,
             )
@@ -79,7 +94,7 @@ class _InventoryPageState extends State<InventoryPage> {
               ),
               trailing: Icon(Icons.arrow_forward_ios),
               onTap: (){
-                modifyMove("Food Item 1");
+                modifyMove("ItemID3");
               },
               isThreeLine: true,
             )

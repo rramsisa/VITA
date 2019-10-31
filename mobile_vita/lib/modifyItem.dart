@@ -26,6 +26,16 @@ class _ModifyItemPageState extends State<ModifyItemPage> {
   TextEditingController itemNameController = new TextEditingController();
   TextEditingController itemAmountController = new TextEditingController();
 
+  void initState() {
+    setFields();
+  }
+
+  void setFields() async {
+    print("Setting text fields");
+    itemNameController.text = selectedItem["name"];
+    itemAmountController.text = selectedItem["quantity"].toString();
+  }
+  
   void modifyItem() async {
     print("Add Item Requested");
     print("Item Name: ${itemNameController.text}");
