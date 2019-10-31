@@ -77,8 +77,13 @@ while True:
                 ret = requests.get(barurl)
                 if ret.status_code == 200:
                         print("{}".format(ret.json()["items"][0]["title"]))
-                        #Send request to server to add/remove item
+                        #TODO:Send request to server to add/remove item
                         body = {}
+                        ret2 = requests.post(serverurl, body=body)
+                        if ret2.status_code == 200:
+                                print("{}".format(ret2.json())
+                        else:
+                                print("Invalid response from server")
                 else:
                         print("Invalid response")               
 		
