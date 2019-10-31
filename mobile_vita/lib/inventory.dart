@@ -24,6 +24,7 @@ class InventoryPage extends StatefulWidget {
 }
 
 class _InventoryPageState extends State<InventoryPage> {
+
   void initState() {
     updatePantry();
   }
@@ -34,7 +35,7 @@ class _InventoryPageState extends State<InventoryPage> {
     //Make API call to get pantry & update list
     bool success = await getPantryItems(context);
     if(success){
-      //TODO: Generate list on page
+      // Generate list on page done below
     }
   }
 
@@ -55,51 +56,23 @@ class _InventoryPageState extends State<InventoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: <Widget>[
-          Card(
+      body: new ListView.builder(
+        itemCount: pantryItems.length,
+        itemBuilder: (BuildContext ctxt, int Index) {
+          return new Card(
             child: ListTile(
-              // leading: FlutterLogo(size: 72.0),
-              title: Text('Food Item Name'),
+              title: Text(pantryItems[Index]["name"]),
               subtitle: Text(
-                'Quantity: ## \nLast Modified: ##/##/####'
+                'Quantity: ${pantryItems[Index]["quantity"].toString()} \nLast Modified: ${pantryItems[Index]["date"].substring(0,10)}'
               ),
               trailing: Icon(Icons.arrow_forward_ios),
               onTap: (){
-                modifyMove("5dba3e6bae7b733259ffa6aa");
+                modifyMove(pantryItems[Index]["_id"]);
               },
               isThreeLine: true,
             )
-          ),
-          Card(
-            child: ListTile(
-              // leading: FlutterLogo(size: 72.0),
-              title: Text('Food Item Name'),
-              subtitle: Text(
-                'Quantity: ## \nLast Modified: ##/##/####'
-              ),
-              trailing: Icon(Icons.arrow_forward_ios),
-              onTap: (){
-                modifyMove("ItemID2");
-              },
-              isThreeLine: true,
-            )
-          ),
-          Card(
-            child: ListTile(
-              // leading: FlutterLogo(size: 72.0),
-              title: Text('Food Item Name'),
-              subtitle: Text(
-                'Quantity: ## \nLast Modified: ##/##/####'
-              ),
-              trailing: Icon(Icons.arrow_forward_ios),
-              onTap: (){
-                modifyMove("ItemID3");
-              },
-              isThreeLine: true,
-            )
-          ),
-        ],
+          );
+        }
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

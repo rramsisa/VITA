@@ -151,7 +151,6 @@ Future<bool> getPantryItems(BuildContext context) async{
         headers: {"Content-Type": "application/json", "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGJhM2RlNGFlN2I3MzMyNTlmZmE2YTciLCJpYXQiOjE1NzI1NDU5NTEsImV4cCI6MTU3MjYzMjM1MX0.OjeCfs8XFvDdjV9SQn3xu0MXKOL7-fU3mdl7762Y6k8"});
     // Map<String, dynamic> bod = json.decode(response.body);
     if (response.statusCode == 200) {
-      print("Response: " + response.body);
       setPantry(json.decode(response.body));
       return true;
     } else {

@@ -36,8 +36,6 @@
   void setSelectedItem(String name){
     bool flag = false;
     for(var i = 0; i < pantryItems.length; i++){
-      print(pantryItems[i]["_id"]);
-      print(name);
       // String item = pantryItems[i]["_id"];
       if(pantryItems[i]["_id"].compareTo(name) == 0){
         selectedItem = pantryItems[i];
@@ -49,8 +47,5 @@
 
     if(!flag){
       print("Error setting selectedItem");
-    }
-    else{
-      // modify._ModifyItemPageState().setFields();
     }
   }
