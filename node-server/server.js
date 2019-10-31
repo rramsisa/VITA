@@ -48,6 +48,8 @@ app.route("/api/item/")
     .post(verify, raspiRoute.getItem);
 app.route("/api/myitems/")
     .get(verify, raspiRoute.getMyItems);
+app.route("/api/findMyItem")
+    .post(verify, raspiRoute.FindMyItems)
 app.route("/api/myitemsInfo/")
     .get(verify, raspiRoute.getMyItemsInfo);
 app.route("/api/user/login")

@@ -102,6 +102,7 @@ async function postBarCodeData(req, res) {
             message: error.details[0].message
         });
     }
+    // console.log(req.user)
  const user = await User.findOne({
         _id: req.user._id
     })
@@ -130,6 +131,7 @@ async function postBarCodeData(req, res) {
             try {
                 const savedItem = item.save();
                 return res.send({
+                    item: item._id,
                     message: "Quantity Updated"
                 });
             } catch (err) {
@@ -195,6 +197,7 @@ async function postBarCodeData(req, res) {
 
 }
 
+
 //get all items across the app 
 async function getItems(req, res) {
     try {
@@ -250,12 +253,36 @@ async function getMyItemsInfo(req, res) {
              const item = await Item.findOne({
                 _id: values[property]
              })
-             if(item.status){
-                itemInfo.push(item)
-             }
+             itemInfo.push(item)
              
         }
         return res.send(itemInfo);
+        
+    } catch (err) {
+        res.status(400).send({
+            message: err
+        })
+    }
+}
+//get list of my items' object
+async function FindMyItems(req, res) {
+    try {
+        const user = await User.findOne({
+            _id: req.user._id
+         })
+        const values = Object.values(user.listOfItems)
+        // console.log(user.listOfItems)
+        if(user.listOfItems.includes(req.body.item_id)){
+            const item = await Item.findOne({
+                _id: req.body.item_id
+             })
+            if(item.status == true){
+                return res.send({found: true});
+            }
+            
+        }
+        return res.send({found: false});
+        
         
     } catch (err) {
         res.status(400).send({
@@ -274,5 +301,6 @@ module.exports = {
     getItems,
     getItem,
     getMyItems,
-    getMyItemsInfo
+    getMyItemsInfo,
+    FindMyItems
 };
