@@ -465,13 +465,13 @@
                  });
          });
      });
-    
+
 
      describe('adding items testing', () => {
          it('add item - normal', (done) => {
              let data = {
-                 name: "milk", 
-                 barCode:"1234567890123",
+                 name: "milk",
+                 barCode: "1234567890123",
                  flag: "1",
                  scannerID: "987654321"
              }
@@ -480,61 +480,59 @@
                  .set('auth-token', token_login)
                  .send(data)
                  .end((err, res) => {
-                        res.should.have.status(200);
-                        done();
+                     res.should.have.status(200);
+                     done();
                  });
          });
          it('add item - normal with list check', (done) => {
-            var resolvingPromise = new Promise(  (resolve, reject) => {
-                    let data = {
-                         name: "apple", 
-                         barCode:"1234567890123",
-                         flag: "1",
-                         scannerID: "987654321"
-                    }
-                    chai.request(app)
-                         .post('/api/raspi/postBarCodeData')
-                         .set('auth-token', token_login)
-                         .send(data)
-                         .end((err, res) => {
-                            // console.log(res.body)
-                            if(res.should.have.status(200)){
-                                // console.log(res.body.item)
-                                resolve(res.body.item)
-                            }
-                            else{
-                                reject(null)
-                            }
-                        });
-                })
-
-             resolvingPromise.then( (result) => {
-                    if(result != null){
-                        let data1 = {
-                             item_id: result
+             var resolvingPromise = new Promise((resolve, reject) => {
+                 let data = {
+                     name: "apple",
+                     barCode: "1234567890123",
+                     flag: "1",
+                     scannerID: "987654321"
+                 }
+                 chai.request(app)
+                     .post('/api/raspi/postBarCodeData')
+                     .set('auth-token', token_login)
+                     .send(data)
+                     .end((err, res) => {
+                         // console.log(res.body)
+                         if (res.should.have.status(200)) {
+                             // console.log(res.body.item)
+                             resolve(res.body.item)
+                         } else {
+                             reject(null)
                          }
-                         chai.request(app)
-                             .post('/api/findMyItem')
-                             .set('auth-token', token_login)
-                             .send(data1)
-                             .end((err1, res1) => {
-                                // console.log(res1.body)
-                                assert.equal(res1.body.found, true, 'item found');
-                                done(); 
-                             });
-                    }
-                    else{
-                        assert.equal(false, true, 'item not found');
-                        done();
-                    }
-                  });
-             
+                     });
+             })
+
+             resolvingPromise.then((result) => {
+                 if (result != null) {
+                     let data1 = {
+                         item_id: result
+                     }
+                     chai.request(app)
+                         .post('/api/findMyItem')
+                         .set('auth-token', token_login)
+                         .send(data1)
+                         .end((err1, res1) => {
+                             // console.log(res1.body)
+                             assert.equal(res1.body.found, true, 'item found');
+                             done();
+                         });
+                 } else {
+                     assert.equal(false, true, 'item not found');
+                     done();
+                 }
+             });
+
          });
-        
+
          it('add item - missing name', (done) => {
              let data = {
-                 name: "", 
-                 barCode:"1234567890123",
+                 name: "",
+                 barCode: "1234567890123",
                  flag: "1"
              }
              chai.request(app)
@@ -547,45 +545,44 @@
                  });
          });
          it('add item - missing name with list check', (done) => {
-            var resolvingPromise = new Promise(  (resolve, reject) => {
-                    let data = {
-                         name: "", 
-                         barCode:"123456789012",
-                         flag: "1"
-                    }
-                    chai.request(app)
-                         .post('/api/raspi/postBarCodeData')
-                         .set('auth-token', token_login)
-                         .send(data)
-                         .end((err, res) => {
-                            if(res.should.have.status(422)){
-                                resolve("")
-                            }
-                            else{
-                                resolve(res.body.item)
-                            }
-                        });
-                })
-
-             resolvingPromise.then( (result) => {
-                        let data1 = {
-                             item_id: result
+             var resolvingPromise = new Promise((resolve, reject) => {
+                 let data = {
+                     name: "",
+                     barCode: "123456789012",
+                     flag: "1"
+                 }
+                 chai.request(app)
+                     .post('/api/raspi/postBarCodeData')
+                     .set('auth-token', token_login)
+                     .send(data)
+                     .end((err, res) => {
+                         if (res.should.have.status(422)) {
+                             resolve("")
+                         } else {
+                             resolve(res.body.item)
                          }
-                         chai.request(app)
-                             .post('/api/findMyItem')
-                             .set('auth-token', token_login)
-                             .send(data1)
-                             .end((err1, res1) => {
-                                assert.equal(res1.body.found, false, 'item found');
-                                done(); 
-                             });
-                  });
-             
+                     });
+             })
+
+             resolvingPromise.then((result) => {
+                 let data1 = {
+                     item_id: result
+                 }
+                 chai.request(app)
+                     .post('/api/findMyItem')
+                     .set('auth-token', token_login)
+                     .send(data1)
+                     .end((err1, res1) => {
+                         assert.equal(res1.body.found, false, 'item found');
+                         done();
+                     });
+             });
+
          });
          it('add item - missing barcode', (done) => {
              let data = {
-                 name: "milk", 
-                 barCode:"",
+                 name: "milk",
+                 barCode: "",
                  flag: "1"
              }
              chai.request(app)
@@ -598,45 +595,44 @@
                  });
          });
          it('add item - missing barcode with list check', (done) => {
-            var resolvingPromise = new Promise(  (resolve, reject) => {
-                    let data = {
-                         name: "milk", 
-                         barCode:"",
-                         flag: "1"
-                    }
-                    chai.request(app)
-                         .post('/api/raspi/postBarCodeData')
-                         .set('auth-token', token_login)
-                         .send(data)
-                         .end((err, res) => {
-                            if(res.should.have.status(422)){
-                                resolve("")
-                            }
-                            else{
-                                resolve(res.body.item)
-                            }
-                        });
-                })
-
-             resolvingPromise.then( (result) => {
-                        let data1 = {
-                             item_id: result
+             var resolvingPromise = new Promise((resolve, reject) => {
+                 let data = {
+                     name: "milk",
+                     barCode: "",
+                     flag: "1"
+                 }
+                 chai.request(app)
+                     .post('/api/raspi/postBarCodeData')
+                     .set('auth-token', token_login)
+                     .send(data)
+                     .end((err, res) => {
+                         if (res.should.have.status(422)) {
+                             resolve("")
+                         } else {
+                             resolve(res.body.item)
                          }
-                         chai.request(app)
-                             .post('/api/findMyItem')
-                             .set('auth-token', token_login)
-                             .send(data1)
-                             .end((err1, res1) => {
-                                assert.equal(res1.body.found, false, 'item found');
-                                done(); 
-                             });
-                  });
+                     });
+             })
+
+             resolvingPromise.then((result) => {
+                 let data1 = {
+                     item_id: result
+                 }
+                 chai.request(app)
+                     .post('/api/findMyItem')
+                     .set('auth-token', token_login)
+                     .send(data1)
+                     .end((err1, res1) => {
+                         assert.equal(res1.body.found, false, 'item found');
+                         done();
+                     });
+             });
          });
 
          it('add item - missing flag', (done) => {
              let data = {
-                 name: "milk", 
-                 barCode:"123456789012",
+                 name: "milk",
+                 barCode: "123456789012",
                  flag: ""
              }
              chai.request(app)
@@ -650,47 +646,46 @@
                  });
          });
          it('add item - missing flag with list check', (done) => {
-            var resolvingPromise = new Promise(  (resolve, reject) => {
-                    let data = {
-                         name: "milk", 
-                         barCode:"123456789012",
-                         flag: ""
-                    }
-                    chai.request(app)
-                         .post('/api/raspi/postBarCodeData')
-                         .set('auth-token', token_login)
-                         .send(data)
-                         .end((err, res) => {
-                            if(res.should.have.status(422)){
-                                resolve("")
-                            }
-                            else{
-                                resolve(res.body.item)
-                            }
-                        });
-                })
-
-              resolvingPromise.then( (result) => {
-                        let data1 = {
-                             item_id: result
+             var resolvingPromise = new Promise((resolve, reject) => {
+                 let data = {
+                     name: "milk",
+                     barCode: "123456789012",
+                     flag: ""
+                 }
+                 chai.request(app)
+                     .post('/api/raspi/postBarCodeData')
+                     .set('auth-token', token_login)
+                     .send(data)
+                     .end((err, res) => {
+                         if (res.should.have.status(422)) {
+                             resolve("")
+                         } else {
+                             resolve(res.body.item)
                          }
-                         chai.request(app)
-                             .post('/api/findMyItem')
-                             .set('auth-token', token_login)
-                             .send(data1)
-                             .end((err1, res1) => {
-                                assert.equal(res1.body.found, false, 'item found');
-                                done(); 
-                             });
-                  
-            });
-          });
-    });
-      describe('removing items testing', () => {
+                     });
+             })
+
+             resolvingPromise.then((result) => {
+                 let data1 = {
+                     item_id: result
+                 }
+                 chai.request(app)
+                     .post('/api/findMyItem')
+                     .set('auth-token', token_login)
+                     .send(data1)
+                     .end((err1, res1) => {
+                         assert.equal(res1.body.found, false, 'item found');
+                         done();
+                     });
+
+             });
+         });
+     });
+     describe('removing items testing', () => {
          it('remove item - normal', (done) => {
              let data = {
-                 name: "milk", 
-                 barCode:"1234567890123",
+                 name: "milk",
+                 barCode: "1234567890123",
                  flag: "0",
                  scannerID: "987654321"
              }
@@ -703,58 +698,56 @@
                      done();
                  });
          });
-          it('remove item - normal with list check', (done) => {
-            var resolvingPromise = new Promise(  (resolve, reject) => {
-                    let data = {
-                         name: "apple", 
-                         barCode:"1234567890123",
-                         flag: "0",
-                         scannerID: "987654321"
-                    }
-                    chai.request(app)
-                         .post('/api/raspi/postBarCodeData')
-                         .set('auth-token', token_login)
-                         .send(data)
-                         .end((err, res) => {
-                            // console.log("in here")
-                            if(res.should.have.status(200)){
-                                // console.log(res.body.item)
-                                resolve(res.body.item)
-                            }
-                            else{
-                                resolve("")
-                            }
-                        });
-                })
-
-             resolvingPromise.then( (result) => {
-                // console.log("resultgrade")
-                // console.log(result)
-                    if(result != null){
-                        let data1 = {
-                             item_id: result
+         it('remove item - normal with list check', (done) => {
+             var resolvingPromise = new Promise((resolve, reject) => {
+                 let data = {
+                     name: "apple",
+                     barCode: "1234567890123",
+                     flag: "0",
+                     scannerID: "987654321"
+                 }
+                 chai.request(app)
+                     .post('/api/raspi/postBarCodeData')
+                     .set('auth-token', token_login)
+                     .send(data)
+                     .end((err, res) => {
+                         // console.log("in here")
+                         if (res.should.have.status(200)) {
+                             // console.log(res.body.item)
+                             resolve(res.body.item)
+                         } else {
+                             resolve("")
                          }
-                         chai.request(app)
-                             .post('/api/findMyItem')
-                             .set('auth-token', token_login)
-                             .send(data1)
-                             .end((err1, res1) => {
-                                // console.log("yoooo")
-                                assert.equal(res1.body.found, false, 'item not found');
-                                done(); 
-                             });
-                    }
-                    else{
-                        assert.equal(false, true, 'item found');
-                        done();
-                    }
-                  });
-             
+                     });
+             })
+
+             resolvingPromise.then((result) => {
+                 // console.log("resultgrade")
+                 // console.log(result)
+                 if (result != null) {
+                     let data1 = {
+                         item_id: result
+                     }
+                     chai.request(app)
+                         .post('/api/findMyItem')
+                         .set('auth-token', token_login)
+                         .send(data1)
+                         .end((err1, res1) => {
+                             // console.log("yoooo")
+                             assert.equal(res1.body.found, false, 'item not found');
+                             done();
+                         });
+                 } else {
+                     assert.equal(false, true, 'item found');
+                     done();
+                 }
+             });
+
          });
          it('remove item - missing name', (done) => {
              let data = {
-                 name: "", 
-                 barCode:"123456789012",
+                 name: "",
+                 barCode: "123456789012",
                  flag: "0"
              }
              chai.request(app)
@@ -767,45 +760,44 @@
                  });
          });
          it('remove item - missing name with list check', (done) => {
-            var resolvingPromise = new Promise(  (resolve, reject) => {
-                    let data = {
-                         name: "", 
-                         barCode:"123456789012",
-                         flag: "0"
-                    }
-                    chai.request(app)
-                         .post('/api/raspi/postBarCodeData')
-                         .set('auth-token', token_login)
-                         .send(data)
-                         .end((err, res) => {
-                            if(res.should.have.status(422)){
-                                resolve("")
-                            }
-                            else{
-                                resolve(res.body.item)
-                            }
-                        });
-                })
-
-             resolvingPromise.then( (result) => {
-                        let data1 = {
-                             item_id: result
+             var resolvingPromise = new Promise((resolve, reject) => {
+                 let data = {
+                     name: "",
+                     barCode: "123456789012",
+                     flag: "0"
+                 }
+                 chai.request(app)
+                     .post('/api/raspi/postBarCodeData')
+                     .set('auth-token', token_login)
+                     .send(data)
+                     .end((err, res) => {
+                         if (res.should.have.status(422)) {
+                             resolve("")
+                         } else {
+                             resolve(res.body.item)
                          }
-                         chai.request(app)
-                             .post('/api/findMyItem')
-                             .set('auth-token', token_login)
-                             .send(data1)
-                             .end((err1, res1) => {
-                                assert.equal(res1.body.found, false, 'item found');
-                                done(); 
-                             });
-                  });
-             
+                     });
+             })
+
+             resolvingPromise.then((result) => {
+                 let data1 = {
+                     item_id: result
+                 }
+                 chai.request(app)
+                     .post('/api/findMyItem')
+                     .set('auth-token', token_login)
+                     .send(data1)
+                     .end((err1, res1) => {
+                         assert.equal(res1.body.found, false, 'item found');
+                         done();
+                     });
+             });
+
          });
          it('remove item - missing barcode', (done) => {
              let data = {
-                 name: "milk", 
-                 barCode:"",
+                 name: "milk",
+                 barCode: "",
                  flag: "0"
              }
              chai.request(app)
@@ -818,44 +810,43 @@
                  });
          });
          it('remove item - missing barcode with list check', (done) => {
-            var resolvingPromise = new Promise(  (resolve, reject) => {
-                    let data = {
-                         name: "milk", 
-                         barCode:"",
-                         flag: "0"
-                    }
-                    chai.request(app)
-                         .post('/api/raspi/postBarCodeData')
-                         .set('auth-token', token_login)
-                         .send(data)
-                         .end((err, res) => {
-                            if(res.should.have.status(422)){
-                                resolve("")
-                            }
-                            else{
-                                resolve(res.body.item)
-                            }
-                        });
-                })
-
-             resolvingPromise.then( (result) => {
-                        let data1 = {
-                             item_id: result
+             var resolvingPromise = new Promise((resolve, reject) => {
+                 let data = {
+                     name: "milk",
+                     barCode: "",
+                     flag: "0"
+                 }
+                 chai.request(app)
+                     .post('/api/raspi/postBarCodeData')
+                     .set('auth-token', token_login)
+                     .send(data)
+                     .end((err, res) => {
+                         if (res.should.have.status(422)) {
+                             resolve("")
+                         } else {
+                             resolve(res.body.item)
                          }
-                         chai.request(app)
-                             .post('/api/findMyItem')
-                             .set('auth-token', token_login)
-                             .send(data1)
-                             .end((err1, res1) => {
-                                assert.equal(res1.body.found, false, 'item found');
-                                done(); 
-                             });
-                  });
+                     });
+             })
+
+             resolvingPromise.then((result) => {
+                 let data1 = {
+                     item_id: result
+                 }
+                 chai.request(app)
+                     .post('/api/findMyItem')
+                     .set('auth-token', token_login)
+                     .send(data1)
+                     .end((err1, res1) => {
+                         assert.equal(res1.body.found, false, 'item found');
+                         done();
+                     });
+             });
          });
          it('remove item - missing flag', (done) => {
              let data = {
-                 name: "milk", 
-                 barCode:"123456789012",
+                 name: "milk",
+                 barCode: "123456789012",
                  flag: ""
              }
              chai.request(app)
@@ -868,48 +859,47 @@
                  });
          });
          it('remove item - missing flag with list check', (done) => {
-            var resolvingPromise = new Promise(  (resolve, reject) => {
-                    let data = {
-                         name: "milk", 
-                         barCode:"123456789012",
-                         flag: ""
-                    }
-                    chai.request(app)
-                         .post('/api/raspi/postBarCodeData')
-                         .set('auth-token', token_login)
-                         .send(data)
-                         .end((err, res) => {
-                            if(res.should.have.status(422)){
-                                resolve("")
-                            }
-                            else{
-                                resolve(res.body.item)
-                            }
-                        });
-                })
-
-             resolvingPromise.then( (result) => {
-                        let data1 = {
-                             item_id: result
+             var resolvingPromise = new Promise((resolve, reject) => {
+                 let data = {
+                     name: "milk",
+                     barCode: "123456789012",
+                     flag: ""
+                 }
+                 chai.request(app)
+                     .post('/api/raspi/postBarCodeData')
+                     .set('auth-token', token_login)
+                     .send(data)
+                     .end((err, res) => {
+                         if (res.should.have.status(422)) {
+                             resolve("")
+                         } else {
+                             resolve(res.body.item)
                          }
-                         chai.request(app)
-                             .post('/api/findMyItem')
-                             .set('auth-token', token_login)
-                             .send(data1)
-                             .end((err1, res1) => {
-                                assert.equal(res1.body.found, false, 'item found');
-                                done(); 
-                             });
-                  
-            });
+                     });
+             })
+
+             resolvingPromise.then((result) => {
+                 let data1 = {
+                     item_id: result
+                 }
+                 chai.request(app)
+                     .post('/api/findMyItem')
+                     .set('auth-token', token_login)
+                     .send(data1)
+                     .end((err1, res1) => {
+                         assert.equal(res1.body.found, false, 'item found');
+                         done();
+                     });
+
+             });
          });
-        
+
      });
-    describe('manual adding items testing', () => {
+     describe('manual adding items testing', () => {
          it('manual add item - normal', (done) => {
              let data = {
-                 name: "milk", 
-                 quantity:"1",
+                 name: "milk",
+                 quantity: "1",
                  flag: "1"
              }
              chai.request(app)
@@ -917,57 +907,55 @@
                  .set('auth-token', token_login)
                  .send(data)
                  .end((err, res) => {
-                        res.should.have.status(200);
-                        done();
+                     res.should.have.status(200);
+                     done();
                  });
          });
          it('manual add item - normal with list check', (done) => {
-            var resolvingPromise = new Promise(  (resolve, reject) => {
-                    let data = {
-                         name: "apple", 
-                         quantity:"1",
-                         flag: "1"
-                    }
-                    chai.request(app)
-                         .post('/api/manual')
-                         .set('auth-token', token_login)
-                         .send(data)
-                         .end((err, res) => {
-                            if(res.should.have.status(200)){
-                                resolve(res.body.item)
-                            }
-                            else{
-                                reject(null)
-                            }
-                        });
-                })
-
-             resolvingPromise.then( (result) => {
-                    if(result != null){
-                        let data1 = {
-                             item_id: result
+             var resolvingPromise = new Promise((resolve, reject) => {
+                 let data = {
+                     name: "apple",
+                     quantity: "1",
+                     flag: "1"
+                 }
+                 chai.request(app)
+                     .post('/api/manual')
+                     .set('auth-token', token_login)
+                     .send(data)
+                     .end((err, res) => {
+                         if (res.should.have.status(200)) {
+                             resolve(res.body.item)
+                         } else {
+                             reject(null)
                          }
-                         chai.request(app)
-                             .post('/api/findMyItem')
-                             .set('auth-token', token_login)
-                             .send(data1)
-                             .end((err1, res1) => {
-                                assert.equal(res1.body.found, true, 'item found');
-                                done(); 
-                             });
-                    }
-                    else{
-                        assert.equal(false, true, 'item not found');
-                        done();
-                    }
-                  });
-             
+                     });
+             })
+
+             resolvingPromise.then((result) => {
+                 if (result != null) {
+                     let data1 = {
+                         item_id: result
+                     }
+                     chai.request(app)
+                         .post('/api/findMyItem')
+                         .set('auth-token', token_login)
+                         .send(data1)
+                         .end((err1, res1) => {
+                             assert.equal(res1.body.found, true, 'item found');
+                             done();
+                         });
+                 } else {
+                     assert.equal(false, true, 'item not found');
+                     done();
+                 }
+             });
+
          });
-        
+
          it('manual add item - missing name', (done) => {
              let data = {
-                 name: "", 
-                 quantity:"1",
+                 name: "",
+                 quantity: "1",
                  flag: "1"
              }
              chai.request(app)
@@ -980,45 +968,44 @@
                  });
          });
          it('manual add item - missing name with list check', (done) => {
-            var resolvingPromise = new Promise(  (resolve, reject) => {
-                    let data = {
-                         name: "", 
-                         quantity:"1",
-                         flag: "1"
-                    }
-                    chai.request(app)
-                         .post('/api/manual')
-                         .set('auth-token', token_login)
-                         .send(data)
-                         .end((err, res) => {
-                            if(res.should.have.status(422)){
-                                resolve("")
-                            }
-                            else{
-                                resolve(res.body.item)
-                            }
-                        });
-                })
-
-             resolvingPromise.then( (result) => {
-                        let data1 = {
-                             item_id: result
+             var resolvingPromise = new Promise((resolve, reject) => {
+                 let data = {
+                     name: "",
+                     quantity: "1",
+                     flag: "1"
+                 }
+                 chai.request(app)
+                     .post('/api/manual')
+                     .set('auth-token', token_login)
+                     .send(data)
+                     .end((err, res) => {
+                         if (res.should.have.status(422)) {
+                             resolve("")
+                         } else {
+                             resolve(res.body.item)
                          }
-                         chai.request(app)
-                             .post('/api/findMyItem')
-                             .set('auth-token', token_login)
-                             .send(data1)
-                             .end((err1, res1) => {
-                                assert.equal(res1.body.found, false, 'item found');
-                                done(); 
-                             });
-                  });
-             
+                     });
+             })
+
+             resolvingPromise.then((result) => {
+                 let data1 = {
+                     item_id: result
+                 }
+                 chai.request(app)
+                     .post('/api/findMyItem')
+                     .set('auth-token', token_login)
+                     .send(data1)
+                     .end((err1, res1) => {
+                         assert.equal(res1.body.found, false, 'item found');
+                         done();
+                     });
+             });
+
          });
          it('manual add item - missing barcode', (done) => {
              let data = {
-                 name: "milk", 
-                 quantity:"",
+                 name: "milk",
+                 quantity: "",
                  flag: "1"
              }
              chai.request(app)
@@ -1031,45 +1018,44 @@
                  });
          });
          it('manual add item - missing barcode with list check', (done) => {
-            var resolvingPromise = new Promise(  (resolve, reject) => {
-                    let data = {
-                         name: "milk", 
-                         quantity:"",
-                         flag: "1"
-                    }
-                    chai.request(app)
-                         .post('/api/manual')
-                         .set('auth-token', token_login)
-                         .send(data)
-                         .end((err, res) => {
-                            if(res.should.have.status(422)){
-                                resolve("")
-                            }
-                            else{
-                                resolve(res.body.item)
-                            }
-                        });
-                })
-
-             resolvingPromise.then( (result) => {
-                        let data1 = {
-                             item_id: result
+             var resolvingPromise = new Promise((resolve, reject) => {
+                 let data = {
+                     name: "milk",
+                     quantity: "",
+                     flag: "1"
+                 }
+                 chai.request(app)
+                     .post('/api/manual')
+                     .set('auth-token', token_login)
+                     .send(data)
+                     .end((err, res) => {
+                         if (res.should.have.status(422)) {
+                             resolve("")
+                         } else {
+                             resolve(res.body.item)
                          }
-                         chai.request(app)
-                             .post('/api/findMyItem')
-                             .set('auth-token', token_login)
-                             .send(data1)
-                             .end((err1, res1) => {
-                                assert.equal(res1.body.found, false, 'item found');
-                                done(); 
-                             });
-                  });
+                     });
+             })
+
+             resolvingPromise.then((result) => {
+                 let data1 = {
+                     item_id: result
+                 }
+                 chai.request(app)
+                     .post('/api/findMyItem')
+                     .set('auth-token', token_login)
+                     .send(data1)
+                     .end((err1, res1) => {
+                         assert.equal(res1.body.found, false, 'item found');
+                         done();
+                     });
+             });
          });
 
          it('manual add item - missing flag', (done) => {
              let data = {
-                 name: "milk", 
-                 quantity:"1",
+                 name: "milk",
+                 quantity: "1",
                  flag: ""
              }
              chai.request(app)
@@ -1083,47 +1069,46 @@
                  });
          });
          it('manual add item - missing flag with list check', (done) => {
-            var resolvingPromise = new Promise(  (resolve, reject) => {
-                    let data = {
-                         name: "milk", 
-                         quantity:"1",
-                         flag: ""
-                    }
-                    chai.request(app)
-                         .post('/api/manual')
-                         .set('auth-token', token_login)
-                         .send(data)
-                         .end((err, res) => {
-                            if(res.should.have.status(422)){
-                                resolve("")
-                            }
-                            else{
-                                resolve(res.body.item)
-                            }
-                        });
-                })
-
-              resolvingPromise.then( (result) => {
-                        let data1 = {
-                             item_id: result
+             var resolvingPromise = new Promise((resolve, reject) => {
+                 let data = {
+                     name: "milk",
+                     quantity: "1",
+                     flag: ""
+                 }
+                 chai.request(app)
+                     .post('/api/manual')
+                     .set('auth-token', token_login)
+                     .send(data)
+                     .end((err, res) => {
+                         if (res.should.have.status(422)) {
+                             resolve("")
+                         } else {
+                             resolve(res.body.item)
                          }
-                         chai.request(app)
-                             .post('/api/findMyItem')
-                             .set('auth-token', token_login)
-                             .send(data1)
-                             .end((err1, res1) => {
-                                assert.equal(res1.body.found, false, 'item found');
-                                done(); 
-                             });
-                  
-            });
-          });
-    });
-      describe('manual removing items testing', () => {
+                     });
+             })
+
+             resolvingPromise.then((result) => {
+                 let data1 = {
+                     item_id: result
+                 }
+                 chai.request(app)
+                     .post('/api/findMyItem')
+                     .set('auth-token', token_login)
+                     .send(data1)
+                     .end((err1, res1) => {
+                         assert.equal(res1.body.found, false, 'item found');
+                         done();
+                     });
+
+             });
+         });
+     });
+     describe('manual removing items testing', () => {
          it('manual remove item - normal', (done) => {
              let data = {
-                 name: "milk", 
-                 quantity:"1",
+                 name: "milk",
+                 quantity: "1",
                  flag: "0"
              }
              chai.request(app)
@@ -1131,62 +1116,60 @@
                  .set('auth-token', token_login)
                  .send(data)
                  .end((err, res) => {
-                    // console.log(res.body)
+                     // console.log(res.body)
                      res.should.have.status(200);
                      done();
                  });
          });
-          it('manual remove item - normal with list check', (done) => {
-            var resolvingPromise = new Promise(  (resolve, reject) => {
-                    let data = {
-                         name: "apple", 
-                         quantity:"1",
-                         flag: "0"
-                    }
-                    chai.request(app)
-                         .post('/api/manual')
-                         .set('auth-token', token_login)
-                         .send(data)
-                         .end((err, res) => {
-                            // console.log("in here")
-                            if(res.should.have.status(200)){
-                                // console.log(res.body.message)
-                                resolve(res.body.item)
-                            }
-                            else{
-                                resolve("")
-                            }
-                        });
-                })
-
-             resolvingPromise.then( (result) => {
-                // console.log("resultgrade")
-                // console.log(result)
-                    if(result != null){
-                        let data1 = {
-                             item_id: result
+         it('manual remove item - normal with list check', (done) => {
+             var resolvingPromise = new Promise((resolve, reject) => {
+                 let data = {
+                     name: "apple",
+                     quantity: "1",
+                     flag: "0"
+                 }
+                 chai.request(app)
+                     .post('/api/manual')
+                     .set('auth-token', token_login)
+                     .send(data)
+                     .end((err, res) => {
+                         // console.log("in here")
+                         if (res.should.have.status(200)) {
+                             // console.log(res.body.message)
+                             resolve(res.body.item)
+                         } else {
+                             resolve("")
                          }
-                         chai.request(app)
-                             .post('/api/findMyItem')
-                             .set('auth-token', token_login)
-                             .send(data1)
-                             .end((err1, res1) => {
-                                // console.log("yoooo")
-                                assert.equal(res1.body.found, false, 'item not found');
-                                done(); 
-                             });
-                    }
-                    else{
-                        assert.equal(false, true, 'item found');
-                        done();
-                    }
-                  });
-             
+                     });
+             })
+
+             resolvingPromise.then((result) => {
+                 // console.log("resultgrade")
+                 // console.log(result)
+                 if (result != null) {
+                     let data1 = {
+                         item_id: result
+                     }
+                     chai.request(app)
+                         .post('/api/findMyItem')
+                         .set('auth-token', token_login)
+                         .send(data1)
+                         .end((err1, res1) => {
+                             // console.log("yoooo")
+                             assert.equal(res1.body.found, false, 'item not found');
+                             done();
+                         });
+                 } else {
+                     assert.equal(false, true, 'item found');
+                     done();
+                 }
+             });
+
          });
          it('manual remove item - missing name', (done) => {
              let data = {
-                 name: "", 
-                 quantity:"1",
+                 name: "",
+                 quantity: "1",
                  flag: "0"
              }
              chai.request(app)
@@ -1199,45 +1182,44 @@
                  });
          });
          it('manual remove item - missing name with list check', (done) => {
-            var resolvingPromise = new Promise(  (resolve, reject) => {
-                    let data = {
-                         name: "", 
-                         quantity:"1",
-                         flag: "0"
-                    }
-                    chai.request(app)
-                         .post('/api/manual')
-                         .set('auth-token', token_login)
-                         .send(data)
-                         .end((err, res) => {
-                            if(res.should.have.status(422)){
-                                resolve("")
-                            }
-                            else{
-                                resolve(res.body.item)
-                            }
-                        });
-                })
-
-             resolvingPromise.then( (result) => {
-                        let data1 = {
-                             item_id: result
+             var resolvingPromise = new Promise((resolve, reject) => {
+                 let data = {
+                     name: "",
+                     quantity: "1",
+                     flag: "0"
+                 }
+                 chai.request(app)
+                     .post('/api/manual')
+                     .set('auth-token', token_login)
+                     .send(data)
+                     .end((err, res) => {
+                         if (res.should.have.status(422)) {
+                             resolve("")
+                         } else {
+                             resolve(res.body.item)
                          }
-                         chai.request(app)
-                             .post('/api/findMyItem')
-                             .set('auth-token', token_login)
-                             .send(data1)
-                             .end((err1, res1) => {
-                                assert.equal(res1.body.found, false, 'item found');
-                                done(); 
-                             });
-                  });
-             
+                     });
+             })
+
+             resolvingPromise.then((result) => {
+                 let data1 = {
+                     item_id: result
+                 }
+                 chai.request(app)
+                     .post('/api/findMyItem')
+                     .set('auth-token', token_login)
+                     .send(data1)
+                     .end((err1, res1) => {
+                         assert.equal(res1.body.found, false, 'item found');
+                         done();
+                     });
+             });
+
          });
          it('manual remove item - missing barcode', (done) => {
              let data = {
-                 name: "milk", 
-                 quantity:"",
+                 name: "milk",
+                 quantity: "",
                  flag: "0"
              }
              chai.request(app)
@@ -1250,44 +1232,43 @@
                  });
          });
          it('manual remove item - missing barcode with list check', (done) => {
-            var resolvingPromise = new Promise(  (resolve, reject) => {
-                    let data = {
-                         name: "milk", 
-                         quantity:"",
-                         flag: "0"
-                    }
-                    chai.request(app)
-                         .post('/api/manual')
-                         .set('auth-token', token_login)
-                         .send(data)
-                         .end((err, res) => {
-                            if(res.should.have.status(422)){
-                                resolve("")
-                            }
-                            else{
-                                resolve(res.body.item)
-                            }
-                        });
-                })
-
-             resolvingPromise.then( (result) => {
-                        let data1 = {
-                             item_id: result
+             var resolvingPromise = new Promise((resolve, reject) => {
+                 let data = {
+                     name: "milk",
+                     quantity: "",
+                     flag: "0"
+                 }
+                 chai.request(app)
+                     .post('/api/manual')
+                     .set('auth-token', token_login)
+                     .send(data)
+                     .end((err, res) => {
+                         if (res.should.have.status(422)) {
+                             resolve("")
+                         } else {
+                             resolve(res.body.item)
                          }
-                         chai.request(app)
-                             .post('/api/findMyItem')
-                             .set('auth-token', token_login)
-                             .send(data1)
-                             .end((err1, res1) => {
-                                assert.equal(res1.body.found, false, 'item found');
-                                done(); 
-                             });
-                  });
+                     });
+             })
+
+             resolvingPromise.then((result) => {
+                 let data1 = {
+                     item_id: result
+                 }
+                 chai.request(app)
+                     .post('/api/findMyItem')
+                     .set('auth-token', token_login)
+                     .send(data1)
+                     .end((err1, res1) => {
+                         assert.equal(res1.body.found, false, 'item found');
+                         done();
+                     });
+             });
          });
          it('manual remove item - missing flag', (done) => {
              let data = {
-                 name: "milk", 
-                 quantity:"1",
+                 name: "milk",
+                 quantity: "1",
                  flag: ""
              }
              chai.request(app)
@@ -1300,44 +1281,43 @@
                  });
          });
          it('manual remove item - missing flag with list check', (done) => {
-            var resolvingPromise = new Promise(  (resolve, reject) => {
-                    let data = {
-                         name: "milk", 
-                         quantity:"1",
-                         flag: ""
-                    }
-                    chai.request(app)
-                         .post('/api/manual')
-                         .set('auth-token', token_login)
-                         .send(data)
-                         .end((err, res) => {
-                            if(res.should.have.status(422)){
-                                resolve("")
-                            }
-                            else{
-                                resolve(res.body.item)
-                            }
-                        });
-                })
-
-             resolvingPromise.then( (result) => {
-                        let data1 = {
-                             item_id: result
+             var resolvingPromise = new Promise((resolve, reject) => {
+                 let data = {
+                     name: "milk",
+                     quantity: "1",
+                     flag: ""
+                 }
+                 chai.request(app)
+                     .post('/api/manual')
+                     .set('auth-token', token_login)
+                     .send(data)
+                     .end((err, res) => {
+                         if (res.should.have.status(422)) {
+                             resolve("")
+                         } else {
+                             resolve(res.body.item)
                          }
-                         chai.request(app)
-                             .post('/api/findMyItem')
-                             .set('auth-token', token_login)
-                             .send(data1)
-                             .end((err1, res1) => {
-                                assert.equal(res1.body.found, false, 'item found');
-                                done(); 
-                             });
-                  
-            });
+                     });
+             })
+
+             resolvingPromise.then((result) => {
+                 let data1 = {
+                     item_id: result
+                 }
+                 chai.request(app)
+                     .post('/api/findMyItem')
+                     .set('auth-token', token_login)
+                     .send(data1)
+                     .end((err1, res1) => {
+                         assert.equal(res1.body.found, false, 'item found');
+                         done();
+                     });
+
+             });
          });
-        
+
      });
- describe('unpair device testing', () => {
+     describe('unpair device testing', () => {
          it('unpair - no id', (done) => {
              let device = {
                  device: ""
