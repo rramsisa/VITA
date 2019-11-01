@@ -277,7 +277,7 @@ async function FindMyItems(req, res) {
                 _id: req.body.item_id
              })
             if(item.status == true){
-                return res.send({found: true});
+                return res.send({found: true, item: item});
             }
             
         }
