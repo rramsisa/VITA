@@ -296,8 +296,17 @@ async function deleteItem(req, res) {
             name: req.body.name
         });
 
+        const user = await User.findOne({
+            _id: req.user._id
+        })
+
         if (item != null) {
             await item.delete();
+            var index = user.listOfItems.indexOf(item._id);
+            if (index > -1) {
+                user.listOfItems.splice(index, 1);
+            }
+            await user.save();
             return res.send({
                 message: "Item Deleted"
             });
