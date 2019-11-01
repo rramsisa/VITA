@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_vita/api.dart';
 import 'package:mobile_vita/main.dart';
-import 'changePassword.dart';
+import 'addItem.dart';
+import 'modifyItem.dart';
+import 'globals.dart';
 
 class InventoryPage extends StatefulWidget {
   InventoryPage({Key key, this.title}) : super(key: key);
@@ -22,78 +24,69 @@ class InventoryPage extends StatefulWidget {
 }
 
 class _InventoryPageState extends State<InventoryPage> {
-  void logout() async {
-    print("Logout Requested");
 
-    await logoutCall();
-    //After successful logout
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => LoginPage()));
+  void initState() {
+    updatePantry();
+  }
+
+  void updatePantry() async {
+    print("Updating Pantry");
+
+    //Make API call to get pantry & update list
+    bool success = await getPantryItems(context);
+    if(success){
+      // Generate list on page done below
+      setState(() {
+        // Used to refresh the UI once the update is finished :)
+      });
+    }
+  }
+
+  void modifyMove(itemID) async {
+    print("Modify Item Requested");
+    print("Item to modify: " + itemID);
+
+    //Store item information as a global (logic to get actual item in globals)
+    setSelectedItem(itemID);
+
+    //Navigate to modify screen and populate
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ModifyItemPage()),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final changePasswordButton = Material(
-      borderRadius: BorderRadius.circular(10.0),
-      color: Colors.purple,
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+    return Scaffold(
+      body: new ListView.builder(
+        itemCount: pantryItems.length,
+        itemBuilder: (BuildContext ctxt, int Index) {
+          return new Card(
+            child: ListTile(
+              title: Text(pantryItems[Index]["name"]),
+              subtitle: Text(
+                'Quantity: ${pantryItems[Index]["quantity"].toString()} \nLast Modified: ${pantryItems[Index]["date"].substring(0,10)}'
+              ),
+              trailing: Icon(Icons.arrow_forward_ios),
+              onTap: (){
+                modifyMove(pantryItems[Index]["_id"]);
+              },
+              isThreeLine: true,
+            )
+          );
+        }
+      ),
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => ChangePasswordPage()),
+            MaterialPageRoute(builder: (context) => AddItemPage()),
           );
         },
-        child: Text("Change Password",
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        child: Icon(Icons.add),
+        backgroundColor: Colors.purple,
       ),
-    );
-
-    final scannersButton = Material(
-      borderRadius: BorderRadius.circular(10.0),
-      color: Colors.purple,
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {},
-        child: Text("Manage Scanners",
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-      ),
-    );
-
-    final logoutButton = Material(
-      borderRadius: BorderRadius.circular(10.0),
-      color: Colors.deepPurple,
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: logout,
-        child: Text("Logout",
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-      ),
-    );
-
-    return Scaffold(
-      body: ListView(
-        children: <Widget>[
-          ListTile(
-            leading: Icon(Icons.map),
-            title: Text('Map'),
-          ),
-          ListTile(
-            leading: Icon(Icons.photo_album),
-            title: Text('Album'),
-          ),
-          ListTile(
-            leading: Icon(Icons.phone),
-            title: Text('Phone'),
-          ),
-        ],
-      )
     );
   }
 }
