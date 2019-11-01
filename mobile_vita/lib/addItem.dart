@@ -28,7 +28,9 @@ class _AddItemPageState extends State<AddItemPage> {
         setState(() {
           
         });
-        Navigator.pop(context);
+        if(addSuccess){
+          Navigator.pop(context);
+        }
         
   }
 
