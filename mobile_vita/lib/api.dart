@@ -250,3 +250,38 @@ Future<bool> pair(
     return false;
   }
 }
+
+Future<bool> getScanners(BuildContext context) async{
+  var call;
+  if (Platform.isAndroid) {
+    call =
+        "http://10.0.2.2:3000/api/user/scanner/"; //base route for the api calls
+  } else {
+    call = "http://localhost:3000/api/user/scanner";
+  }
+
+  try {
+    final response = await http.get(call,
+        // body: json.encode({'newPassword': newPass, 'email': email, 'password': pass}),
+        headers: {"Content-Type": "application/json", "auth-token": authToken});
+    // Map<String, dynamic> bod = json.decode(response.body);
+    if (response.statusCode == 200) {
+      setScanners(json.decode(response.body));
+      return true;
+    } else {
+      //error, display message according
+      print(response.statusCode);
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              // title: Text(bod["message"]),
+            );
+          });
+    }
+    return false;
+  } catch (exception) {
+    print(exception);
+    return false;
+  }
+}

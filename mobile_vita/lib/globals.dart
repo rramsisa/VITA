@@ -3,6 +3,7 @@
   var emailGlob = "";
 
   var pantryItems = [];
+  var scanners = [];
   var selectedItem = {};
   
   void setAuthToken(var t){
@@ -17,6 +18,12 @@
     pantryItems = p;
     print("Pantry Updated");
     print(p);
+  }
+
+  void setScanners(var s){
+      scanners = s;
+      print("Scanners Updated");
+      print(s);
   }
 
   void setSelectedItem(String name){
