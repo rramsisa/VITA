@@ -71,7 +71,7 @@ app.route("/api/manual")
 app.route("/api/user/scanner")
     .get(verify, raspiRoute.pairedScanners)
 app.route("/api/item/deleteItem")
-    .get(verify, raspiRoute.deleteItem)
+    .post(verify, raspiRoute.deleteItem)
 
 
 // listen for requests

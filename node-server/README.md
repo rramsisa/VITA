@@ -35,7 +35,7 @@ When logging out, this token must be deleted.
 | GET  | /api/myitemsInfo/           | None                                                                 |
 | GET  | /api/recipes/recipe/        | None                                                                 |
 | GET  | /api/user/scanner/          | None                                                                 |
-| GET  | /api/item/deleteItem/       | name (string)                                                        |
+| POST | /api/item/deleteItem/       | name (string)                                                        |
 
 <b> PostMan test cases </b>
 https://app.getpostman.com/join-team?invite_code=f7a228669babd77bdd2a5ae7c1dac92d
