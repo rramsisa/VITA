@@ -49,7 +49,7 @@ app.route("/api/item/")
 app.route("/api/myitems/")
     .get(verify, raspiRoute.getMyItems);
 app.route("/api/findMyItem")
-    .post(verify, raspiRoute.FindMyItems)
+    .post(verify, raspiRoute.findMyItems)
 app.route("/api/myitemsInfo/")
     .get(verify, raspiRoute.getMyItemsInfo);
 app.route("/api/user/login")
@@ -65,9 +65,11 @@ app.route("/api/raspi/pair")
 app.route("/api/raspi/unpair")
     .post(verify, raspiRoute.unpair)
 app.route("/api/raspi/postBarCodeData")
-    .post(verify, raspiRoute.postBarCodeData)
+    .post(raspiRoute.postBarCodeData)
 app.route("/api/manual")
     .post(verify, manualRoute.manual)
+app.route("/api/user/scanner")
+    .get(verify, raspiRoute.pairedScanners)
 
 
 // listen for requests

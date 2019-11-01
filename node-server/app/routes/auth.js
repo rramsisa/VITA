@@ -1,8 +1,6 @@
-const router = require('express').Router();
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const verify = require('./verifyToken');
 
 const {
     registerValidation,
@@ -18,7 +16,6 @@ async function register(req, res) {
     if (error) {
 
         return res.status(422).send({
-
             message: error.details[0].message
         });
     }

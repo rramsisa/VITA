@@ -16,29 +16,23 @@ When logging out, this token must be deleted.
 
 <b>Endpoints created:</b>
 
-1. /api/user/register/
-2. /api/user/login/
-3. /api/user/changePassword/
-
-| Type | Path                       | Parameters                                                     |
-| ---- | -------------------------- | -------------------------------------------------------------- |
-| POST | /api/user/register/        | name (string), email (string), password (string)               |
-| POST | /api/user/login/           | email (string), password (string)                              |
-| POST | /api/user/changePassword/  | email (string), password (string), newPassword (string)        |
-| POST | /api/user/deleteUser/      | email (string), password (string)                              |
-| POST | /api/raspi/pair/           | device(string id)                                              |
-| POST | /api/raspi/unpair/         | device(string id)                                              |
-| GET  | /api/user/                 | None                                                           |
-| POST | /api/raspi/postBarCodeData | name (string), flag (0 or 1), barCode(12 characters, optional) |
-| POST | /api/manual                | name (string), flag (0 or 1), quantity(integer)                |
-| GET  | /api/items/                | None                                                           |
-| POST | /api/item/                 | item id (string)                                               |
-| GET  | /api/myitems/              | None                                                           |
-| GET  | /api/myitemsInfo/          | None                                                           |
-| GET  | /api/recipes/recipe        | None                                                           |
-
-
-
+| Type | Path                        | Parameters                                                                         |
+| ---- | --------------------------- | ---------------------------------------------------------------------------------- |
+| POST | /api/user/register/         | name (string), email (string), password (string)                                   |
+| POST | /api/user/login/            | email (string), password (string)                                                  |
+| POST | /api/user/changePassword/   | email (string), password (string), newPassword (string)                            |
+| POST | /api/user/deleteUser/       | email (string), password (string)                                                  |
+| POST | /api/raspi/pair/            | device(string id)                                                                  |
+| POST | /api/raspi/unpair/          | device(string id)                                                                  |
+| GET  | /api/user/                  | None                                                                               |
+| POST | /api/raspi/postBarCodeData/ | name (string), flag (0 or 1), barCode (13 characters), scannerID (9 digits)        |
+| POST | /api/manual/                | name (string), flag (0 or 1), quantity(integer), barCode (13 characters, optional) |
+| GET  | /api/items/                 | None                                                                               |
+| POST | /api/item/                  | item id (string)                                                                   |
+| GET  | /api/myitems/               | None                                                                               |
+| GET  | /api/myitemsInfo/           | None                                                                               |
+| GET  | /api/recipes/recipe/        | None                                                                               |
+| GET  | /api/user/scanner/          | None                                                                               |
 
 <b> PostMan test cases </b>
 https://app.getpostman.com/join-team?invite_code=f7a228669babd77bdd2a5ae7c1dac92d
