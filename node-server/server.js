@@ -43,7 +43,7 @@ app.route("/api/recipes/recipe")
 app.route("/api/user/")
     .get(authRoute.getUsers);
 app.route("/api/items/")
-    .get(verify, raspiRoute.getItems);
+    .get(raspiRoute.getItems);
 app.route("/api/item/")
     .post(verify, raspiRoute.getItem);
 app.route("/api/myitems/")
