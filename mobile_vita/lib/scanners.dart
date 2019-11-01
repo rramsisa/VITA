@@ -3,6 +3,7 @@ import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:mobile_vita/api.dart';
 import 'package:mobile_vita/main.dart';
 import 'addScanner.dart';
+import 'globals.dart';
 
 class ScannerPage extends StatefulWidget {
   ScannerPage({Key key, this.title}) : super(key: key);
@@ -23,6 +24,24 @@ class ScannerPage extends StatefulWidget {
 }
 
 class _ScannerPageState extends State<ScannerPage> {
+
+  void initState() {
+    updateScanners();
+  }
+
+  void updateScanners() async {
+    print("Updating Scanners");
+
+    //Make API call to get pantry & update list
+    bool success = await getScanners(context);
+    if(success){
+      // Generate list on page done below
+      setState(() {
+        // Used to refresh the UI once the update is finished :)
+      });
+    }
+  }
+
   void removeScanner(itemName) async {
     print("Remove Item Requested");
     print("Scanner to remove: " + itemName);
@@ -46,57 +65,23 @@ class _ScannerPageState extends State<ScannerPage> {
     ));
     return Scaffold(
       appBar: appBar,
-      body: ListView(
-        children: <Widget>[
-          Card(
+      body: new ListView.builder(
+        itemCount: scanners.length,
+        itemBuilder: (BuildContext ctxt, int Index) {
+          return new Card(
             child: ListTile(
               leading: Icon(Icons.scanner, size: 40.0),
-              title: Text('Scanner Name 1'),
-              subtitle: Text(
-                'ID: ###-###-###'
-              ),
+              title: Text(scanners[Index]),
               trailing: IconButton(
                 icon: Icon(Icons.clear),
                 tooltip: 'Remove Item',
                 onPressed: () {
-                  removeScanner("id1");
+                  removeScanner(scanners[Index]);
                 },
               ),
             )
-          ),
-          Card(
-            child: ListTile(
-              leading: Icon(Icons.scanner, size: 40.0),
-              title: Text('Scanner Name 2'),
-              subtitle: Text(
-                'ID: ###-###-###'
-              ),
-              trailing: IconButton(
-                icon: Icon(Icons.clear),
-                tooltip: 'Remove Item',
-                onPressed: () {
-                  removeScanner("id2");
-                },
-              ),
-            )
-          ),
-          Card(
-            child: ListTile(
-              leading: Icon(Icons.scanner, size: 40.0),
-              title: Text('Scanner Name 3'),
-              subtitle: Text(
-                'ID: ###-###-###'
-              ),
-              trailing: IconButton(
-                icon: Icon(Icons.clear),
-                tooltip: 'Remove Item',
-                onPressed: () {
-                  removeScanner("id3");
-                },
-              ),
-            )
-          ),
-        ],
+          );
+        }
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

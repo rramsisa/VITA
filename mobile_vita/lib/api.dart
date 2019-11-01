@@ -238,7 +238,7 @@ Future<bool> getScanners(BuildContext context) async{
     final response = await http.get(call,
         headers: {"Content-Type": "application/json", "auth-token": authToken});
     if (response.statusCode == 200) {
-      setScanners(json.decode(response.body));
+      setScanners(json.decode(response.body)["devices"]);
       return true;
     } else {
       //error, display message according

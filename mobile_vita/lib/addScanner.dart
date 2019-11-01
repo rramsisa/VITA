@@ -31,7 +31,7 @@ class _AddScannerPageState extends State<AddScannerPage> {
     print("Scanner Name: ${scannerNameController.text}");
     print("Scanner ID: ${scannerIDController.text}");
 
-    // TODO: Dom - Call API to successfully link scanner to account
+    // Call API to successfully link scanner to account
     bool pairSuccess = await pair(scannerIDController.text, context);
     
   }
@@ -101,8 +101,8 @@ class _AddScannerPageState extends State<AddScannerPage> {
               child: ListView(
                 shrinkWrap: true,
                 children: <Widget>[
-                  scannerNameField,
-                  SizedBox(height: 25.0),
+                  // scannerNameField,
+                  // SizedBox(height: 25.0),
                   scannerIDField,
                   SizedBox(height: 35.0),
                   sendButton,
