@@ -23,8 +23,13 @@ class _AddItemPageState extends State<AddItemPage> {
     print("Item Quantity: ${itemAmountController.text}");
 
     // TODO: Dom - Call API to successfully add item to pantry & update list
-    
-
+    bool addSuccess = await manual(itemNameController.text, 1,
+        int.parse(itemAmountController.text), context);
+        setState(() {
+          
+        });
+        Navigator.pop(context);
+        
   }
 
   @override

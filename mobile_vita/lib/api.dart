@@ -170,3 +170,118 @@ Future<bool> getPantryItems(BuildContext context) async{
     return false;
   }
 }
+
+
+Future<bool> manual(
+    String name, int flag, int quantity, BuildContext context) async {
+  var call;
+  if (Platform.isAndroid) {
+    call =
+        "http://10.0.2.2:3000/api/manual/"; //base route for the api calls
+  } else {
+    call = "http://localhost:3000/api/manual/";
+  }
+  print(call);
+  try {
+    print("before await");
+    final response = await http.post(call,
+        body: json
+            .encode({'name': name, 'flag': flag, 'quantity': quantity}),
+        headers: {"Content-Type": "application/json", "auth-token": authToken});
+    print("after call");
+    Map<String, dynamic> bod = json.decode(response.body);
+    print(bod);
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      //error, display message according
+      print(response.statusCode);
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(bod["message"]),
+            );
+          });
+    }
+    return false;
+  } catch (exception) {
+    print(exception);
+    return false;
+  }
+}
+
+
+Future<bool> pair(
+    String id, BuildContext context) async {
+  var call;
+  if (Platform.isAndroid) {
+    call =
+        "http://10.0.2.2:3000/api/raspi/pair/"; //base route for the api calls
+  } else {
+    call = "http://localhost:3000/api/raspi/pair/";
+  }
+  print(call);
+  try {
+    print("before await");
+    final response = await http.post(call,
+        body: json
+            .encode({'device': id}),
+        headers: {"Content-Type": "application/json", "auth-token": authToken});
+    print("after call");
+    Map<String, dynamic> bod = json.decode(response.body);
+    print(bod);
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      //error, display message according
+      print(response.statusCode);
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(bod["message"]),
+            );
+          });
+    }
+    return false;
+  } catch (exception) {
+    print(exception);
+    return false;
+  }
+}
+
+Future<bool> getScanners(BuildContext context) async{
+  var call;
+  if (Platform.isAndroid) {
+    call =
+        "http://10.0.2.2:3000/api/user/scanner/"; //base route for the api calls
+  } else {
+    call = "http://localhost:3000/api/user/scanner";
+  }
+
+  try {
+    final response = await http.get(call,
+        // body: json.encode({'newPassword': newPass, 'email': email, 'password': pass}),
+        headers: {"Content-Type": "application/json", "auth-token": authToken});
+    // Map<String, dynamic> bod = json.decode(response.body);
+    if (response.statusCode == 200) {
+      setScanners(json.decode(response.body));
+      return true;
+    } else {
+      //error, display message according
+      print(response.statusCode);
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              // title: Text(bod["message"]),
+            );
+          });
+    }
+    return false;
+  } catch (exception) {
+    print(exception);
+    return false;
+  }
+}

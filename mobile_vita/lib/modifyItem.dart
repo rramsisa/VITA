@@ -37,11 +37,26 @@ class _ModifyItemPageState extends State<ModifyItemPage> {
   }
   
   void modifyItem() async {
-    print("Add Item Requested");
+    //print("Add Item Requested");
     print("Item Name: ${itemNameController.text}");
     print("Item Quantity: ${itemAmountController.text}");
+    
+    //handling no modify in backend using front end info.
+    
+    int dif = selectedItem["quantity"] - int.parse(itemAmountController.text);
+    int f;
+    if(dif >= 0){ //dif is pos
+      f = 0;
+      //should remove abs value of amount
+    }
+    else{ //dif is neg
+      f = 1; //should add abs value
+      dif *= -1;
+    }
 
-    // TODO: Dom - Call API to successfully add item to pantry
+    // TODO: Dom - Call API to successfully mod item in pantry
+    bool modSuccess = await manual(itemNameController.text, f,
+        dif, context);
 
     //Nav back to original page
     Navigator.pop(context);
@@ -53,7 +68,8 @@ class _ModifyItemPageState extends State<ModifyItemPage> {
     print("Item to remove: ");
 
     //TODO DOM: Make appropriate API call to remove item from list
-
+    bool removeSuccess = await manual(itemNameController.text, 0,
+        int.parse(itemAmountController.text), context);
 
     //Nav back to original page
     Navigator.pop(context);
