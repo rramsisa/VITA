@@ -32,6 +32,8 @@ class _AddScannerPageState extends State<AddScannerPage> {
     print("Scanner ID: ${scannerIDController.text}");
 
     // TODO: Dom - Call API to successfully link scanner to account
+    bool pairSuccess = await pair(scannerIDController.text, context);
+    
   }
 
   @override
