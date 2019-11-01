@@ -77,8 +77,9 @@ class _ModifyItemPageState extends State<ModifyItemPage> {
     
     bool delSuccess = await deleteCall(itemNameController.text, context);
     //Nav back to original page
-    
-    Navigator.pop(context);
+    if(delSuccess){
+      Navigator.pop(context);
+    }
   }
 
   @override
