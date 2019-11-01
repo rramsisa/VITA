@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
+import 'package:http/http.dart';
 import 'package:mobile_vita/api.dart';
 import 'inventory.dart';
 import 'globals.dart';
@@ -68,10 +69,14 @@ class _ModifyItemPageState extends State<ModifyItemPage> {
     print("Item to remove: ");
 
     //TODO DOM: Make appropriate API call to remove item from list
+     
     bool removeSuccess = await manual(itemNameController.text, 0,
         int.parse(itemAmountController.text), context);
-
+    
+    /*
+    bool delSuccess = await deleteCall(itemNameController.text, context);
     //Nav back to original page
+    */
     Navigator.pop(context);
   }
 
