@@ -1,5 +1,7 @@
 # Server
 
+API server: 198.199.89.191:3000/api/
+
 This is a server that uses node.js to run an express server with a Mongo DB database
 
 To run the server, run <b>npm start</b><endl>
