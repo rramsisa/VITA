@@ -10,10 +10,11 @@ import sys
 import requests
 from rgb import *
 from switch import *
+import json
 
-piID = '1234567890'
+piID = '123456789'
 barcodeurl = 'https://api.upcitemdb.com/prod/trial/lookup?upc='
-serverurl = 'http://localhost:3000/api/postBarCodeData1/'
+serverurl = 'http://198.199.89.191:3000/api/raspi/postBarCodeData/'
 
 def modeOn(val):
         if val == 1:
@@ -76,15 +77,21 @@ while True:
 		#Make API call to get info
                 ret = requests.get(barurl)
                 if ret.status_code == 200:
-                        print("{}".format(ret.json()["items"][0]["title"]))
-                        #TODO:Send request to server to add/remove item
-                        body = {}
-                        ret2 = requests.post(serverurl, body=body)
+                        itemName = ret.json()["items"][0]["title"]
+                        #Send request to server to add/remove item
+                        body = {"scannerID":piID, "flag":mode, "barCode":barcodeData, "name":itemName}
+                        header = {"Content-Type": "application/json"}
+                        print(serverurl)
+                        print(body)
+                        print(header)
+                        print(itemName)
+                        ret2 = requests.post(url = serverurl, json = body, headers = header)
                         if ret2.status_code == 200:
-                                print("{}".format(ret2.json())
+                                print("Request successfully sent")
                         else:
-                                print("Invalid response from server")
-                else:
+                                print(ret2.status_code)
+                                print(json.loads(ret2.text))
+                else:   
                         print("Invalid response")               
 		
 		time.sleep(1.0)
