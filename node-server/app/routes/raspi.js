@@ -286,7 +286,7 @@ async function pairedScanners(req, res) {
             _id: req.user._id
         })
 
-        return res.send(user.pairedDevices);
+        return res.send({devices: user.pairedDevices});
 
     } catch (err) {
         res.status(400).send({

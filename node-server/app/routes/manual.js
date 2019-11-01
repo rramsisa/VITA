@@ -23,40 +23,38 @@ async function manual(req, res) {
     const user = await User.findOne({
         _id: req.user._id
     })
-    for (i = 0; i < user.listOfItems.length; i++) {
-
-        // console.log(user.listOfItems[i]);
-        const item = await Item.findOne({
-            _id: user.listOfItems[i]
-        });
-        // console.log(item == null);
-        if (item != null && item.name == req.body.name) {
-            if (req.body.flag == 1) {
-                item.quantity = parseInt(item.quantity) + parseInt(req.body.quantity)
-                item.status = true;
-
-            } else if (item.quantity == 0) {
-                return res.status(400).send({
-                    "message": "Item is out of stock"
-                });
-            } else {
-                item.quantity = parseInt(item.quantity) - parseInt(req.body.quantity)
-            }
-            if (item.quantity <= 0) {
-                item.status = false;
-            }
-            // console.log("Item exists")
-            try {
-                const savedItem = item.save();
-                return res.send({
-                    item: item._id,
-                    message: "Quantity Updated"
-                });
-            } catch (err) {
-                return res.status(400).send({
-                    message: err
-                });
-            }
+   
+     const item = await Item.findOne({
+        userID: user._id,
+        name: req.body.name
+    });
+    // console.log(item)
+    if(item != null){
+        if (req.body.flag == 1) {
+            item.quantity = parseInt(item.quantity) + parseInt(req.body.quantity)
+            item.status = true;
+        } else if (item.quantity == 0) {
+            return res.status(400).send({
+                "message": "Item is out of stock"
+            });
+        } else {
+            item.quantity = parseInt(item.quantity) - parseInt(req.body.quantity)
+        }
+        if (item.quantity <= 0) {
+            item.quantity = 0;
+            item.status = false;
+        }
+        // console.log("Item exists")
+        try {
+            const savedItem = item.save();
+            return res.send({
+                item: item._id,
+                message: "Quantity Updated"
+            });
+        } catch (err) {
+            return res.status(400).send({
+                message: err
+            });
         }
     }
 

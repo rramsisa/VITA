@@ -450,6 +450,7 @@
                      done();
                  });
          });
+        
          it('pair - already added', (done) => {
              let device = {
                  device: "987654321"
@@ -463,6 +464,46 @@
                      res.body.should.have.property('message').eql("Device already paired to this account");
                      done();
                  });
+         });
+         it('pair - check in list', (done) => {
+             
+
+                var resolvingPromise = new Promise(  (resolve, reject) => {
+                    let device = {
+                         device: "001021998"
+                     }
+                     chai.request(app)
+                         .post('/api/raspi/pair')
+                         .set('auth-token', token_login)
+                         .send(device)
+                         .end((err, res) => {
+                             // console.log(res.status)
+                             if(res.should.have.status(200)){   
+                                        resolve("001021998")
+                                    }
+                                    else{
+                                        reject(null)
+                                    }
+                         });                    
+                        })
+
+                     resolvingPromise.then( (result) => {
+                        // console.log(result)
+                            if(result != null){
+                                chai.request(app)
+                                 .get('/api/user/scanner')
+                                 .set('auth-token', token_login)
+                                 .end((err, res) => {
+                                        assert.equal(res.body.devices[1], '001021998');
+                                        done();
+                                 });
+                            }
+                            else{
+                                assert.equal(false, true, 'scanner not found');
+                                done();
+                            }
+                          });
+
          });
      });
     
@@ -520,6 +561,52 @@
                              .end((err1, res1) => {
                                 // console.log(res1.body)
                                 assert.equal(res1.body.found, true, 'item found');
+                                done(); 
+                             });
+                    }
+                    else{
+                        assert.equal(false, true, 'item not found');
+                        done();
+                    }
+                  });
+             
+         });
+         it('add item - normal with list check +1', (done) => {
+            var resolvingPromise = new Promise(  (resolve, reject) => {
+                    let data = {
+                         name: "apple", 
+                         barCode:"1234567890123",
+                         flag: "1",
+                         scannerID: "987654321"
+                    }
+                    chai.request(app)
+                         .post('/api/raspi/postBarCodeData')
+                         .set('auth-token', token_login)
+                         .send(data)
+                         .end((err, res) => {
+                            // console.log(res.body)
+                            if(res.should.have.status(200)){
+                                // console.log(res.body.item)
+                                resolve(res.body.item)
+                            }
+                            else{
+                                reject(null)
+                            }
+                        });
+                })
+
+             resolvingPromise.then( (result) => {
+                    if(result != null){
+                        let data1 = {
+                             item_id: result
+                         }
+                         chai.request(app)
+                             .post('/api/findMyItem')
+                             .set('auth-token', token_login)
+                             .send(data1)
+                             .end((err1, res1) => {
+                                // console.log(res1.body)
+                                assert.equal(res1.body.item.quantity, 2, 'item found');
                                 done(); 
                              });
                     }
@@ -702,6 +789,56 @@
                      res.should.have.status(200);
                      done();
                  });
+         });
+          it('remove item - normal with list check -1', (done) => {
+            var resolvingPromise = new Promise(  (resolve, reject) => {
+                    let data = {
+                         name: "apple", 
+                         barCode:"1234567890123",
+                         flag: "0",
+                         scannerID: "987654321"
+                    }
+                    chai.request(app)
+                         .post('/api/raspi/postBarCodeData')
+                         .set('auth-token', token_login)
+                         .send(data)
+                         .end((err, res) => {
+                            // console.log("in here")
+                            if(res.should.have.status(200)){
+                                // console.log(res.body.item)
+                                resolve(res.body.item)
+                            }
+                            else{
+                                resolve("")
+                            }
+                        });
+                })
+
+             resolvingPromise.then( (result) => {
+                // console.log("resultgrade")
+                // console.log(result)
+                    if(result != null){
+                        let data1 = {
+                             item_id: result
+                         }
+                         chai.request(app)
+                             .post('/api/findMyItem')
+                             .set('auth-token', token_login)
+                             .send(data1)
+                             .end((err1, res1) => {
+                                // console.log("yoooo")
+                                assert.equal(res1.body.found, true, 'item not found');
+                                assert.equal(res1.body.item.quantity, 1);
+
+                                done(); 
+                             });
+                    }
+                    else{
+                        assert.equal(false, true, 'item found');
+                        done();
+                    }
+                  });
+             
          });
           it('remove item - normal with list check', (done) => {
             var resolvingPromise = new Promise(  (resolve, reject) => {
@@ -963,6 +1100,50 @@
                   });
              
          });
+         it('manual add item - normal with list check +10', (done) => {
+            var resolvingPromise = new Promise(  (resolve, reject) => {
+                    let data = {
+                         name: "apple", 
+                         quantity:"10",
+                         flag: "1"
+                    }
+                    chai.request(app)
+                         .post('/api/manual')
+                         .set('auth-token', token_login)
+                         .send(data)
+                         .end((err, res) => {
+                            if(res.should.have.status(200)){
+                                resolve(res.body.item)
+                            }
+                            else{
+                                reject(null)
+                            }
+                        });
+                })
+
+             resolvingPromise.then( (result) => {
+                    if(result != null){
+                        let data1 = {
+                             item_id: result
+                         }
+                         chai.request(app)
+                             .post('/api/findMyItem')
+                             .set('auth-token', token_login)
+                             .send(data1)
+                             .end((err1, res1) => {
+                                assert.equal(res1.body.found, true, 'item found');
+                                assert.equal(res1.body.item.quantity, 11);
+
+                                done(); 
+                             });
+                    }
+                    else{
+                        assert.equal(false, true, 'item not found');
+                        done();
+                    }
+                  });
+             
+         });
         
          it('manual add item - missing name', (done) => {
              let data = {
@@ -1135,6 +1316,55 @@
                      res.should.have.status(200);
                      done();
                  });
+         });
+          it('manual remove item - normal with list check -10', (done) => {
+            var resolvingPromise = new Promise(  (resolve, reject) => {
+                    let data = {
+                         name: "apple", 
+                         quantity:"10",
+                         flag: "0"
+                    }
+                    chai.request(app)
+                         .post('/api/manual')
+                         .set('auth-token', token_login)
+                         .send(data)
+                         .end((err, res) => {
+                            // console.log("in here")
+                            if(res.should.have.status(200)){
+                                // console.log(res.body.message)
+                                resolve(res.body.item)
+                            }
+                            else{
+                                resolve("")
+                            }
+                        });
+                })
+
+             resolvingPromise.then( (result) => {
+                // console.log("resultgrade")
+                // console.log(result)
+                    if(result != null){
+                        let data1 = {
+                             item_id: result
+                         }
+                         chai.request(app)
+                             .post('/api/findMyItem')
+                             .set('auth-token', token_login)
+                             .send(data1)
+                             .end((err1, res1) => {
+                                // console.log("yoooo")
+                                assert.equal(res1.body.found, true, 'item not found');
+                                assert.equal(res1.body.item.quantity, 1);
+
+                                done(); 
+                             });
+                    }
+                    else{
+                        assert.equal(false, true, 'item found');
+                        done();
+                    }
+                  });
+             
          });
           it('manual remove item - normal with list check', (done) => {
             var resolvingPromise = new Promise(  (resolve, reject) => {
@@ -1367,6 +1597,46 @@
                      done();
                  });
          });
+         //  it('unpair - check in list', (done) => {
+             
+
+         //        var resolvingPromise = new Promise(  (resolve, reject) => {
+         //            let device = {
+         //                 device: "001021998"
+         //             }
+         //             chai.request(app)
+         //                 .post('/api/raspi/unpair')
+         //                 .set('auth-token', token_login)
+         //                 .send(device)
+         //                 .end((err, res) => {
+         //                     console.log(res.status)
+         //                     if(res.should.have.status(200)){   
+         //                                resolve("001021998")
+         //                            }
+         //                            else{
+         //                                reject(null)
+         //                            }
+         //                 });                    
+         //                })
+
+         //             resolvingPromise.then( (result) => {
+         //                console.log(result)
+         //                    if(result != null){
+         //                        chai.request(app)
+         //                         .get('/api/user/scanner')
+         //                         .set('auth-token', token_login)
+         //                         .end((err, res) => {
+         //                            assert.notDeepInclude(res.body.devices, '001021998');
+         //                                done();
+         //                         });
+         //                    }
+         //                    else{
+         //                        assert.equal(false, true, 'scanner not found');
+         //                        done();
+         //                    }
+         //                  });
+
+         // });
          it('unpair - already removed', (done) => {
              let device = {
                  device: "987654321"

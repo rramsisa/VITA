@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
     pairedDevices: {
         type: Array,
         value: [{
-            type: Number,
+            type: String,
         }],
         default: []
     },
