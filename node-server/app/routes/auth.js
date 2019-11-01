@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Item = require('../models/Item');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -183,11 +184,22 @@ async function deleteUser(req, res) {
         });
     }
     try {
-        const savedUser = await user.delete();
+        // console.log("In deletion process")
+        const items = await Item.find({
+            userID: user._id
+        });
+        // console.log("Got items");
+        // console.log(items);
+        for (i = 0; items != null && i < items.length; i++) {
+            await items[i].delete();
+        }
+        // console.log("Deleted items");
+        await user.delete();
         return res.send({
             message: "User Deleted"
         });
     } catch (err) {
+        // console.log("failure")
         res.status(400).send({
             message: err
         });
