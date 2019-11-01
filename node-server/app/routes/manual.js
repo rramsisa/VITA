@@ -25,7 +25,7 @@ async function manual(req, res) {
     })
     for (i = 0; i < user.listOfItems.length; i++) {
 
-        console.log(user.listOfItems[i]);
+        // console.log(user.listOfItems[i]);
         const item = await Item.findOne({
             _id: user.listOfItems[i]
         });
@@ -49,6 +49,7 @@ async function manual(req, res) {
             try {
                 const savedItem = item.save();
                 return res.send({
+                    item: item._id,
                     message: "Quantity Updated"
                 });
             } catch (err) {

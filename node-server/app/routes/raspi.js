@@ -330,7 +330,8 @@ async function findMyItems(req, res) {
             })
             if (item.status == true) {
                 return res.send({
-                    found: true
+                    found: true,
+                    item: item
                 });
             }
         }
