@@ -525,27 +525,35 @@
                      done();
                  });
          });
-         it('add item - normal with list check', (done) => {
-             var resolvingPromise = new Promise((resolve, reject) => {
-                 let data = {
-                     name: "apple",
-                     barCode: "1234567890123",
-                     flag: "1",
-                     scannerID: "987654321"
-                 }
-                 chai.request(app)
-                     .post('/api/raspi/postBarCodeData')
-                     .set('auth-token', token_login)
-                     .send(data)
-                     .end((err, res) => {
-                         // console.log(res.body)
-                         if (res.should.have.status(200)) {
-                             // console.log(res.body.item)
-                             resolve(res.body.item)
-                         } else {
-                             reject(null)
+          it('add item - normal with list check', (done) => {
+            var resolvingPromise = new Promise(  (resolve, reject) => {
+                    let data = {
+                         name: "apple", 
+                         barCode:"1234567890123",
+                         flag: "1",
+                         scannerID: "987654321"
+                    }
+                    chai.request(app)
+                         .post('/api/raspi/postBarCodeData')
+                         .set('auth-token', token_login)
+                         .send(data)
+                         .end((err, res) => {
+                            // console.log(res.body)
+                            if(res.should.have.status(200)){
+                                // console.log(res.body.item)
+                                resolve(res.body.item)
+                            }
+                            else{
+                                reject(null)
+                            }
+                        });
+                })
+
+             resolvingPromise.then( (result) => {
+                    if(result != null){
+                        let data1 = {
+                             item_id: result
                          }
-<<<<<<< HEAD
                          chai.request(app)
                              .post('/api/findMyItem')
                              .set('auth-token', token_login)
@@ -563,7 +571,7 @@
                   });
              
          });
-         it('add item - normal with list check +1', (done) => {
+          it('add item - normal with list check +1', (done) => {
             var resolvingPromise = new Promise(  (resolve, reject) => {
                     let data = {
                          name: "apple", 
@@ -607,36 +615,10 @@
                         done();
                     }
                   });
-             
+
          });
         
-=======
-                     });
-             })
 
-             resolvingPromise.then((result) => {
-                 if (result != null) {
-                     let data1 = {
-                         item_id: result
-                     }
-                     chai.request(app)
-                         .post('/api/findMyItem')
-                         .set('auth-token', token_login)
-                         .send(data1)
-                         .end((err1, res1) => {
-                             // console.log(res1.body)
-                             assert.equal(res1.body.found, true, 'item found');
-                             done();
-                         });
-                 } else {
-                     assert.equal(false, true, 'item not found');
-                     done();
-                 }
-             });
-
-         });
-
->>>>>>> a5163a1406a0adef95ce01bd892632ae54ecaf6e
          it('add item - missing name', (done) => {
              let data = {
                  name: "",
@@ -806,7 +788,6 @@
                      done();
                  });
          });
-<<<<<<< HEAD
           it('remove item - normal with list check -1', (done) => {
             var resolvingPromise = new Promise(  (resolve, reject) => {
                     let data = {
@@ -887,53 +868,23 @@
                     if(result != null){
                         let data1 = {
                              item_id: result
-=======
-         it('remove item - normal with list check', (done) => {
-             var resolvingPromise = new Promise((resolve, reject) => {
-                 let data = {
-                     name: "apple",
-                     barCode: "1234567890123",
-                     flag: "0",
-                     scannerID: "987654321"
-                 }
-                 chai.request(app)
-                     .post('/api/raspi/postBarCodeData')
-                     .set('auth-token', token_login)
-                     .send(data)
-                     .end((err, res) => {
-                         // console.log("in here")
-                         if (res.should.have.status(200)) {
-                             // console.log(res.body.item)
-                             resolve(res.body.item)
-                         } else {
-                             resolve("")
->>>>>>> a5163a1406a0adef95ce01bd892632ae54ecaf6e
                          }
-                     });
-             })
-
-             resolvingPromise.then((result) => {
-                 // console.log("resultgrade")
-                 // console.log(result)
-                 if (result != null) {
-                     let data1 = {
-                         item_id: result
-                     }
-                     chai.request(app)
-                         .post('/api/findMyItem')
-                         .set('auth-token', token_login)
-                         .send(data1)
-                         .end((err1, res1) => {
-                             // console.log("yoooo")
-                             assert.equal(res1.body.found, false, 'item not found');
-                             done();
-                         });
-                 } else {
-                     assert.equal(false, true, 'item found');
-                     done();
-                 }
-             });
-
+                         chai.request(app)
+                             .post('/api/findMyItem')
+                             .set('auth-token', token_login)
+                             .send(data1)
+                             .end((err1, res1) => {
+                                // console.log("yoooo")
+                                assert.equal(res1.body.found, false, 'item not found');
+                                done(); 
+                             });
+                    }
+                    else{
+                        assert.equal(false, true, 'item found');
+                        done();
+                    }
+                  });
+             
          });
          it('remove item - missing name', (done) => {
              let data = {
@@ -1102,24 +1053,32 @@
                      done();
                  });
          });
-         it('manual add item - normal with list check', (done) => {
-             var resolvingPromise = new Promise((resolve, reject) => {
-                 let data = {
-                     name: "apple",
-                     quantity: "1",
-                     flag: "1"
-                 }
-                 chai.request(app)
-                     .post('/api/manual')
-                     .set('auth-token', token_login)
-                     .send(data)
-                     .end((err, res) => {
-                         if (res.should.have.status(200)) {
-                             resolve(res.body.item)
-                         } else {
-                             reject(null)
+          it('manual add item - normal with list check', (done) => {
+            var resolvingPromise = new Promise(  (resolve, reject) => {
+                    let data = {
+                         name: "apple", 
+                         quantity:"1",
+                         flag: "1"
+                    }
+                    chai.request(app)
+                         .post('/api/manual')
+                         .set('auth-token', token_login)
+                         .send(data)
+                         .end((err, res) => {
+                            if(res.should.have.status(200)){
+                                resolve(res.body.item)
+                            }
+                            else{
+                                reject(null)
+                            }
+                        });
+                })
+
+             resolvingPromise.then( (result) => {
+                    if(result != null){
+                        let data1 = {
+                             item_id: result
                          }
-<<<<<<< HEAD
                          chai.request(app)
                              .post('/api/findMyItem')
                              .set('auth-token', token_login)
@@ -1181,32 +1140,6 @@
              
          });
         
-=======
-                     });
-             })
-
-             resolvingPromise.then((result) => {
-                 if (result != null) {
-                     let data1 = {
-                         item_id: result
-                     }
-                     chai.request(app)
-                         .post('/api/findMyItem')
-                         .set('auth-token', token_login)
-                         .send(data1)
-                         .end((err1, res1) => {
-                             assert.equal(res1.body.found, true, 'item found');
-                             done();
-                         });
-                 } else {
-                     assert.equal(false, true, 'item not found');
-                     done();
-                 }
-             });
-
-         });
-
->>>>>>> a5163a1406a0adef95ce01bd892632ae54ecaf6e
          it('manual add item - missing name', (done) => {
              let data = {
                  name: "",
@@ -1376,7 +1309,6 @@
                      done();
                  });
          });
-<<<<<<< HEAD
           it('manual remove item - normal with list check -10', (done) => {
             var resolvingPromise = new Promise(  (resolve, reject) => {
                     let data = {
@@ -1426,7 +1358,7 @@
                   });
              
          });
-          it('manual remove item - normal with list check', (done) => {
+           it('manual remove item - normal with list check', (done) => {
             var resolvingPromise = new Promise(  (resolve, reject) => {
                     let data = {
                          name: "apple", 
@@ -1455,52 +1387,23 @@
                     if(result != null){
                         let data1 = {
                              item_id: result
-=======
-         it('manual remove item - normal with list check', (done) => {
-             var resolvingPromise = new Promise((resolve, reject) => {
-                 let data = {
-                     name: "apple",
-                     quantity: "1",
-                     flag: "0"
-                 }
-                 chai.request(app)
-                     .post('/api/manual')
-                     .set('auth-token', token_login)
-                     .send(data)
-                     .end((err, res) => {
-                         // console.log("in here")
-                         if (res.should.have.status(200)) {
-                             // console.log(res.body.message)
-                             resolve(res.body.item)
-                         } else {
-                             resolve("")
->>>>>>> a5163a1406a0adef95ce01bd892632ae54ecaf6e
                          }
-                     });
-             })
-
-             resolvingPromise.then((result) => {
-                 // console.log("resultgrade")
-                 // console.log(result)
-                 if (result != null) {
-                     let data1 = {
-                         item_id: result
-                     }
-                     chai.request(app)
-                         .post('/api/findMyItem')
-                         .set('auth-token', token_login)
-                         .send(data1)
-                         .end((err1, res1) => {
-                             // console.log("yoooo")
-                             assert.equal(res1.body.found, false, 'item not found');
-                             done();
-                         });
-                 } else {
-                     assert.equal(false, true, 'item found');
-                     done();
-                 }
-             });
-
+                         chai.request(app)
+                             .post('/api/findMyItem')
+                             .set('auth-token', token_login)
+                             .send(data1)
+                             .end((err1, res1) => {
+                                // console.log("yoooo")
+                                assert.equal(res1.body.found, false, 'item not found');
+                                done(); 
+                             });
+                    }
+                    else{
+                        assert.equal(false, true, 'item found');
+                        done();
+                    }
+                  });
+             
          });
          it('manual remove item - missing name', (done) => {
              let data = {
@@ -1683,6 +1586,7 @@
                      done();
                  });
          });
+         //TODO: leave code below this
          //  it('unpair - check in list', (done) => {
              
 
