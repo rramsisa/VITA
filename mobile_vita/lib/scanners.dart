@@ -42,12 +42,19 @@ class _ScannerPageState extends State<ScannerPage> {
     }
   }
 
-  void removeScanner(itemName) async {
+  void removeScanner(id) async {
     print("Remove Item Requested");
-    print("Scanner to remove: " + itemName);
+    print("Scanner to remove: " + id);
 
     //Make appropriate API call to remove scanner from list (& Refresh)
-    bool removeSucceess = await unpairCall();
+
+    bool unpairSuccess = await unpairCall(id, context); // This needs to be remove 
+    if(unpairSuccess){
+      // Generate list on page done below
+      setState(() {
+        // Used to refresh the UI once the update is finished :)
+      });
+    }
   }
 
 
