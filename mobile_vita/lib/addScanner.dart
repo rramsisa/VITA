@@ -33,6 +33,7 @@ class _AddScannerPageState extends State<AddScannerPage> {
 
     // Call API to successfully link scanner to account
     bool pairSuccess = await pair(scannerIDController.text, context);
+    Navigator.pop(context);
     
   }
 

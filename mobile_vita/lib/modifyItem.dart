@@ -60,6 +60,7 @@ class _ModifyItemPageState extends State<ModifyItemPage> {
         dif, context);
 
     //Nav back to original page
+    
     Navigator.pop(context);
   }
 
@@ -68,7 +69,7 @@ class _ModifyItemPageState extends State<ModifyItemPage> {
     print("Remove Item Requested");
     print("Item to remove: ");
 
-    //TODO DOM: Make appropriate API call to remove item from list
+    //Make appropriate API call to remove item from list
     /*
     bool removeSuccess = await manual(itemNameController.text, 0,
         int.parse(itemAmountController.text), context);
