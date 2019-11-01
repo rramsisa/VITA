@@ -465,59 +465,15 @@
                  });
          });
      });
-     describe('unpair device testing', () => {
-         it('unpair - no id', (done) => {
-             let device = {
-                 device: ""
-             }
-             chai.request(app)
-                 .post('/api/raspi/unpair')
-                 .set('auth-token', token_login)
-                 .send(device)
-                 .end((err, res) => {
-
-                     res.should.have.status(422);
-                     res.body.should.have.property('message').eql("\"device\" is not allowed to be empty");
-
-                     done();
-                 });
-         });
-         it('unpair - normal', (done) => {
-             let device = {
-                 device: "987654321"
-             }
-             chai.request(app)
-                 .post('/api/raspi/unpair')
-                 .set('auth-token', token_login)
-                 .send(device)
-                 .end((err, res) => {
-                     res.should.have.status(200);
-                     done();
-                 });
-         });
-         it('unpair - already removed', (done) => {
-             let device = {
-                 device: "987654321"
-             }
-             chai.request(app)
-                 .post('/api/raspi/unpair')
-                 .set('auth-token', token_login)
-                 .send(device)
-                 .end((err, res) => {
-                     res.should.have.status(404);
-                     res.body.should.have.property('message').eql("Device not found");
-
-                     done();
-                 });
-         });
-     });
+    
 
      describe('adding items testing', () => {
          it('add item - normal', (done) => {
              let data = {
                  name: "milk", 
-                 barCode:"123456789012",
-                 flag: "1"
+                 barCode:"1234567890123",
+                 flag: "1",
+                 scannerID: "987654321"
              }
              chai.request(app)
                  .post('/api/raspi/postBarCodeData')
@@ -532,15 +488,18 @@
             var resolvingPromise = new Promise(  (resolve, reject) => {
                     let data = {
                          name: "apple", 
-                         barCode:"123456789012",
-                         flag: "1"
+                         barCode:"1234567890123",
+                         flag: "1",
+                         scannerID: "987654321"
                     }
                     chai.request(app)
                          .post('/api/raspi/postBarCodeData')
                          .set('auth-token', token_login)
                          .send(data)
                          .end((err, res) => {
+                            // console.log(res.body)
                             if(res.should.have.status(200)){
+                                // console.log(res.body.item)
                                 resolve(res.body.item)
                             }
                             else{
@@ -559,6 +518,7 @@
                              .set('auth-token', token_login)
                              .send(data1)
                              .end((err1, res1) => {
+                                // console.log(res1.body)
                                 assert.equal(res1.body.found, true, 'item found');
                                 done(); 
                              });
@@ -574,7 +534,7 @@
          it('add item - missing name', (done) => {
              let data = {
                  name: "", 
-                 barCode:"123456789012",
+                 barCode:"1234567890123",
                  flag: "1"
              }
              chai.request(app)
@@ -730,15 +690,15 @@
          it('remove item - normal', (done) => {
              let data = {
                  name: "milk", 
-                 barCode:"123456789012",
-                 flag: "0"
+                 barCode:"1234567890123",
+                 flag: "0",
+                 scannerID: "987654321"
              }
              chai.request(app)
                  .post('/api/raspi/postBarCodeData')
                  .set('auth-token', token_login)
                  .send(data)
                  .end((err, res) => {
-                    // console.log(res.body)
                      res.should.have.status(200);
                      done();
                  });
@@ -747,8 +707,9 @@
             var resolvingPromise = new Promise(  (resolve, reject) => {
                     let data = {
                          name: "apple", 
-                         barCode:"123456789012",
-                         flag: "0"
+                         barCode:"1234567890123",
+                         flag: "0",
+                         scannerID: "987654321"
                     }
                     chai.request(app)
                          .post('/api/raspi/postBarCodeData')
@@ -944,7 +905,7 @@
          });
         
      });
-  describe('manual adding items testing', () => {
+    describe('manual adding items testing', () => {
          it('manual add item - normal', (done) => {
              let data = {
                  name: "milk", 
@@ -1376,7 +1337,52 @@
          });
         
      });
+ describe('unpair device testing', () => {
+         it('unpair - no id', (done) => {
+             let device = {
+                 device: ""
+             }
+             chai.request(app)
+                 .post('/api/raspi/unpair')
+                 .set('auth-token', token_login)
+                 .send(device)
+                 .end((err, res) => {
 
+                     res.should.have.status(422);
+                     res.body.should.have.property('message').eql("\"device\" is not allowed to be empty");
+
+                     done();
+                 });
+         });
+         it('unpair - normal', (done) => {
+             let device = {
+                 device: "987654321"
+             }
+             chai.request(app)
+                 .post('/api/raspi/unpair')
+                 .set('auth-token', token_login)
+                 .send(device)
+                 .end((err, res) => {
+                     res.should.have.status(200);
+                     done();
+                 });
+         });
+         it('unpair - already removed', (done) => {
+             let device = {
+                 device: "987654321"
+             }
+             chai.request(app)
+                 .post('/api/raspi/unpair')
+                 .set('auth-token', token_login)
+                 .send(device)
+                 .end((err, res) => {
+                     res.should.have.status(404);
+                     res.body.should.have.property('message').eql("Device not found");
+
+                     done();
+                 });
+         });
+     });
      describe('delete testing', () => {
          it('delete - no password', (done) => {
              let user = {

@@ -118,31 +118,33 @@ async function postBarCodeData(req, res) {
         userID: user._id,
         name: req.body.name
     });
-
-    if (req.body.flag == 1) {
-        item.quantity = item.quantity + 1
-        item.status = true;
-    } else if (item.quantity == 0) {
-        return res.status(400).send({
-            "message": "Item is out of stock"
-        });
-    } else {
-        item.quantity = item.quantity - 1
-    }
-    if (item.quantity == 0) {
-        item.status = false;
-    }
-    // console.log("Item exists")
-    try {
-        const savedItem = item.save();
-        return res.send({
-            item: item._id,
-            message: "Quantity Updated"
-        });
-    } catch (err) {
-        return res.status(400).send({
-            message: err
-        });
+    // console.log(item)
+    if(item != null){
+        if (req.body.flag == 1) {
+            item.quantity = item.quantity + 1
+            item.status = true;
+        } else if (item.quantity == 0) {
+            return res.status(400).send({
+                "message": "Item is out of stock"
+            });
+        } else {
+            item.quantity = item.quantity - 1
+        }
+        if (item.quantity == 0) {
+            item.status = false;
+        }
+        // console.log("Item exists")
+        try {
+            const savedItem = item.save();
+            return res.send({
+                item: item._id,
+                message: "Quantity Updated"
+            });
+        } catch (err) {
+            return res.status(400).send({
+                message: err
+            });
+        }
     }
 
     // console.log(itemTest);
@@ -329,6 +331,7 @@ async function findMyItems(req, res) {
                 _id: req.body.item_id
             })
             if (item.status == true) {
+
                 return res.send({
                     found: true,
                     item: item

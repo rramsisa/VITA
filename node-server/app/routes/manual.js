@@ -65,7 +65,6 @@ async function manual(req, res) {
 
 
     try {
-        console.log("name")
         unirest.post(requestString)
             .header("apiKey", process.env.API_KEY)
             .header('Content-Type', 'application/json')
