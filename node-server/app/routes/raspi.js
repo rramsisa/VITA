@@ -137,7 +137,7 @@ async function postBarCodeData(req, res) {
         // console.log("Item exists")
         try {
             const savedItem = item.save();
-            return res.send({
+            return res.status(200).send({
                 item: item._id,
                 message: "Quantity Updated"
             });
@@ -219,7 +219,7 @@ async function postBarCodeData(req, res) {
                 const savedUser = user.save();
                 // console.log("saved item")
                 // console.log(breadcrumbsList)
-                return res.send({
+                return res.status(200).send({
                     item: newItem._id,
                     message: "Item Request received!"
                 });
