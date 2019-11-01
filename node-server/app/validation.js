@@ -108,6 +108,16 @@ const manualValidation = (data) => {
     return Joi.validate(data, schema);
 };
 
+// Delete Item Validation
+const deleteItemValidation = (data) => {
+    const schema = {
+        name: Joi.string()
+            .required(),
+    };
+
+    return Joi.validate(data, schema);
+};
+
 module.exports.registerValidation = registerValidation;
 module.exports.loginValidation = loginValidation;
 module.exports.changePasswordValidation = changePasswordValidation;
@@ -115,3 +125,4 @@ module.exports.deleteUserValidation = deleteUserValidation;
 module.exports.pairPiValidation = pairPiValidation;
 module.exports.barCodeValidation = barCodeValidation;
 module.exports.manualValidation = manualValidation;
+module.exports.deleteItemValidation = deleteItemValidation;

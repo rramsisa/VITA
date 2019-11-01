@@ -5,7 +5,8 @@ const unirest = require('unirest')
 
 const {
     pairPiValidation,
-    barCodeValidation
+    barCodeValidation,
+    deleteItemValidation,
 } = require('../validation');
 
 async function pair(req, res) {
@@ -119,7 +120,7 @@ async function postBarCodeData(req, res) {
         name: req.body.name
     });
     // console.log(item)
-    if(item != null){
+    if (item != null) {
         if (req.body.flag == 1) {
             item.quantity = item.quantity + 1
             item.status = true;
@@ -274,7 +275,39 @@ async function getMyItems(req, res) {
         return res.send(user.listOfItems);
 
     } catch (err) {
-        res.status(400).send({
+        return res.status(400).send({
+            message: err
+        })
+    }
+}
+async function deleteItem(req, res) {
+    const {
+        error
+    } = deleteItemValidation(req.body);
+    if (error) {
+        return res.status(422).send({
+            message: error.details[0].message
+        });
+    }
+
+    try {
+        const item = await Item.findOne({
+            userID: req.user._id,
+            name: req.body.name
+        });
+
+        if (item != null) {
+            await item.delete();
+            return res.send({
+                message: "Item Deleted"
+            });
+        }
+        return res.send({
+            message: "Unable to find item"
+        });
+
+    } catch (err) {
+        return res.status(400).send({
             message: err
         })
     }
@@ -286,7 +319,9 @@ async function pairedScanners(req, res) {
             _id: req.user._id
         })
 
-        return res.send({devices: user.pairedDevices});
+        return res.send({
+            devices: user.pairedDevices
+        });
 
     } catch (err) {
         res.status(400).send({
@@ -359,5 +394,6 @@ module.exports = {
     getMyItems,
     getMyItemsInfo,
     findMyItems,
-    pairedScanners
+    pairedScanners,
+    deleteItem
 };
