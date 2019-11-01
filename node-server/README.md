@@ -1,5 +1,7 @@
 # Server
 
+API server: 198.199.89.191:3000/api/
+
 This is a server that uses node.js to run an express server with a Mongo DB database
 
 To run the server, run <b>npm start</b><endl>
@@ -39,10 +41,3 @@ https://app.getpostman.com/join-team?invite_code=f7a228669babd77bdd2a5ae7c1dac92
 
 <b> Unit testing</b>
 run : npm test
-
-<b>To Do:</b>
-
-1. Update Schema to accomodate paired devices as well as the inventory items (Finished)
-2. Make change password api endpoint (POST) (finished)
-3. Basic POST API call to receive bar code from Raspi. No association with accounts needed right now.
-4. Make pair/unpair scanner endpoints (finished)
