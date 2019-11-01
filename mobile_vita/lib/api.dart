@@ -1,6 +1,4 @@
 import 'dart:convert';
-//mport 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -8,6 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'globals.dart';
 import 'dart:io';
 
+
+//-----------------------API FOR LOGIN-----------------------------------------
 Future<bool> loginCall(String email, String pass, BuildContext context) async {
   var call;
   call = "http://198.199.89.191:3000/api/user/login/"; //base route for the api calls
@@ -19,12 +19,6 @@ Future<bool> loginCall(String email, String pass, BuildContext context) async {
     call = "http://localhost:3000/api/user/login/";
   }
   */
-  //var bString = "{'email':'" + email + "', 'password':'" + pass + "'}";
-  //var hString = "{'Content-Type':'application/x-www-form-urlencoded'}";
-
-  //Map<String, dynamic> body = jsonDecode(bString);
-  //Map<String, dynamic> hdrs = json.decode(hString);
-  //new Uri.http("10.0.2.2:3000", call)
   try {
     final response = await http.post(call,
         body: json.encode({'email': email, 'password': pass}),
@@ -59,6 +53,8 @@ Future<bool> loginCall(String email, String pass, BuildContext context) async {
   }
 }
 
+
+//-----------------------API FOR LOGOUT-----------------------------------------
 logoutCall() async {
   SharedPreferences pref = await SharedPreferences.getInstance();
   await pref.setString('auth-token', "");
@@ -67,18 +63,12 @@ logoutCall() async {
   setEmail("");
 }
 
+
+//-----------------------API FOR SIGNUP-----------------------------------------
 Future<bool> signUpCall(
     String name, String email, String pass, BuildContext context) async {
   var call;
   call = "http://198.199.89.191:3000/api/user/register/";
-  /*
-  if (Platform.isAndroid) {
-    call =
-        "http://10.0.2.2:3000/api/user/register/"; //base route for the api calls
-  } else {
-    call = "http://localhost:3000/api/user/register/";
-  }
-  */
   try {
     final response = await http.post(call,
         body: json.encode({'name': name, 'email': email, 'password': pass}),
@@ -104,18 +94,12 @@ Future<bool> signUpCall(
   }
 }
 
+
+//-----------------------API FOR CHANGE PASSWORD-----------------------------------------
 Future<bool> changePassCall(
     String pass, String newPass, String email, BuildContext context) async {
   var call;
   call = "http://198.199.89.191:3000/api/user/changePassword/";
-  /*
-  if (Platform.isAndroid) {
-    call =
-        "http://10.0.2.2:3000/api/user/changePassword/"; //base route for the api calls
-  } else {
-    call = "http://localhost:3000/api/user/changePassword/";
-  }
-  */
   try {
     final response = await http.post(call,
         body: json
@@ -142,17 +126,11 @@ Future<bool> changePassCall(
   }
 }
 
+
+//-----------------------API FOR PANTRY ITEMS-----------------------------------------
 Future<bool> getPantryItems(BuildContext context) async{
   var call;
   call = "http://198.199.89.191:3000/api/myitemsInfo/";
-  /*
-  if (Platform.isAndroid) {
-    call =
-        "http://10.0.2.2:3000/api/myitemsInfo/"; //base route for the api calls
-  } else {
-    call = "http://localhost:3000/api/myitemsInfo/";
-  }
-*/
   try {
     final response = await http.get(call,
         // body: json.encode({'newPassword': newPass, 'email': email, 'password': pass}),
@@ -180,18 +158,11 @@ Future<bool> getPantryItems(BuildContext context) async{
 }
 
 
+//-----------------------API FOR MODIFY-----------------------------------------
 Future<bool> manual(
     String name, int flag, int quantity, BuildContext context) async {
   var call;
   call = "http://198.199.89.191:3000/api/manual/";
-  /*
-  if (Platform.isAndroid) {
-    call =
-        "http://10.0.2.2:3000/api/manual/"; //base route for the api calls
-  } else {
-    call = "http://localhost:3000/api/manual/";
-  }
-  */
   print(call);
   try {
     print("before await");
@@ -223,18 +194,11 @@ Future<bool> manual(
 }
 
 
+//-----------------------API FOR SCANNER PAIR-----------------------------------------
 Future<bool> pair(
     String id, BuildContext context) async {
   var call;
   call = "http://198.199.89.191:3000/api/raspi/pair/";
-  /*
-  if (Platform.isAndroid) {
-    call =
-        "http://10.0.2.2:3000/api/raspi/pair/"; //base route for the api calls
-  } else {
-    call = "http://localhost:3000/api/raspi/pair/";
-  }
-  */
   print(call);
   try {
     print("before await");
@@ -265,22 +229,14 @@ Future<bool> pair(
   }
 }
 
+
+//-----------------------API FOR SCANNER RETREIVE-----------------------------------------
 Future<bool> getScanners(BuildContext context) async{
   var call;
   call = "http://198.199.89.191:3000/api/user/scanner/";
-  /*
-  if (Platform.isAndroid) {
-    call =
-        "http://10.0.2.2:3000/api/user/scanner/"; //base route for the api calls
-  } else {
-    call = "http://localhost:3000/api/user/scanner";
-  }
-  */
   try {
     final response = await http.get(call,
-        // body: json.encode({'newPassword': newPass, 'email': email, 'password': pass}),
         headers: {"Content-Type": "application/json", "auth-token": authToken});
-    // Map<String, dynamic> bod = json.decode(response.body);
     if (response.statusCode == 200) {
       setScanners(json.decode(response.body));
       return true;
@@ -302,6 +258,8 @@ Future<bool> getScanners(BuildContext context) async{
   }
 }
 
+
+//-----------------------API FOR DELETE-----------------------------------------
 Future<bool> deleteCall(
     String name, BuildContext context) async {
   var call;
