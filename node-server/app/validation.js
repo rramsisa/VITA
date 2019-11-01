@@ -85,8 +85,6 @@ const barCodeValidation = (data) => {
         name: Joi.string()
             .required(),
         barCode: Joi.string()
-            .min(13)
-            .max(13)
             .required(),
         flag: Joi.number() // 0 = remove item, 1 = add item
             .required(),
