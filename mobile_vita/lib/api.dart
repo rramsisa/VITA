@@ -230,6 +230,41 @@ Future<bool> pair(
 }
 
 
+//-----------------------API FOR SCANNER PAIR-----------------------------------------
+Future<bool> unpairCall(
+    String id, BuildContext context) async {
+  var call;
+  call = "http://198.199.89.191:3000/api/raspi/unpair/";
+  print(call);
+  try {
+    print("before await");
+    final response = await http.post(call,
+        body: json
+            .encode({'device': id}),
+        headers: {"Content-Type": "application/json", "auth-token": authToken});
+    print("after call");
+    Map<String, dynamic> bod = json.decode(response.body);
+    print(bod);
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      //error, display message according
+      print(response.statusCode);
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(bod["message"]),
+            );
+          });
+    }
+    return false;
+  } catch (exception) {
+    print(exception);
+    return false;
+  }
+}
+
 //-----------------------API FOR SCANNER RETREIVE-----------------------------------------
 Future<bool> getScanners(BuildContext context) async{
   var call;

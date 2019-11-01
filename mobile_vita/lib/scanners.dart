@@ -46,7 +46,8 @@ class _ScannerPageState extends State<ScannerPage> {
     print("Remove Item Requested");
     print("Scanner to remove: " + itemName);
 
-    //TODO - Make appropriate API call to remove scanner from list (& Refresh)
+    //Make appropriate API call to remove scanner from list (& Refresh)
+    bool removeSucceess = await unpairCall();
   }
 
 
