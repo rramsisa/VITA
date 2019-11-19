@@ -18,6 +18,17 @@ async function getList(req, res) {
             if(item.status == false){
                 itemInfo.push(item)
             }
+            else {
+                var total = 0;
+                for(var i = 0; i < item.lasted.length; i++){
+                    total = total + item.lasted[i]
+                }
+                var avg = total / item.lasted.length;
+                var date1 = new Date();
+                if(date1.getTime() - item.date > avg ){
+                    itemInfo.push(item)
+                }
+            }
             
 
         }
