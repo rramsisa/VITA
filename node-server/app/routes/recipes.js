@@ -9,7 +9,7 @@ const url = "https://api.spoonacular.com/"
 
 
 
-async function get_basic_pantry_item_name(name) {
+async function get_basic_pantry_item_name(req, res) {
 
 	let requestString = "food/products/classify?apiKey=" + process.env.API_KEY
 	try {
@@ -17,7 +17,7 @@ async function get_basic_pantry_item_name(name) {
 			.header("apiKey", process.env.API_KEY)
 			.header('Content-Type', 'application/json')
 			.send({
-				"title": name,
+				"title": req.name,
 				"upc": "0",
 				"plu_code": "0"
 

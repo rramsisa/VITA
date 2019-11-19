@@ -29,6 +29,10 @@ const itemSchema = new mongoose.Schema({
     breadcrumbs: { // List of item's simplified names
         type: [String],
         required: true
+    },
+    lasted: { // List of item's simplified names
+        type: [Number],
+        required: true
     }
 });
 

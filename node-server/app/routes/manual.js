@@ -43,6 +43,10 @@ async function manual(req, res) {
         if (item.quantity <= 0) {
             item.quantity = 0;
             item.status = false;
+            var date1 = new Date();
+            var Difference_In_Time = date1.getTime()-item.date; 
+            console.log(Difference_In_Time)
+            item.lasted.push(Difference_In_Time);
         }
         // console.log("Item exists")
         try {

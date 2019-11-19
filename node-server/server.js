@@ -6,6 +6,8 @@ const authRoute = require('./app/routes/auth')
 const raspiRoute = require('./app/routes/raspi');
 const recipesRoute = require('./app/routes/recipes');
 const manualRoute = require('./app/routes/manual');
+const listRoute = require('./app/routes/list');
+
 const verify = require('./app/routes/verifyToken').validateToken;
 
 
@@ -72,6 +74,8 @@ app.route("/api/user/scanner")
     .get(verify, raspiRoute.pairedScanners)
 app.route("/api/item/deleteItem")
     .post(verify, raspiRoute.deleteItem)
+app.route("/api/list")
+    .get(verify, listRoute.getList)
 
 
 // listen for requests
