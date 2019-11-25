@@ -8,6 +8,8 @@ To run the server, run <b>npm start</b><endl>
 
 It will run on <b>localhost:3000</b>
 
+To run the server on the droplet, ssh into the droplet as root. Then, run <b>pm2 list</b> to see the list of servers running. To start the server, run <b>pm2 start server.js</b>.<endl>
+
 <b>Packages:</b>
 
 @hapi/joi version 15.0.3
