@@ -74,9 +74,16 @@ app.route("/api/user/scanner")
     .get(verify, raspiRoute.pairedScanners)
 app.route("/api/item/deleteItem")
     .post(verify, raspiRoute.deleteItem)
-app.route("/api/list")
+app.route("/api/list/refresh")
+    .get(verify, listRoute.refreshList)
+app.route("/api/list/add")
+    .post(verify, listRoute.addToList)
+app.route("/api/list/remove")
+    .post(verify, listRoute.removeFromList)
+app.route("/api/list/get")
     .get(verify, listRoute.getList)
-
+app.route("/api/list/clear")
+    .post(verify, listRoute.clearList)
 
 // listen for requests
 const server = app.listen(3000, () => {
