@@ -74,16 +74,12 @@ app.route("/api/user/scanner")
     .get(verify, raspiRoute.pairedScanners)
 app.route("/api/item/deleteItem")
     .post(verify, raspiRoute.deleteItem)
-
-
 app.route("/api/list/refreshOutOfStockList")
     .get(verify, listRoute.refreshOutOfStockList)
 app.route("/api/list/refreshSoonOutOfStockList")
     .get(verify, listRoute.refreshSoonOutOfStockList)
-
 app.route("/api/list/addToShoppingList")
     .post(verify, listRoute.addToShoppingList)
-
 app.route("/api/list/moveFromOutOfStockList")
     .post(verify, listRoute.moveFromOutOfStockList)
 app.route("/api/list/moveFromSoonOutOfStockList")
