@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
     pairedDevices: {
         type: Array,
         value: [{
-            type: Number,
+            type: String,
         }],
         default: []
     },
@@ -35,6 +35,42 @@ const userSchema = new mongoose.Schema({
         type: Array,
         value: [{
             type: Number,
+        }],
+        default: []
+    },
+    outOfStock:{
+        type: Array,
+        value: [{
+            type: Object,
+            value: [{
+                name: String,
+                time: Number,
+                priotiry: Number //1 = out of stock, 2 = soon to be out of stock, 3 = manually added
+            }],
+        }],
+        default: []
+    },
+    soonOutOfStock:{
+        type: Array,
+        value: [{
+            type: Object,
+            value: [{
+                name: String,
+                time: Number,
+                priotiry: Number //1 = out of stock, 2 = soon to be out of stock, 3 = manually added
+            }],
+        }],
+        default: []
+    },
+    shoppingList:{
+        type: Array,
+        value: [{
+            type: Object,
+            value: [{
+                name: String,
+                time: Number,
+                priotiry: Number //1 = out of stock, 2 = soon to be out of stock, 3 = manually added
+            }],
         }],
         default: []
     }

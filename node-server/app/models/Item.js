@@ -25,9 +25,13 @@ const itemSchema = new mongoose.Schema({
     userID: { // User that registered the item
         type: String,
         required: true
-    }, 
-    breadcrumbs: {
+    },
+    breadcrumbs: { // List of item's simplified names
         type: [String],
+        required: true
+    },
+    lasted: { // List of item's simplified names
+        type: [Number],
         required: true
     }
 });

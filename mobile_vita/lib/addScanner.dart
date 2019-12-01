@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:mobile_vita/api.dart';
-import 'main.dart';
+import 'settings.dart';
+import 'globals.dart';
 
-class SignupPage extends StatefulWidget {
-  SignupPage({Key key, this.title}) : super(key: key);
+class AddScannerPage extends StatefulWidget {
+  AddScannerPage({Key key, this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -18,34 +19,29 @@ class SignupPage extends StatefulWidget {
   final String title;
 
   @override
-  _SignupPageState createState() => _SignupPageState();
+  _AddScannerPageState createState() => _AddScannerPageState();
 }
 
-class _SignupPageState extends State<SignupPage> {
-  TextEditingController nameController = new TextEditingController();
-  TextEditingController emailController = new TextEditingController();
-  TextEditingController passwordController = new TextEditingController();
+class _AddScannerPageState extends State<AddScannerPage> {
+  TextEditingController scannerIDController = new TextEditingController();
+  TextEditingController scannerNameController = new TextEditingController();
 
-  void createAccount() async {
-    print("Create Account Requested");
-    print("Name: ${nameController.text}");
-    print("Email: ${emailController.text}");
-    print("Password: ${passwordController.text}");
+  void addItem() async {
+    print("Link Scanner Requested");
+    print("Scanner Name: ${scannerNameController.text}");
+    print("Scanner ID: ${scannerIDController.text}");
 
-    bool success = await signUpCall(nameController.text, emailController.text,
-        passwordController.text, context);
-
-    //Upon successful return
-    if (success) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => LoginPage()));
+    // Call API to successfully link scanner to account
+    bool pairSuccess = await pair(scannerIDController.text, context);
+    if(pairSuccess){
+        Navigator.pop(context);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final appBar = GradientAppBar(
-        title: Text('Sign Up'),
+        title: Text('Add Scanner'),
         backgroundColorStart: Colors.deepPurple,
         backgroundColorEnd: Colors.purple,
         automaticallyImplyLeading: true,
@@ -56,12 +52,12 @@ class _SignupPageState extends State<SignupPage> {
           },
         ));
 
-    final nameField = TextField(
-      controller: nameController,
+    final scannerIDField = TextField(
+      controller: scannerIDController,
       obscureText: false,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Name",
+          hintText: "Scanner ID",
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.purpleAccent, width: 2.0),
           ),
@@ -69,12 +65,12 @@ class _SignupPageState extends State<SignupPage> {
               OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))),
     );
 
-    final emailField = TextField(
-      controller: emailController,
+    final scannerNameField = TextField(
+      controller: scannerNameController,
       obscureText: false,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Email",
+          hintText: "Scanner Name",
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.purpleAccent, width: 2.0),
           ),
@@ -82,27 +78,14 @@ class _SignupPageState extends State<SignupPage> {
               OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))),
     );
 
-    final passwordField = TextField(
-      controller: passwordController,
-      obscureText: true,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Password",
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.purpleAccent, width: 2.0),
-          ),
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))),
-    );
-
-    final createButton = Material(
+    final sendButton = Material(
       borderRadius: BorderRadius.circular(10.0),
       color: Colors.purple,
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: createAccount,
-        child: Text("Create Account",
+        onPressed: addItem,
+        child: Text("Link Scanner",
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       ),
@@ -110,6 +93,7 @@ class _SignupPageState extends State<SignupPage> {
 
     return Scaffold(
       appBar: appBar,
+      // bottomNavigationBar: bottomNavigationBar,
       body: Center(
         child: Container(
           color: Colors.white,
@@ -119,23 +103,11 @@ class _SignupPageState extends State<SignupPage> {
               child: ListView(
                 shrinkWrap: true,
                 children: <Widget>[
-                  SizedBox(
-                    height: 155.0,
-                    child: Image.asset(
-                      "assets/logo-gradient.png",
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                  SizedBox(height: 45.0),
-                  nameField,
-                  SizedBox(height: 25.0),
-                  emailField,
-                  SizedBox(height: 25.0),
-                  passwordField,
-                  SizedBox(
-                    height: 35.0,
-                  ),
-                  createButton,
+                  // scannerNameField,
+                  // SizedBox(height: 25.0),
+                  scannerIDField,
+                  SizedBox(height: 35.0),
+                  sendButton,
                 ],
               ),
             ),

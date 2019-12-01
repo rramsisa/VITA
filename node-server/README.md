@@ -1,10 +1,14 @@
 # Server
 
+API server: 198.199.89.191:3000/api/
+
 This is a server that uses node.js to run an express server with a Mongo DB database
 
 To run the server, run <b>npm start</b><endl>
 
 It will run on <b>localhost:3000</b>
+
+To run the server on the droplet, ssh into the droplet as root. Then, run <b>pm2 list</b> to see the list of servers running. To start the server, run <b>pm2 start server.js</b>.<endl>
 
 <b>Packages:</b>
 
@@ -16,39 +20,27 @@ When logging out, this token must be deleted.
 
 <b>Endpoints created:</b>
 
-1. /api/user/register/
-2. /api/user/login/
-3. /api/user/changePassword/
-
-| Type | Path                       | Parameters                                                     |
-| ---- | -------------------------- | -------------------------------------------------------------- |
-| POST | /api/user/register/        | name (string), email (string), password (string)               |
-| POST | /api/user/login/           | email (string), password (string)                              |
-| POST | /api/user/changePassword/  | email (string), password (string), newPassword (string)        |
-| POST | /api/user/deleteUser/      | email (string), password (string)                              |
-| POST | /api/raspi/pair/           | device(string id)                                              |
-| POST | /api/raspi/unpair/         | device(string id)                                              |
-| GET  | /api/user/                 | None                                                           |
-| POST | /api/raspi/postBarCodeData | name (string), flag (0 or 1), barCode(12 characters, optional) |
-| POST | /api/manual                | name (string), flag (0 or 1), quantity(integer)                |
-| GET  | /api/items/                | None                                                           |
-| POST | /api/item/                 | item id (string)                                               |
-| GET  | /api/myitems/              | None                                                           |
-| GET  | /api/myitemsInfo/          | None                                                           |
-| GET  | /api/recipes/recipe        | None                                                           |
-
-
-
+| Type | Path                        | Parameters                                                           |
+| ---- | --------------------------- | -------------------------------------------------------------------- |
+| POST | /api/user/register/         | name (string), email (string), password (string)                     |
+| POST | /api/user/login/            | email (string), password (string)                                    |
+| POST | /api/user/changePassword/   | email (string), password (string), newPassword (string)              |
+| POST | /api/user/deleteUser/       | email (string), password (string)                                    |
+| POST | /api/raspi/pair/            | device(string id)                                                    |
+| POST | /api/raspi/unpair/          | device(string id)                                                    |
+| GET  | /api/user/                  | None                                                                 |
+| POST | /api/raspi/postBarCodeData/ | name (string), flag (0 or 1), barCode (string), scannerID (9 digits) |
+| POST | /api/manual/                | name (string), flag (0 or 1), quantity(integer)                      |
+| GET  | /api/items/                 | None                                                                 |
+| POST | /api/item/                  | item id (string)                                                     |
+| GET  | /api/myitems/               | None                                                                 |
+| GET  | /api/myitemsInfo/           | None                                                                 |
+| GET  | /api/recipes/recipe/        | None                                                                 |
+| GET  | /api/user/scanner/          | None                                                                 |
+| POST | /api/item/deleteItem/       | name (string)                                                        |
 
 <b> PostMan test cases </b>
 https://app.getpostman.com/join-team?invite_code=f7a228669babd77bdd2a5ae7c1dac92d
 
 <b> Unit testing</b>
 run : npm test
-
-<b>To Do:</b>
-
-1. Update Schema to accomodate paired devices as well as the inventory items (Finished)
-2. Make change password api endpoint (POST) (finished)
-3. Basic POST API call to receive bar code from Raspi. No association with accounts needed right now.
-4. Make pair/unpair scanner endpoints (finished)

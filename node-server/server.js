@@ -6,6 +6,8 @@ const authRoute = require('./app/routes/auth')
 const raspiRoute = require('./app/routes/raspi');
 const recipesRoute = require('./app/routes/recipes');
 const manualRoute = require('./app/routes/manual');
+const listRoute = require('./app/routes/list');
+
 const verify = require('./app/routes/verifyToken').validateToken;
 
 
@@ -40,14 +42,18 @@ app.use(express.json());
 
 app.route("/api/recipes/recipe")
     .get(verify, recipesRoute.GetRecipe)
+app.route("/api/recipes/recipeLink")
+    .get(verify, recipesRoute.GetRecipeLink)
 app.route("/api/user/")
     .get(authRoute.getUsers);
 app.route("/api/items/")
-    .get(verify, raspiRoute.getItems);
+    .get(raspiRoute.getItems);
 app.route("/api/item/")
     .post(verify, raspiRoute.getItem);
 app.route("/api/myitems/")
     .get(verify, raspiRoute.getMyItems);
+app.route("/api/findMyItem")
+    .post(verify, raspiRoute.findMyItems)
 app.route("/api/myitemsInfo/")
     .get(verify, raspiRoute.getMyItemsInfo);
 app.route("/api/user/login")
@@ -63,9 +69,38 @@ app.route("/api/raspi/pair")
 app.route("/api/raspi/unpair")
     .post(verify, raspiRoute.unpair)
 app.route("/api/raspi/postBarCodeData")
-    .post(verify, raspiRoute.postBarCodeData)
+    .post(raspiRoute.postBarCodeData)
 app.route("/api/manual")
     .post(verify, manualRoute.manual)
+app.route("/api/user/scanner")
+    .get(verify, raspiRoute.pairedScanners)
+app.route("/api/item/deleteItem")
+    .post(verify, raspiRoute.deleteItem)
+app.route("/api/list/refreshOutOfStockList")
+    .get(verify, listRoute.refreshOutOfStockList)
+app.route("/api/list/refreshSoonOutOfStockList")
+    .get(verify, listRoute.refreshSoonOutOfStockList)
+app.route("/api/list/addToShoppingList")
+    .post(verify, listRoute.addToShoppingList)
+app.route("/api/list/moveFromOutOfStockList")
+    .post(verify, listRoute.moveFromOutOfStockList)
+app.route("/api/list/moveFromSoonOutOfStockList")
+    .post(verify, listRoute.moveFromSoonOutOfStockList)
+app.route("/api/list/removeFromShoppingList")
+    .post(verify, listRoute.removeFromShoppingList)
+app.route("/api/list/getOutOfStockList")
+    .get(verify, listRoute.getOutOfStockList)
+app.route("/api/list/clearOutOfStockList")
+    .post(verify, listRoute.clearOutOfStockList)
+app.route("/api/list/getSoonOutOfStockList")
+    .get(verify, listRoute.getSoonOutOfStockList)
+app.route("/api/list/clearSoonOutOfStockList")
+    .post(verify, listRoute.clearSoonOutOfStockList)
+app.route("/api/list/getShoppingList")
+    .get(verify, listRoute.getShoppingList)
+app.route("/api/list/clearShoppingList")
+    .post(verify, listRoute.clearShoppingList)
+
 
 
 // listen for requests
