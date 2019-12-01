@@ -37,6 +37,13 @@ const userSchema = new mongoose.Schema({
             type: Number,
         }],
         default: []
+    },
+    toGetList:{
+        type: Array,
+        value: [{
+            type: String,
+        }],
+        default: []
     }
 });
 
