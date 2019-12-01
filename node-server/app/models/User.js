@@ -38,10 +38,39 @@ const userSchema = new mongoose.Schema({
         }],
         default: []
     },
-    toGetList:{
+    outOfStock:{
         type: Array,
         value: [{
-            type: String,
+            type: Object,
+            value: [{
+                name: String,
+                time: Number,
+                priotiry: Number //1 = out of stock, 2 = soon to be out of stock, 3 = manually added
+            }],
+        }],
+        default: []
+    },
+    soonOutOfStock:{
+        type: Array,
+        value: [{
+            type: Object,
+            value: [{
+                name: String,
+                time: Number,
+                priotiry: Number //1 = out of stock, 2 = soon to be out of stock, 3 = manually added
+            }],
+        }],
+        default: []
+    },
+    shoppingList:{
+        type: Array,
+        value: [{
+            type: Object,
+            value: [{
+                name: String,
+                time: Number,
+                priotiry: Number //1 = out of stock, 2 = soon to be out of stock, 3 = manually added
+            }],
         }],
         default: []
     }
