@@ -31,6 +31,7 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
     updateLists();
 
     tabController = TabController(length: 3, vsync: this);
+    tabController.addListener(updateView);
   }
 
   void updateLists() async {
@@ -44,6 +45,13 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
         // Used to refresh the UI once the update is finished :)
       });
     }
+  }
+
+  void updateView(){
+    setState(() {
+      
+    });
+    print("Updating View");
   }
 
   void addToShoppingList(itemName) async {
@@ -73,7 +81,6 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
   }
 
   Widget returnShoppingList(){
-    print(shoppingList);
     return ListView.builder(
       itemCount: shoppingList.length,
       itemBuilder: (BuildContext ctxt, int Index) {
@@ -82,7 +89,7 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
             title: Text(shoppingList[Index]),
             // leading: Icon(Icons.cancel),
             trailing: Icon(Icons.done_outline),
-            onTap: (){
+            onLongPress: (){
               removeFromShoppingList(shoppingList[Index]);
             },
           )
@@ -143,6 +150,7 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
       flexibleSpace: SafeArea(
         child: new TabBar(
           controller: tabController,
+          // onTap: updateView(),
           tabs:[
             new Tab(
               text: "Shopping",
