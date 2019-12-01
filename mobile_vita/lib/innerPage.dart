@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'settings.dart';
 import 'inventory.dart';
+import 'lists.dart';
 import 'placeholderWidget.dart';
 
 class InnerApp extends StatelessWidget {
@@ -48,7 +49,7 @@ class _InnerPageState extends State<InnerPage> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     InventoryPage(), // Inventory Page
-    PlaceholderWidget(Colors.grey[100]), // Lists Page
+    ListsPage(), // Lists Page
     PlaceholderWidget(Colors.grey[200]), // Recipes Page
     SettingsPage(),
   ];

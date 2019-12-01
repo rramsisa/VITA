@@ -5,6 +5,9 @@
   var pantryItems = [];
   var scanners = [];
   var selectedItem = {};
+  var shoppingList = ["S Item One", "S Item Two", "S Item Three"]; //TODO: temp. Should be changed
+  var recommendedList = ["R Item One", "R Item Two", "R Item Three"]; //TODO: temp. Should be changed
+  var outOfStockList = ["O Item One", "O Item Two", "O Item Three"]; //TODO: temp. Should be changed
   
   void setAuthToken(var t){
     authToken = t;
@@ -18,6 +21,24 @@
     pantryItems = p;
     print("Pantry Updated");
     print(p);
+  }
+
+  void setShoppingList(var l){
+    shoppingList = l;
+    print("Shopping List Updated");
+    print(l);
+  }
+
+  void setRecommendedList(var r){
+    recommendedList = r;
+    print("Recommended List Updated");
+    print(r);
+  }
+
+  void setOutOfStockList(var o){
+    outOfStockList = o;
+    print("Out of Stock List Updated");
+    print(o);
   }
 
   void setScanners(var s){

@@ -7,10 +7,14 @@ import 'globals.dart';
 import 'dart:io';
 
 
+// Use these to switch paths for testing
+var callPath = "localhost";
+// var callPath = "198.199.89.191";
+
 //-----------------------API FOR LOGIN-----------------------------------------
 Future<bool> loginCall(String email, String pass, BuildContext context) async {
   var call;
-  call = "http://198.199.89.191:3000/api/user/login/"; //base route for the api calls
+  call = "http://$callPath:3000/api/user/login/"; //base route for the api calls
   /* 
   if (Platform.isAndroid) {
     call =
@@ -68,7 +72,7 @@ logoutCall() async {
 Future<bool> signUpCall(
     String name, String email, String pass, BuildContext context) async {
   var call;
-  call = "http://198.199.89.191:3000/api/user/register/";
+  call = "http://$callPath:3000/api/user/register/";
   try {
     final response = await http.post(call,
         body: json.encode({'name': name, 'email': email, 'password': pass}),
@@ -99,7 +103,7 @@ Future<bool> signUpCall(
 Future<bool> changePassCall(
     String pass, String newPass, String email, BuildContext context) async {
   var call;
-  call = "http://198.199.89.191:3000/api/user/changePassword/";
+  call = "http://$callPath:3000/api/user/changePassword/";
   try {
     final response = await http.post(call,
         body: json
@@ -130,7 +134,7 @@ Future<bool> changePassCall(
 //-----------------------API FOR PANTRY ITEMS-----------------------------------------
 Future<bool> getPantryItems(BuildContext context) async{
   var call;
-  call = "http://198.199.89.191:3000/api/myitemsInfo/";
+  call = "http://$callPath:3000/api/myitemsInfo/";
   try {
     final response = await http.get(call,
         // body: json.encode({'newPassword': newPass, 'email': email, 'password': pass}),
@@ -162,7 +166,7 @@ Future<bool> getPantryItems(BuildContext context) async{
 Future<bool> manual(
     String name, int flag, int quantity, BuildContext context) async {
   var call;
-  call = "http://198.199.89.191:3000/api/manual/";
+  call = "http://$callPath:3000/api/manual/";
   print(call);
   try {
     print("before await");
@@ -198,7 +202,7 @@ Future<bool> manual(
 Future<bool> pair(
     String id, BuildContext context) async {
   var call;
-  call = "http://198.199.89.191:3000/api/raspi/pair/";
+  call = "http://$callPath:3000/api/raspi/pair/";
   print(call);
   try {
     print("before await");
@@ -234,7 +238,7 @@ Future<bool> pair(
 Future<bool> unpairCall(
     String id, BuildContext context) async {
   var call;
-  call = "http://198.199.89.191:3000/api/raspi/unpair/";
+  call = "http://$callPath:3000/api/raspi/unpair/";
   print(call);
   try {
     print("before await");
@@ -268,7 +272,7 @@ Future<bool> unpairCall(
 //-----------------------API FOR SCANNER RETREIVE-----------------------------------------
 Future<bool> getScanners(BuildContext context) async{
   var call;
-  call = "http://198.199.89.191:3000/api/user/scanner/";
+  call = "http://$callPath:3000/api/user/scanner/";
   try {
     final response = await http.get(call,
         headers: {"Content-Type": "application/json", "auth-token": authToken});
@@ -298,7 +302,7 @@ Future<bool> getScanners(BuildContext context) async{
 Future<bool> deleteCall(
     String name, BuildContext context) async {
   var call;
-  call = "http://198.199.89.191:3000/api/item/deleteItem/";
+  call = "http://$callPath:3000/api/item/deleteItem/";
   print(call);
   try {
     print("before await");

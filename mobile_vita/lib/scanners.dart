@@ -24,7 +24,6 @@ class ScannerPage extends StatefulWidget {
 }
 
 class _ScannerPageState extends State<ScannerPage> {
-
   void initState() {
     updateScanners();
   }
@@ -53,6 +52,7 @@ class _ScannerPageState extends State<ScannerPage> {
       // Generate list on page done below
       setState(() {
         // Used to refresh the UI once the update is finished :)
+        scanners = List.from(scanners);
       });
     }
   }
