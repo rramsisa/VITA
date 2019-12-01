@@ -29,6 +29,19 @@
     print(l);
   }
 
+// TODO: These are manipulating the local array, should probably be done differently, or update entire list with API call
+  void shoppingListAdd(var a){
+    shoppingList.add(a);
+    print("New Shopping List: ");
+    print(shoppingList);
+  }
+
+  void shoppingListRemove(var a){
+    shoppingList.remove(a);
+    print("New Shopping List: ");
+    print(shoppingList);
+  }
+
   void setRecommendedList(var r){
     recommendedList = r;
     print("Recommended List Updated");

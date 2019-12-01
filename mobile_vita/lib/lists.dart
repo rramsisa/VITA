@@ -46,6 +46,18 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
     }
   }
 
+  void addToShoppingList(itemName) async {
+    print("Add to Shopping List Requested");
+    print("Item to add: " + itemName);
+    shoppingListAdd(itemName);
+  }
+
+  void removeFromShoppingList(itemName) async {
+    print("Remove from Shopping List Requested");
+    print("Item to remove: " + itemName);
+    shoppingListRemove(itemName);
+  }
+
   void modifyMove(itemID) async {
     print("Modify Item Requested");
     print("Item to modify: " + itemID);
@@ -68,10 +80,10 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
         return new Card(
           child: ListTile(
             title: Text(shoppingList[Index]),
-            leading: Icon(Icons.cancel),
+            // leading: Icon(Icons.cancel),
             trailing: Icon(Icons.done_outline),
-            onTap: (){ // TODO: Change to individual taps
-              modifyMove(pantryItems[Index]["_id"]);
+            onTap: (){
+              removeFromShoppingList(shoppingList[Index]);
             },
           )
         );
@@ -89,8 +101,8 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
             subtitle: Text("Will run out in about # days"),
             // leading: Icon(Icons.cancel),
             trailing: Icon(Icons.add_shopping_cart),
-            onTap: (){ // TODO: Change to individual taps
-              modifyMove(pantryItems[Index]["_id"]);
+            onTap: (){
+              addToShoppingList(recommendedList[Index]);
             },
           )
         );
@@ -108,8 +120,8 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
             subtitle: Text("##/##/####"),
             // leading: Icon(Icons.cancel),
             trailing: Icon(Icons.add_shopping_cart),
-            onTap: (){ // TODO: Change to individual taps
-              modifyMove(pantryItems[Index]["_id"]);
+            onTap: (){
+              addToShoppingList(outOfStockList[Index]);
             },
           )
         );
