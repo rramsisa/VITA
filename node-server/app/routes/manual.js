@@ -77,7 +77,7 @@ async function manual(req, res) {
 
             })
             .end(result => {
-                breadList = result.body.breadcrumbs
+                breadList = [result.body.category]
                 // console.log(breadList);
                 if (breadList.indexOf("non food item") >= 0) {
                     breadList = []

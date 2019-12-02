@@ -55,21 +55,25 @@ async function GetRecipe(req, res) {
 		for (var property in values) {
 
 			const item = await Item.findOne({
-				_id: values[property]
-			})
+            	_id: values[property]
+        	 })
+			if(item.status == true){
+        		breadcrumbs.push.apply(breadcrumbs, item.breadcrumbs)
+			}
+            
+        }
+       console.log(breadcrumbs)
 
-			breadcrumbs.push.apply(breadcrumbs, item.breadcrumbs)
-
-		}
-		console.log(breadcrumbs)
+		
 
 		unirest.get(url + requestString)
 			.header("apiKey", process.env.API_KEY)
 			.header('Content-Type', 'application/json')
 			.query({
 				"ingredients": breadcrumbs,
-				"number": 5,
-				"ranking": 1
+				"number":2,
+				"ranking":2,
+				"ignorePantry": true
 			})
 			.end(result => {
 				console.log(result.body);
@@ -90,9 +94,49 @@ async function GetRecipe(req, res) {
 
 }
 
+async function GetRecipeLink(req, res) {
+    console.log("reached link finder")
+	
+	let requestString = "recipes/informationBulk?apiKey="+process.env.API_KEY
+
+    try {
+        const user = await User.findOne({
+            _id: req.user._id
+         })
+        
+       // console.log(breadcrumbs)
+
+         unirest.get(url+requestString)
+			.header("apiKey", process.env.API_KEY)
+			.header('Content-Type', 'application/json')
+			.query({
+				"ids": [req.body.id],
+				"includeNutrition": false
+			})
+			.end(result=>{
+				console.log(result.body[0].spoonacularSourceUrl);
+				return res.send({
+			            link: result.body[0].spoonacularSourceUrl
+			        });
+			})
+        
+
+        
+    } catch (err) {
+        res.status(400).send({
+            message: err
+        })
+    }
+
+
+ 
+}
+
 
 
 module.exports = {
-	get_basic_pantry_item_name,
-	GetRecipe
+   get_basic_pantry_item_name, 
+   GetRecipe, 
+   GetRecipeLink
+
 };
