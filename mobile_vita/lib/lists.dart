@@ -35,11 +35,11 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
     tabController.addListener(updateView);
   }
 
-  void updateLists() async {
+  Future<void> updateLists() async {
     print("Updating Lists");
 
     //Make API call to get pantry & update list
-    bool success = await getPantryItems(context); // TODO: Change to proper call
+    bool success = await getPantryItems(context); // TODO: Change to proper calls
     if(success){
       // Generate list on page done below
       setState(() {
@@ -204,7 +204,10 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: getTabBar(),
-        body: getTabBarPages(),
+        body: new RefreshIndicator(
+          onRefresh: updateLists,
+          child: getTabBarPages(),
+        )
       );
   }
 }

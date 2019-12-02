@@ -29,7 +29,7 @@ class _RecipesPageState extends State<RecipesPage> {
     updateRecipes();
   }
 
-  void updateRecipes() async {
+  Future<void> updateRecipes() async {
     print("Updating Recipes");
 
     //Make API call to get pantry & update list
@@ -50,24 +50,27 @@ class _RecipesPageState extends State<RecipesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: new ListView.builder(
-        itemCount: recipesList.length,
-        itemBuilder: (BuildContext ctxt, int Index) {
-          return new Card(
-            child: ListTile(
-              title: Text(recipesList[Index]["title"]),
-              subtitle: Text(
-                'Number of Ingredients Used: ${recipesList[Index]["usedIngredientCount"].toString()}'
-              ),
-              leading: Image.network(recipesList[Index]["image"]),
-              trailing: Icon(Icons.language),
-              onTap: (){
-                navigateToRecipe(recipesList[Index]["id"]);
-              },
-            )
-          );
-        }
-      ),
+      body: new RefreshIndicator(
+        onRefresh: updateRecipes,
+        child: new ListView.builder(
+          itemCount: recipesList.length,
+          itemBuilder: (BuildContext ctxt, int Index) {
+            return new Card(
+              child: ListTile(
+                title: Text(recipesList[Index]["title"]),
+                subtitle: Text(
+                  'Number of Ingredients Used: ${recipesList[Index]["usedIngredientCount"].toString()}'
+                ),
+                leading: Image.network(recipesList[Index]["image"]),
+                trailing: Icon(Icons.language),
+                onTap: (){
+                  navigateToRecipe(recipesList[Index]["id"]);
+                },
+              )
+            );
+          }
+        ),
+      )
     );
   }
 }
