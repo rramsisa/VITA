@@ -8,6 +8,69 @@
   var shoppingList = ["S Item One", "S Item Two", "S Item Three"]; //TODO: temp. Should be changed
   var recommendedList = ["R Item One", "R Item Two", "R Item Three"]; //TODO: temp. Should be changed
   var outOfStockList = ["O Item One", "O Item Two", "O Item Three"]; //TODO: temp. Should be changed
+
+  var recipesList = [
+    {
+      "id": 933310,
+      "title": "2 Ingredient Instant Pot Applesauce",
+      "image": "https://spoonacular.com/recipeImages/933310-312x231.jpg",
+      "imageType": "jpg",
+      "usedIngredientCount": 1,
+      "missedIngredientCount": 0,
+      "missedIngredients": [],
+      "usedIngredients": [
+          {
+              "id": 9003,
+              "amount": 11,
+              "unit": "large",
+              "unitLong": "larges",
+              "unitShort": "large",
+              "aisle": "Produce",
+              "name": "apples",
+              "original": "11 Apples, peeled and chopped in large pieces *see note",
+              "originalString": "11 Apples, peeled and chopped in large pieces *see note",
+              "originalName": "11 Apples, peeled and chopped in large pieces *see note",
+              "metaInformation": [
+                  "peeled",
+                  "chopped"
+              ],
+              "image": "https://spoonacular.com/cdn/ingredients_100x100/apple.jpg"
+          }
+      ],
+      "unusedIngredients": [],
+      "likes": 0
+    },
+    {
+      "id": 933311,
+      "title": "3 Ingredient Instant Pot Mac and Cheese",
+      "image": "https://www.cookingclassy.com/wp-content/uploads/2018/07/stovetop-macaroni-cheese-1.jpg",
+      "imageType": "jpg",
+      "usedIngredientCount": 4,
+      "missedIngredientCount": 0,
+      "missedIngredients": [],
+      "usedIngredients": [
+          {
+              "id": 9003,
+              "amount": 11,
+              "unit": "large",
+              "unitLong": "larges",
+              "unitShort": "large",
+              "aisle": "Produce",
+              "name": "apples",
+              "original": "11 Apples, peeled and chopped in large pieces *see note",
+              "originalString": "11 Apples, peeled and chopped in large pieces *see note",
+              "originalName": "11 Apples, peeled and chopped in large pieces *see note",
+              "metaInformation": [
+                  "peeled",
+                  "chopped"
+              ],
+              "image": "https://spoonacular.com/cdn/ingredients_100x100/apple.jpg"
+          }
+      ],
+      "unusedIngredients": [],
+      "likes": 0
+    },
+  ];
   
   void setAuthToken(var t){
     authToken = t;

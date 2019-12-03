@@ -4,6 +4,7 @@ import 'settings.dart';
 import 'inventory.dart';
 import 'lists.dart';
 import 'placeholderWidget.dart';
+import 'recipes.dart';
 
 class InnerApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -50,7 +51,7 @@ class _InnerPageState extends State<InnerPage> {
   final List<Widget> _children = [
     InventoryPage(), // Inventory Page
     ListsPage(), // Lists Page
-    PlaceholderWidget(Colors.grey[200]), // Recipes Page
+    RecipesPage(),
     SettingsPage(),
   ];
 

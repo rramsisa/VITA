@@ -29,7 +29,7 @@ class _InventoryPageState extends State<InventoryPage> {
     updatePantry();
   }
 
-  void updatePantry() async {
+  Future<void> updatePantry() async {
     print("Updating Pantry");
 
     //Make API call to get pantry & update list
@@ -59,23 +59,26 @@ class _InventoryPageState extends State<InventoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: new ListView.builder(
-        itemCount: pantryItems.length,
-        itemBuilder: (BuildContext ctxt, int Index) {
-          return new Card(
-            child: ListTile(
-              title: Text(pantryItems[Index]["name"]),
-              subtitle: Text(
-                'Quantity: ${pantryItems[Index]["quantity"].toString()} \nLast Modified: ${pantryItems[Index]["date"].substring(0,10)}'
-              ),
-              trailing: Icon(Icons.arrow_forward_ios),
-              onTap: (){
-                modifyMove(pantryItems[Index]["_id"]);
-              },
-              isThreeLine: true,
-            )
-          );
-        }
+      body: new RefreshIndicator(
+        onRefresh: updatePantry,
+        child: new ListView.builder(
+          itemCount: pantryItems.length,
+          itemBuilder: (BuildContext ctxt, int Index) {
+            return new Card(
+              child: ListTile(
+                title: Text(pantryItems[Index]["name"]),
+                subtitle: Text(
+                  'Quantity: ${pantryItems[Index]["quantity"].toString()} \nLast Modified: ${pantryItems[Index]["date"].substring(0,10)}'
+                ),
+                trailing: Icon(Icons.arrow_forward_ios),
+                onTap: (){
+                  modifyMove(pantryItems[Index]["_id"]);
+                },
+                isThreeLine: true,
+              )
+            );
+          }
+        )
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

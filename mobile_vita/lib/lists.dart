@@ -26,6 +26,7 @@ class ListsPage extends StatefulWidget {
 
 class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMixin{
   TabController tabController;
+  TextEditingController newController = new TextEditingController();
 
   void initState() {
     updateLists();
@@ -34,11 +35,11 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
     tabController.addListener(updateView);
   }
 
-  void updateLists() async {
+  Future<void> updateLists() async {
     print("Updating Lists");
 
     //Make API call to get pantry & update list
-    bool success = await getPantryItems(context); // TODO: Change to proper call
+    bool success = await getPantryItems(context); // TODO: Change to proper calls
     if(success){
       // Generate list on page done below
       setState(() {
@@ -58,12 +59,22 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
     print("Add to Shopping List Requested");
     print("Item to add: " + itemName);
     shoppingListAdd(itemName);
+    updateView();
   }
 
   void removeFromShoppingList(itemName) async {
     print("Remove from Shopping List Requested");
     print("Item to remove: " + itemName);
     shoppingListRemove(itemName);
+    updateView();
+  }
+
+  void manualShoppingList(){
+    print("Manual Add to Shopping List Requested");
+    print("Item to add: " + newController.text);
+    shoppingListAdd(newController.text);
+    newController.text = "";
+    updateView();
   }
 
   void modifyMove(itemID) async {
@@ -81,7 +92,7 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
   }
 
   Widget returnShoppingList(){
-    return ListView.builder(
+    return new ListView.builder(
       itemCount: shoppingList.length,
       itemBuilder: (BuildContext ctxt, int Index) {
         return new Card(
@@ -94,7 +105,24 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
             },
           )
         );
-      }
+      },
+    );
+  }
+
+  Widget returnTextField(){
+    return TextField(
+      controller: newController,
+      style: new TextStyle(color: Colors.white),
+      decoration: InputDecoration(
+        fillColor: Colors.purple,
+        hintText: "Add New Item",
+        // border: OutlineInputBorder(),
+        contentPadding: const EdgeInsets.all(20.0),
+        suffixIcon: IconButton(
+          icon: Icon(Icons.add_shopping_cart),
+          onPressed: manualShoppingList,
+        ),
+      ),
     );
   }
 
@@ -138,6 +166,7 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
 
   Widget getTabBarPages() {
     return TabBarView(controller: tabController, children: <Widget>[
+      // returnTextField(),
       returnShoppingList(),
       returnRecommendedList(),
       returnOutOfStockList()
@@ -154,7 +183,6 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
           tabs:[
             new Tab(
               text: "Shopping",
-              
             ),
             new Tab(
               text: "Recommended",
@@ -165,6 +193,10 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
           ],
         ),
       ),
+      bottom: PreferredSize(
+        preferredSize: const Size.fromHeight(48.0),
+        child: returnTextField()
+      )
     );
   }
 
@@ -172,17 +204,10 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: getTabBar(),
-        body: getTabBarPages(),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => AddItemPage()),
-            );
-          },
-          child: Icon(Icons.add),
-          backgroundColor: Colors.purple,
-        ),
+        body: new RefreshIndicator(
+          onRefresh: updateLists,
+          child: getTabBarPages(),
+        )
       );
   }
 }

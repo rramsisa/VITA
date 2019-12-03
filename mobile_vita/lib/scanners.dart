@@ -28,7 +28,7 @@ class _ScannerPageState extends State<ScannerPage> {
     updateScanners();
   }
 
-  void updateScanners() async {
+  Future<void> updateScanners() async {
     print("Updating Scanners");
 
     //Make API call to get pantry & update list
@@ -73,23 +73,26 @@ class _ScannerPageState extends State<ScannerPage> {
     ));
     return Scaffold(
       appBar: appBar,
-      body: new ListView.builder(
-        itemCount: scanners.length,
-        itemBuilder: (BuildContext ctxt, int Index) {
-          return new Card(
-            child: ListTile(
-              leading: Icon(Icons.scanner, size: 40.0),
-              title: Text(scanners[Index]),
-              trailing: IconButton(
-                icon: Icon(Icons.clear),
-                tooltip: 'Remove Item',
-                onPressed: () {
-                  removeScanner(scanners[Index]);
-                },
-              ),
-            )
-          );
-        }
+      body: new RefreshIndicator(
+        onRefresh: updateScanners,
+        child: new ListView.builder(
+          itemCount: scanners.length,
+          itemBuilder: (BuildContext ctxt, int Index) {
+            return new Card(
+              child: ListTile(
+                leading: Icon(Icons.scanner, size: 40.0),
+                title: Text(scanners[Index]),
+                trailing: IconButton(
+                  icon: Icon(Icons.clear),
+                  tooltip: 'Remove Item',
+                  onPressed: () {
+                    removeScanner(scanners[Index]);
+                  },
+                ),
+              )
+            );
+          }
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
