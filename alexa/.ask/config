@@ -17,11 +17,11 @@
       "in_skill_products": [],
       "resources": {
         "manifest": {
-          "eTag": "038edfd13b70ff75213ac93e4d424599"
+          "eTag": "c0ebbd5b31d9a3c071bfeab751fc3bb0"
         },
         "interactionModel": {
           "en-US": {
-            "eTag": "0f66227e88a09aadfcc646b3fa59eb2f"
+            "eTag": "0d86672bcdd6a18c61c4928a3da65d9f"
           }
         },
         "lambda": [
@@ -34,7 +34,7 @@
             "codeUri": "lambda/custom",
             "functionName": "ask-custom-dabblelab-vita-default",
             "handler": "index.handler",
-            "revisionId": "6253e9cd-ee05-44c1-84ec-58ac992570ad",
+            "revisionId": "0697007f-ec85-4b0e-817c-6b712dcd7d08",
             "runtime": "nodejs8.10"
           }
         ]

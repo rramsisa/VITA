@@ -234,7 +234,7 @@ Future<bool> pair(
 }
 
 
-//-----------------------API FOR SCANNER PAIR-----------------------------------------
+//-----------------------API FOR SCANNER UNPAIR-----------------------------------------
 Future<bool> unpairCall(
     String id, BuildContext context) async {
   var call;

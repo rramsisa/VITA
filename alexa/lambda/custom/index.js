@@ -1,13 +1,16 @@
 /* eslint-disable  func-names */
 /* eslint-disable  no-console */
 
+// Auth token for user rishabh@google.com
+// May require to be regenerated
+const authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGJiOTJhYzYwZTlmNDNkNTE5OWI5YmEiLCJpYXQiOjE1NzU0MzAzNTcsImV4cCI6MTU3NTUxNjc1N30.GTtpK86LWRgERz4jiFAwISLK4BNT_1Am_ls2BhX2n9k';
+
 const Alexa = require('ask-sdk-core');
 
-const GetRemoteDataHandler = {
+const GetShoppingListHandler = {
   canHandle(handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'LaunchRequest'
-      || (handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && handlerInput.requestEnvelope.request.intent.name === 'GetRemoteDataIntent');
+    return (handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'GetShoppingListIntent');
   },
   async handle(handlerInput) {
     let outputSpeech = 'This is the default message.';
@@ -15,8 +18,8 @@ const GetRemoteDataHandler = {
     await getRemoteData('http://api.open-notify.org/astros.json')
       .then((response) => {
         const data = JSON.parse(response);
-        outputSpeech = `There are currently ${data.people.length} astronauts in space. `;
-        
+        outputSpeech = `There are currently ${data.people.length} shopping items in space. `;
+
       })
       .catch((err) => {
         //set an optional error message here
@@ -28,6 +31,147 @@ const GetRemoteDataHandler = {
       .getResponse();
 
   },
+};
+
+const GetItemListHandler = {
+  canHandle(handlerInput) {
+    return (handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'GetItemListIntent');
+  },
+  async handle(handlerInput) {
+    let outputSpeech = 'This is the default message.';
+
+    await getRemoteData('http://api.open-notify.org/astros.json')
+      .then((response) => {
+        const data = JSON.parse(response);
+        outputSpeech = `There are currently ${data.people.length} items in space. `;
+
+      })
+      .catch((err) => {
+        //set an optional error message here
+        //outputSpeech = err.message;
+      });
+
+    return handlerInput.responseBuilder
+      .speak(outputSpeech)
+      .getResponse();
+
+  },
+};
+
+const GetRecipeListHandler = {
+  canHandle(handlerInput) {
+    return (handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'GetRecipeListIntent');
+  },
+  async handle(handlerInput) {
+    let outputSpeech = 'This is the default message.';
+
+    await getRemoteData('http://api.open-notify.org/astros.json')
+      .then((response) => {
+        const data = JSON.parse(response);
+        outputSpeech = `There are currently ${data.people.length} recipes in space. `;
+
+      })
+      .catch((err) => {
+        //set an optional error message here
+        //outputSpeech = err.message;
+      });
+
+    return handlerInput.responseBuilder
+      .speak(outputSpeech)
+      .getResponse();
+
+  },
+};
+
+const AddPantryItemHandler = {
+  canHandle(handlerInput) {
+    return (handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'AddPantryItemIntent');
+  },
+  async handle(handlerInput) {
+    let outputSpeech = 'This is the default message.';
+
+    let slotValues = handlerInput.requestEnvelope.request.intent.slots;
+    let slotStatus = '';
+
+    if (slotValues.item.value && slotValues.item.value !== '') {
+      slotStatus += ' slot item was heard as ' + slotValues.item.value + ' with value ' + slotValues.quantity.value + '. ';
+    } else {
+      slotStatus += 'slot item is empty. ';
+    }
+
+    // await getRemoteData('http://api.open-notify.org/astros.json')
+    //   .then((response) => {
+    //     const data = JSON.parse(response);
+    //     outputSpeech = `There are currently ${data.people.length} astronauts in space. `;
+
+    //   })
+    //   .catch((err) => {
+    //     //set an optional error message here
+    //     //outputSpeech = err.message;
+    //   });
+
+    outputSpeech = slotStatus;
+
+    return handlerInput.responseBuilder
+      .speak(outputSpeech)
+      .getResponse();
+
+  },
+};
+
+const RemovePantryItemHandler = {
+  canHandle(handlerInput) {
+    return (handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'RemovePantryItemIntent');
+  },
+  async handle(handlerInput) {
+    let outputSpeech = 'This is the default message.';
+
+    let slotValues = handlerInput.requestEnvelope.request.intent.slots;
+    let slotStatus = '';
+
+    if (slotValues.item.value && slotValues.item.value !== '') {
+      slotStatus += ' slot item was heard as ' + slotValues.item.value + ' with value ' + slotValues.quantity.value + '. ';
+    } else {
+      slotStatus += 'slot item is empty. ';
+    }
+
+
+    // await getRemoteData('http://api.open-notify.org/astros.json')
+    //   .then((response) => {
+    //     const data = JSON.parse(response);
+    //     outputSpeech = `There are currently ${data.people.length} astronauts in space. `;
+
+    //   })
+    //   .catch((err) => {
+    //     //set an optional error message here
+    //     //outputSpeech = err.message;
+    //   });
+
+    outputSpeech = slotStatus;
+
+    return handlerInput.responseBuilder
+      .speak(outputSpeech)
+      .getResponse();
+
+  },
+};
+
+const LaunchRequestHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
+  },
+  handle(handlerInput) {
+    const speechText = 'Welcome to VITA, your personal virtual inventory tracker and assistant';
+
+    return handlerInput.responseBuilder
+      .speak(speechText)
+      .reprompt(speechText)
+      .getResponse();
+  }
 };
 
 const HelpIntentHandler = {
@@ -104,10 +248,15 @@ const skillBuilder = Alexa.SkillBuilders.custom();
 
 exports.handler = skillBuilder
   .addRequestHandlers(
-    GetRemoteDataHandler,
+    GetShoppingListHandler,
     HelpIntentHandler,
     CancelAndStopIntentHandler,
-    SessionEndedRequestHandler
+    SessionEndedRequestHandler,
+    LaunchRequestHandler,
+    GetItemListHandler,
+    GetRecipeListHandler,
+    AddPantryItemHandler,
+    RemovePantryItemHandler
   )
   .addErrorHandlers(ErrorHandler)
   .lambda();

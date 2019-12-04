@@ -1,41 +1,162 @@
 {
-  "interactionModel": {
-    "languageModel": {
-      "invocationName": "vita",
-      "types": [],
-      "intents": [
-        {
-          "name": "AMAZON.NavigateHomeIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.CancelIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.HelpIntent",
-          "samples": []
-        },
-        {
-          "name": "AMAZON.StopIntent",
-          "samples": []
-        },
-        {
-          "name": "GetRemoteDataIntent",
-          "slots": [],
-          "samples": [
-            "how many people are in space",
-            "how many people are in space now",
-            "how many people are currently in space",
-            "how many humans are in space",
-            "how many humans are in space now",
-            "how many humans are currently in space",
-            "how many astronauts are in space",
-            "how many astronauts are in space now",
-            "how many astronauts are currently in space"
-          ]
-        }
-      ]
-    }
-  }
+	"interactionModel": {
+		"languageModel": {
+			"invocationName": "inventory assistant",
+			"types": [
+				{
+					"values": [
+						{
+							"name": {
+								"value": "eggs"
+							}
+						},
+						{
+							"name": {
+								"value": "tomato sauce"
+							}
+						},
+						{
+							"name": {
+								"value": "sausage"
+							}
+						},
+						{
+							"name": {
+								"value": "chicken"
+							}
+						},
+						{
+							"name": {
+								"value": "ground beef"
+							}
+						},
+						{
+							"name": {
+								"value": "sausages"
+							}
+						},
+						{
+							"name": {
+								"value": "pork"
+							}
+						},
+						{
+							"name": {
+								"value": "beef"
+							}
+						},
+						{
+							"name": {
+								"value": "cheese"
+							}
+						},
+						{
+							"name": {
+								"value": "vegetables"
+							}
+						},
+						{
+							"name": {
+								"value": "potatoes"
+							}
+						},
+						{
+							"name": {
+								"value": "meat"
+							}
+						},
+						{
+							"name": {
+								"value": "bread"
+							}
+						},
+						{
+							"name": {
+								"value": "flour"
+							}
+						},
+						{
+							"name": {
+								"value": "butter"
+							}
+						},
+						{
+							"name": {
+								"value": "milk"
+							}
+						}
+					],
+					"name": "ITEM"
+				}
+			],
+			"intents": [
+				{
+					"name": "AMAZON.NavigateHomeIntent",
+					"samples": []
+				},
+				{
+					"name": "AMAZON.CancelIntent",
+					"samples": []
+				},
+				{
+					"name": "AMAZON.HelpIntent",
+					"samples": []
+				},
+				{
+					"name": "AMAZON.StopIntent",
+					"samples": []
+				},
+				{
+					"name": "GetShoppingListIntent",
+					"slots": [],
+					"samples": ["what is in my shopping list"]
+				},
+				{
+					"name": "GetItemListIntent",
+					"slots": [],
+					"samples": ["what is in my pantry", "what is in my inventory"]
+				},
+				{
+					"name": "GetRecipeListIntent",
+					"slots": [],
+					"samples": ["what recipes can I make"]
+				},
+				{
+					"name": "AddPantryItemIntent",
+					"slots": [
+						{
+							"name": "item",
+							"type": "ITEM"
+						},
+						{
+							"name": "quantity",
+							"type": "AMAZON.NUMBER"
+						}
+					],
+					"samples": [
+						"add {quantity} {item} to my inventory",
+						"add {quantity} {item} to my pantry"
+					]
+				},
+				{
+					"name": "RemovePantryItemIntent",
+					"slots": [
+						{
+							"name": "item",
+							"type": "ITEM"
+						},
+						{
+							"name": "quantity",
+							"type": "AMAZON.NUMBER"
+						}
+					],
+					"samples": [
+						"remove {quantity} {item} from my inventory",
+						"remove {quantity} {item} from my pantry"
+					]
+				}
+			]
+		}
+	},
+	"version": "11"
 }
