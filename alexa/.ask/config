@@ -1,0 +1,44 @@
+{
+  "deploy_settings": {
+    "default": {
+      "skill_id": "amzn1.ask.skill.a44ec74d-6ce5-4d05-8220-aa63872f9578",
+      "was_cloned": false,
+      "merge": {
+        "manifest": {
+          "apis": {
+            "custom": {
+              "endpoint": {
+                "uri": "arn:aws:lambda:us-east-1:233648822249:function:ask-custom-dabblelab-vita-default"
+              }
+            }
+          }
+        }
+      },
+      "in_skill_products": [],
+      "resources": {
+        "manifest": {
+          "eTag": "038edfd13b70ff75213ac93e4d424599"
+        },
+        "interactionModel": {
+          "en-US": {
+            "eTag": "0f66227e88a09aadfcc646b3fa59eb2f"
+          }
+        },
+        "lambda": [
+          {
+            "alexaUsage": [
+              "custom/default"
+            ],
+            "arn": "arn:aws:lambda:us-east-1:233648822249:function:ask-custom-dabblelab-vita-default",
+            "awsRegion": "us-east-1",
+            "codeUri": "lambda/custom",
+            "functionName": "ask-custom-dabblelab-vita-default",
+            "handler": "index.handler",
+            "revisionId": "6253e9cd-ee05-44c1-84ec-58ac992570ad",
+            "runtime": "nodejs8.10"
+          }
+        ]
+      }
+    }
+  }
+}
