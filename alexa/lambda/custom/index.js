@@ -19,7 +19,6 @@ const GetShoppingListHandler = {
       .then((response) => {
         const data = JSON.parse(response);
         outputSpeech = `There are currently ${data.people.length} shopping items in space. `;
-
       })
       .catch((err) => {
         //set an optional error message here
