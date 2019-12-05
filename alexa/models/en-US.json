@@ -2,93 +2,7 @@
 	"interactionModel": {
 		"languageModel": {
 			"invocationName": "inventory assistant",
-			"types": [
-				{
-					"values": [
-						{
-							"name": {
-								"value": "eggs"
-							}
-						},
-						{
-							"name": {
-								"value": "tomato sauce"
-							}
-						},
-						{
-							"name": {
-								"value": "sausage"
-							}
-						},
-						{
-							"name": {
-								"value": "chicken"
-							}
-						},
-						{
-							"name": {
-								"value": "ground beef"
-							}
-						},
-						{
-							"name": {
-								"value": "sausages"
-							}
-						},
-						{
-							"name": {
-								"value": "pork"
-							}
-						},
-						{
-							"name": {
-								"value": "beef"
-							}
-						},
-						{
-							"name": {
-								"value": "cheese"
-							}
-						},
-						{
-							"name": {
-								"value": "vegetables"
-							}
-						},
-						{
-							"name": {
-								"value": "potatoes"
-							}
-						},
-						{
-							"name": {
-								"value": "meat"
-							}
-						},
-						{
-							"name": {
-								"value": "bread"
-							}
-						},
-						{
-							"name": {
-								"value": "flour"
-							}
-						},
-						{
-							"name": {
-								"value": "butter"
-							}
-						},
-						{
-							"name": {
-								"value": "milk"
-							}
-						}
-					],
-					"name": "ITEM"
-				}
-			],
+			"types": [],
 			"intents": [
 				{
 					"name": "AMAZON.NavigateHomeIntent",
@@ -126,7 +40,7 @@
 					"slots": [
 						{
 							"name": "item",
-							"type": "ITEM"
+							"type": "AMAZON.FOOD"
 						},
 						{
 							"name": "quantity",
@@ -143,7 +57,7 @@
 					"slots": [
 						{
 							"name": "item",
-							"type": "ITEM"
+							"type": "AMAZON.FOOD"
 						},
 						{
 							"name": "quantity",

@@ -14,7 +14,7 @@ import json
 
 piID = '123456789'
 barcodeurl = 'https://api.upcitemdb.com/prod/trial/lookup?upc='
-serverurl = 'http://198.199.89.191:3000/api/raspi/postBarCodeData/'
+serverurl = 'http://167.71.145.115:3000/api/raspi/postBarCodeData/'
 
 def modeOn(val):
         if val == 1:

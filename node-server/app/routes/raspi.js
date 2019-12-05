@@ -152,45 +152,6 @@ async function postBarCodeData(req, res) {
         }
     }
 
-    // console.log(itemTest);
-
-    // for (i = 0; i < user.listOfItems.length; i++) {
-
-    //     // console.log(user.listOfItems[i]);
-    //     const item = await Item.findOne({
-    //         _id: user.listOfItems[i]
-    //     });
-    //     // console.log(item == null);
-    //     if (item != null && item.name == req.body.name) {
-    //         if (req.body.flag == 1) {
-    //             item.quantity = item.quantity + 1
-    //             item.status = true;
-    //         } else if (item.quantity == 0) {
-    //             return res.status(400).send({
-    //                 "message": "Item is out of stock"
-    //             });
-    //         } else {
-    //             item.quantity = item.quantity - 1
-    //         }
-    //         if (item.quantity == 0) {
-    //             item.status = false;
-    //         }
-    //         // console.log("Item exists")
-    //         try {
-    //             const savedItem = item.save();
-    //             return res.send({
-    //                 item: item._id,
-    //                 message: "Quantity Updated"
-    //             });
-    //         } catch (err) {
-    //             return res.status(400).send({
-    //                 message: err
-    //             });
-    //         }
-    //     }
-    // }
-
-
     let requestString = "https://api.spoonacular.com/food/products/classify?apiKey=" + process.env.API_KEY
 
     try {

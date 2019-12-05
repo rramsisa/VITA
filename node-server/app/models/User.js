@@ -31,6 +31,13 @@ const userSchema = new mongoose.Schema({
         }],
         default: []
     },
+    pairedAlexas: {
+        type: Array,
+        value: [{
+            type: String,
+        }],
+        default: []
+    },
     listOfItems: {
         type: Array,
         value: [{
@@ -38,7 +45,7 @@ const userSchema = new mongoose.Schema({
         }],
         default: []
     },
-    outOfStock:{
+    outOfStock: {
         type: Array,
         value: [{
             type: Object,
@@ -50,7 +57,7 @@ const userSchema = new mongoose.Schema({
         }],
         default: []
     },
-    soonOutOfStock:{
+    soonOutOfStock: {
         type: Array,
         value: [{
             type: Object,
@@ -62,7 +69,7 @@ const userSchema = new mongoose.Schema({
         }],
         default: []
     },
-    shoppingList:{
+    shoppingList: {
         type: Array,
         value: [{
             type: Object,

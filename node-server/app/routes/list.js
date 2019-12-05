@@ -11,7 +11,7 @@ async function clearOutOfStockList(req, res) {
         })
         // const values = Object.values(user.listOfItems)
         user.outOfStock = [];
-         const savedUser = await user.save();
+        const savedUser = await user.save();
         return res.send({
             message: "list cleared"
         });
@@ -29,7 +29,7 @@ async function clearSoonOutOfStockList(req, res) {
         })
         // const values = Object.values(user.listOfItems)
         user.soonOutOfStock = [];
-         const savedUser = await user.save();
+        const savedUser = await user.save();
         return res.send({
             message: "list cleared"
         });
@@ -47,7 +47,7 @@ async function clearShoppingList(req, res) {
         })
         // const values = Object.values(user.listOfItems)
         user.shoppingList = [];
-         const savedUser = await user.save();
+        const savedUser = await user.save();
         return res.send({
             message: "list cleared"
         });
@@ -64,7 +64,7 @@ async function getOutOfStockList(req, res) {
             _id: req.user._id
         })
         // const values = Object.values(user.listOfItems)
-        
+
         return res.send({
             list: user.outOfStock
         });
@@ -82,7 +82,7 @@ async function getSoonOutOfStockList(req, res) {
             _id: req.user._id
         })
         // const values = Object.values(user.listOfItems)
-        
+
         return res.send({
             list: user.soonOutOfStock
         });
@@ -100,7 +100,7 @@ async function getShoppingList(req, res) {
             _id: req.user._id
         })
         // const values = Object.values(user.listOfItems)
-        
+
         return res.send({
             list: user.shoppingList
         });
@@ -119,21 +119,21 @@ async function moveFromOutOfStockList(req, res) {
         })
 
         var item = user.outOfStock.filter(obj => {
-              return obj.name === req.body.name
+            return obj.name === req.body.name
         })
-        if(item.length != 0){
+        if (item.length != 0) {
             console.log(req.body.name)
             user.outOfStock.splice(user.outOfStock.indexOf(item[0]), 1)
             var item2 = user.shoppingList.filter(obj => {
-              return obj.name === req.body.name
+                return obj.name === req.body.name
             })
-            if(item2.length != 0){
+            if (item2.length != 0) {
                 user.shoppingList.splice(user.shoppingList.indexOf(item2[0]), 1)
                 item2[0].priotiry = item[0].priotiry
                 item2[0].time = item[0].time
                 user.shoppingList.push(item2[0])
             }
-            else{
+            else {
                 user.shoppingList.push(item[0])
             }
         }
@@ -156,22 +156,22 @@ async function moveFromSoonOutOfStockList(req, res) {
         })
 
         var item = user.soonOutOfStock.filter(obj => {
-              return obj.name === req.body.name
+            return obj.name === req.body.name
         })
-        if(item.length != 0){
+        if (item.length != 0) {
             console.log(req.body.name)
             user.soonOutOfStock.splice(user.soonOutOfStock.indexOf(item[0]), 1)
             var item2 = user.shoppingList.filter(obj => {
-              return obj.name === req.body.name
+                return obj.name === req.body.name
             })
-            if(item2.length != 0){
+            if (item2.length != 0) {
                 user.shoppingList.splice(user.shoppingList.indexOf(item2[0]), 1)
                 item2[0].priotiry = item[0].priotiry
                 item2[0].time = item[0].time
                 user.shoppingList.push(item2[0])
             }
-            else{
-                var temp = {name: item[0].name, time: item[0].time, priotiry:2  };
+            else {
+                var temp = { name: item[0].name, time: item[0].time, priotiry: 2 };
                 user.shoppingList.push(temp)
             }
         }
@@ -194,9 +194,9 @@ async function removeFromShoppingList(req, res) {
         })
 
         var item = user.shoppingList.filter(obj => {
-              return obj.name === req.body.name
+            return obj.name === req.body.name
         })
-        if(item.length != 0){
+        if (item.length != 0) {
             console.log(req.body.name)
             user.shoppingList.splice(user.shoppingList.indexOf(item), 1)
         }
@@ -217,24 +217,24 @@ async function addToShoppingList(req, res) {
         const user = await User.findOne({
             _id: req.user._id
         })
-       
+
         var item = user.shoppingList.filter(obj => {
-              return obj.name === req.body.name
+            return obj.name === req.body.name
         })
-       
-        if(item.length == 0){
+
+        if (item.length == 0) {
             console.log(req.body.name)
             console.log("manual add")
-            var temp = {name: req.body.name, priotiry:3  };
+            var temp = { name: req.body.name, priotiry: 3 };
             user.shoppingList.push(temp)
 
         }
-        else{
+        else {
             return res.send({
-            message: "item already on shopping list"
-        });
+                message: "item already on shopping list"
+            });
         }
-       
+
         const savedUser = await user.save();
         return res.send({
             message: "added to shopping list to get"
@@ -260,20 +260,20 @@ async function refreshOutOfStockList(req, res) {
                 _id: values[property]
             })
             console.log(item.name)
-            if(user.outOfStock.includes(item.name)){
+            if (user.outOfStock.includes(item.name)) {
                 continue;
 
             }
-            if(item.status == false){
+            if (item.status == false) {
                 console.log("out of stock")
                 var date1 = new Date();
                 var t = date1.getTime() - item.date
-                var temp = {name: item.name, time: t, priotiry:1  };
+                var temp = { name: item.name, time: t, priotiry: 1 };
                 console.log(temp.name)
-                    console.log(item.name)
-                    user.outOfStock.push(temp)
+                console.log(item.name)
+                user.outOfStock.push(temp)
             }
-            
+
         }
         const savedUser = await user.save();
         return res.send({
@@ -301,25 +301,25 @@ async function refreshSoonOutOfStockList(req, res) {
                 _id: values[property]
             })
             console.log(item.name)
-            if(user.soonOutOfStock.includes(item.name)){
+            if (user.soonOutOfStock.includes(item.name)) {
                 continue;
 
             }
-            if(item.status != false){
+            if (item.status != false) {
                 var total = 0;
-                for(var i = 0; i < item.lasted.length; i++){
+                for (var i = 0; i < item.lasted.length; i++) {
                     total = total + item.lasted[i]
                 }
                 var avg = total / item.lasted.length;
                 var date1 = new Date();
-                if(date1.getTime() - item.date > avg ){
-                    
+                if (date1.getTime() - item.date > avg) {
+
                     var t = date1.getTime() - item.date
-                    var temp = {name: item.name, time: t, priotiry:2  };
+                    var temp = { name: item.name, time: t, priotiry: 2 };
                     console.log(item.name)
                     user.soonOutOfStock.push(temp)
                 }
-            }  
+            }
         }
         const savedUser = await user.save();
         return res.send({

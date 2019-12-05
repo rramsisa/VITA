@@ -7,10 +7,9 @@ const raspiRoute = require('./app/routes/raspi');
 const recipesRoute = require('./app/routes/recipes');
 const manualRoute = require('./app/routes/manual');
 const listRoute = require('./app/routes/list');
+const alexaRoute = require('./app/routes/alexa');
 
 const verify = require('./app/routes/verifyToken').validateToken;
-
-
 
 dotenv.config();
 
@@ -100,15 +99,23 @@ app.route("/api/list/getShoppingList")
     .get(verify, listRoute.getShoppingList)
 app.route("/api/list/clearShoppingList")
     .post(verify, listRoute.clearShoppingList)
-
-
+app.route("/api/alexa/pair")
+    .post(alexaRoute.pairAlexa)
+app.route("/api/alexa/unpair")
+    .post(alexaRoute.unpairAlexa)
+app.route("/api/alexa/getRecipes")
+    .post(alexaRoute.getRecipesFromAlexa)
+app.route("/api/alexa/getShoppingList")
+    .post(alexaRoute.getShoppingListFromAlexa)
+app.route("/api/alexa/getItems")
+    .post(alexaRoute.getMyItemsFromAlexa)
+app.route("/api/alexa/modify")
+    .post(alexaRoute.modifyFromAlexa)
 
 // listen for requests
 const server = app.listen(3000, () => {
     console.log("Server is listening on port 3000");
 });
-
-
 
 function stop() {
     server.close(() => {

@@ -79,6 +79,18 @@ const pairPiValidation = (data) => {
     return Joi.validate(data, schema);
 };
 
+// Pair/Unpair Alexa Validation
+const pairAlexaValidation = (data) => {
+    const schema = {
+        alexaID: Joi.string()
+            .required()
+            .min(10)
+            .max(10)
+    };
+
+    return Joi.validate(data, schema);
+};
+
 // Bar Code Validation
 const barCodeValidation = (data) => {
     const schema = {
@@ -94,7 +106,7 @@ const barCodeValidation = (data) => {
 
     return Joi.validate(data, schema);
 };
-// Bar Code Validation
+// Modify Item Validation
 const manualValidation = (data) => {
     const schema = {
         name: Joi.string()
@@ -103,6 +115,24 @@ const manualValidation = (data) => {
             .required(),
         flag: Joi.number() // 0 = remove item, 1 = add item
             .required(),
+    };
+
+    return Joi.validate(data, schema);
+};
+
+// Modify Item from Alexa validation
+const modifyAlexaValidation = (data) => {
+    const schema = {
+        name: Joi.string()
+            .required(),
+        quantity: Joi.number()
+            .required(),
+        flag: Joi.number() // 0 = remove item, 1 = add item
+            .required(),
+        alexaID: Joi.string()
+            .required()
+            .min(10)
+            .max(10)
     };
 
     return Joi.validate(data, schema);
@@ -123,6 +153,8 @@ module.exports.loginValidation = loginValidation;
 module.exports.changePasswordValidation = changePasswordValidation;
 module.exports.deleteUserValidation = deleteUserValidation;
 module.exports.pairPiValidation = pairPiValidation;
+module.exports.pairAlexaValidation = pairAlexaValidation;
 module.exports.barCodeValidation = barCodeValidation;
 module.exports.manualValidation = manualValidation;
 module.exports.deleteItemValidation = deleteItemValidation;
+module.exports.modifyAlexaValidation = modifyAlexaValidation;
