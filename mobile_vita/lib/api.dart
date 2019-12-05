@@ -9,7 +9,7 @@ import 'dart:io';
 
 // Use these to switch paths for testing
 // var callPath = "localhost";
-var callPath = "167.71.145.115";
+var callPath = "167.71.145.115"; //digital ocean droplet
 
 //-----------------------API FOR LOGIN-----------------------------------------
 Future<bool> loginCall(String email, String pass, BuildContext context) async {
@@ -422,6 +422,241 @@ Future<bool> deleteCall(
           builder: (BuildContext context) {
             return AlertDialog(
               title: Text(bod["message"]),
+            );
+          });
+    }
+    return false;
+  } catch (exception) {
+    print(exception);
+    return false;
+  }
+}
+
+//-----------------------API FOR getShoppingList-----------------------------------------
+Future<bool> shoppingListGet(BuildContext context) async{
+  var call;
+  call = "http://$callPath:3000/api/list/getShoppingList";
+  try {
+    final response = await http.get(call,
+        // body: json.encode({'newPassword': newPass, 'email': email, 'password': pass}),
+        headers: {"Content-Type": "application/json", "auth-token": authToken});
+    // Map<String, dynamic> bod = json.decode(response.body);
+    if (response.statusCode == 200) {
+      print("respnse body: " + response.body);
+      setShoppingList(json.decode(response.body)["list"]);
+      return true;
+    } else {
+      //error, display message according
+      print(response.statusCode);
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              // title: Text(bod["message"]),
+            );
+          });
+    }
+    return false;
+  } catch (exception) {
+    print(exception);
+    return false;
+  }
+}
+
+
+//-----------------------API FOR addToShoppingList-----------------------------------------
+Future<bool> shoppingListAddCall(
+    String name, BuildContext context) async {
+  var call;
+  call = "http://$callPath:3000/api/list/addToShoppingList";
+  print(call);
+  try {
+    print("before await");
+    final response = await http.post(call,
+        body: json
+            .encode({'name': name}),
+        headers: {"Content-Type": "application/json", "auth-token": authToken});
+    print("after call");
+    Map<String, dynamic> bod = json.decode(response.body);
+    print(bod);
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      //error, display message according
+      print(response.statusCode);
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(bod["message"]),
+            );
+          });
+    }
+    return false;
+  } catch (exception) {
+    print(exception);
+    return false;
+  }
+}
+
+
+//-----------------------API FOR removeFromShoppingList-----------------------------------------
+Future<bool> shoppingListRemoveCall(
+    String name, BuildContext context) async {
+  var call;
+  call = "http://$callPath:3000/api/list/removeFromShoppingList";
+  print(call);
+  try {
+    print("before await");
+    final response = await http.post(call,
+        body: json
+            .encode({'name': name}),
+        headers: {"Content-Type": "application/json", "auth-token": authToken});
+    print("after call");
+    Map<String, dynamic> bod = json.decode(response.body);
+    print(bod);
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      //error, display message according
+      print(response.statusCode);
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(bod["message"]),
+            );
+          });
+    }
+    return false;
+  } catch (exception) {
+    print(exception);
+    return false;
+  }
+}
+
+
+//-----------------------API FOR getRecommendedList-----------------------------------------
+Future<bool> recommendedListGet(BuildContext context) async{
+  var call;
+  call = "http://$callPath:3000/api/list/getSoonOutOfStockList";
+  try {
+    final response = await http.get(call,
+        // body: json.encode({'newPassword': newPass, 'email': email, 'password': pass}),
+        headers: {"Content-Type": "application/json", "auth-token": authToken});
+    // Map<String, dynamic> bod = json.decode(response.body);
+    if (response.statusCode == 200) {
+      print("respnse body: " + response.body);
+      setRecommendedList(json.decode(response.body)["list"]);
+      return true;
+    } else {
+      //error, display message according
+      print(response.statusCode);
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              // title: Text(bod["message"]),
+            );
+          });
+    }
+    return false;
+  } catch (exception) {
+    print(exception);
+    return false;
+  }
+}
+
+
+
+//-----------------------API FOR recommendedListRefresh-----------------------------------------
+Future<bool> recommendedListRefresh(BuildContext context) async{
+  var call;
+  call = "http://$callPath:3000/api/list/refreshSoonOutOfStockList";
+  try {
+    final response = await http.get(call,
+        // body: json.encode({'newPassword': newPass, 'email': email, 'password': pass}),
+        headers: {"Content-Type": "application/json", "auth-token": authToken});
+    // Map<String, dynamic> bod = json.decode(response.body);
+    if (response.statusCode == 200) {
+      print("response body: " + response.body);
+      //setShoppingList(json.decode(response.body)["list"]);
+      return true;
+    } else {
+      //error, display message according
+      print(response.statusCode);
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              // title: Text(bod["message"]),
+            );
+          });
+    }
+    return false;
+  } catch (exception) {
+    print(exception);
+    return false;
+  }
+}
+
+
+
+
+//-----------------------API FOR getOutOfStockList-----------------------------------------
+Future<bool> outOfStockListGet(BuildContext context) async{
+  var call;
+  call = "http://$callPath:3000/api/list/getOutOfStockList";
+  try {
+    final response = await http.get(call,
+        // body: json.encode({'newPassword': newPass, 'email': email, 'password': pass}),
+        headers: {"Content-Type": "application/json", "auth-token": authToken});
+    // Map<String, dynamic> bod = json.decode(response.body);
+    if (response.statusCode == 200) {
+      print("respnse body: " + response.body);
+      setOutOfStockList(json.decode(response.body)["list"]);
+      return true;
+    } else {
+      //error, display message according
+      print(response.statusCode);
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              // title: Text(bod["message"]),
+            );
+          });
+    }
+    return false;
+  } catch (exception) {
+    print(exception);
+    return false;
+  }
+}
+
+
+
+//-----------------------API FOR outOfStockListRefresh-----------------------------------------
+Future<bool> outOfStockListRefresh(BuildContext context) async{
+  var call;
+  call = "http://$callPath:3000/api/list/refreshOutOfStockList";
+  try {
+    final response = await http.get(call,
+        // body: json.encode({'newPassword': newPass, 'email': email, 'password': pass}),
+        headers: {"Content-Type": "application/json", "auth-token": authToken});
+    // Map<String, dynamic> bod = json.decode(response.body);
+    if (response.statusCode == 200) {
+      print("respnse body: " + response.body);
+      //setShoppingList(json.decode(response.body)["list"]);
+      return true;
+    } else {
+      //error, display message according
+      print(response.statusCode);
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              // title: Text(bod["message"]),
             );
           });
     }

@@ -5,6 +5,7 @@ import 'package:mobile_vita/main.dart';
 import 'addItem.dart';
 import 'modifyItem.dart';
 import 'globals.dart';
+import 'dart:convert';
 
 class ListsPage extends StatefulWidget {
   ListsPage({Key key, this.title}) : super(key: key);
@@ -39,8 +40,24 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
     print("Updating Lists");
 
     //Make API call to get pantry & update list
-    bool success = await getPantryItems(context); // TODO: Change to proper calls
-    if(success){
+    bool slSuccess = await shoppingListGet(context);
+
+    //refresh recommended then call get
+    bool refSuc = await recommendedListRefresh(context);
+    bool rlSuccess;
+    if(refSuc){
+      rlSuccess = await recommendedListGet(context);
+    }
+    
+    //refresh out of stock then call get
+    bool oosSuc = await outOfStockListRefresh(context);
+    bool osSuccess;
+    if(oosSuc){
+      osSuccess = await outOfStockListGet(context);
+    }
+
+    //bool success = await getPantryItems(context); // TODO: Change to proper calls
+    if(slSuccess || rlSuccess || osSuccess){
       // Generate list on page done below
       setState(() {
         // Used to refresh the UI once the update is finished :)
@@ -49,6 +66,7 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
   }
 
   void updateView(){
+    updateLists();
     setState(() {
       
     });
@@ -58,23 +76,41 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
   void addToShoppingList(itemName) async {
     print("Add to Shopping List Requested");
     print("Item to add: " + itemName);
-    shoppingListAdd(itemName);
-    updateView();
+    bool slSuccess = await shoppingListAddCall(itemName, context);
+    if(slSuccess){
+      updateLists();
+    }
   }
 
   void removeFromShoppingList(itemName) async {
     print("Remove from Shopping List Requested");
     print("Item to remove: " + itemName);
-    shoppingListRemove(itemName);
-    updateView();
+    //shoppingListRemove(itemName);
+    bool slSuccess = await shoppingListRemoveCall(itemName, context);
+    if(slSuccess){
+      bool slSuccess = await shoppingListGet(context);
+      if(slSuccess){
+        setState(() {
+          
+        });
+      }
+    }
+    //updateView();
   }
 
-  void manualShoppingList(){
+  void manualShoppingList() async{
     print("Manual Add to Shopping List Requested");
     print("Item to add: " + newController.text);
-    shoppingListAdd(newController.text);
-    newController.text = "";
-    updateView();
+    bool slSuccess = await shoppingListAddCall(newController.text, context);
+    if(slSuccess){
+      newController.text = "";
+      bool slSuccess = await shoppingListGet(context);
+      if(slSuccess){
+        setState(() {
+          
+        });
+      }
+    }
   }
 
   void modifyMove(itemID) async {
@@ -97,11 +133,11 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
       itemBuilder: (BuildContext ctxt, int Index) {
         return new Card(
           child: ListTile(
-            title: Text(shoppingList[Index]),
+            title: Text(shoppingList[Index]["name"]),
             // leading: Icon(Icons.cancel),
             trailing: Icon(Icons.done_outline),
             onLongPress: (){
-              removeFromShoppingList(shoppingList[Index]);
+              removeFromShoppingList(shoppingList[Index]["name"]);
             },
           )
         );
@@ -132,12 +168,12 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
       itemBuilder: (BuildContext ctxt, int Index) {
         return new Card(
           child: ListTile(
-            title: Text(recommendedList[Index]),
+            title: Text(recommendedList[Index]["name"]),
             subtitle: Text("Will run out in about # days"),
             // leading: Icon(Icons.cancel),
             trailing: Icon(Icons.add_shopping_cart),
             onTap: (){
-              addToShoppingList(recommendedList[Index]);
+              addToShoppingList(recommendedList[Index]["name"]);
             },
           )
         );
@@ -151,12 +187,12 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
       itemBuilder: (BuildContext ctxt, int Index) {
         return new Card(
           child: ListTile(
-            title: Text(outOfStockList[Index]),
-            subtitle: Text("##/##/####"),
+            title: Text(outOfStockList[Index]["name"]),
+            subtitle: Text(outOfStockList[Index]["time"].toString()),
             // leading: Icon(Icons.cancel),
             trailing: Icon(Icons.add_shopping_cart),
             onTap: (){
-              addToShoppingList(outOfStockList[Index]);
+              addToShoppingList(outOfStockList[Index]["name"]);
             },
           )
         );
