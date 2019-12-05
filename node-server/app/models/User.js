@@ -52,7 +52,7 @@ const userSchema = new mongoose.Schema({
             value: [{
                 name: String,
                 time: Number,
-                priotiry: Number //1 = out of stock, 2 = soon to be out of stock, 3 = manually added
+                priotiry: Number //1 = out of stock, 2 = soon to be out of stock, 3 = manually added, 4 = frequency of buying
             }],
         }],
         default: []
@@ -64,7 +64,7 @@ const userSchema = new mongoose.Schema({
             value: [{
                 name: String,
                 time: Number,
-                priotiry: Number //1 = out of stock, 2 = soon to be out of stock, 3 = manually added
+                priotiry: Number //1 = out of stock, 2 = soon to be out of stock, 3 = manually added, 4 = frequency of buying
             }],
         }],
         default: []
@@ -76,7 +76,7 @@ const userSchema = new mongoose.Schema({
             value: [{
                 name: String,
                 time: Number,
-                priotiry: Number //1 = out of stock, 2 = soon to be out of stock, 3 = manually added
+                priotiry: Number //1 = out of stock, 2 = soon to be out of stock, 3 = manually added, 4 = frequency of buying
             }],
         }],
         default: []

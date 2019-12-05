@@ -306,18 +306,35 @@ async function refreshSoonOutOfStockList(req, res) {
 
             }
             if (item.status != false) {
-                var total = 0;
+                var total_lasted = 0;
                 for (var i = 0; i < item.lasted.length; i++) {
-                    total = total + item.lasted[i]
+                    total_lasted = total_lasted + item.lasted[i]
                 }
-                var avg = total / item.lasted.length;
+                var avg_lasted = total_lasted / item.lasted.length;
+                
                 var date1 = new Date();
-                if (date1.getTime() - item.date > avg) {
+               if (date1.getTime() - item.date > avg_lasted) {
 
-                    var t = (date1.getTime() - item.date) - avg
-                    var temp = { name: item.name, time: t, priotiry: 2 };
-                    console.log(item.name)
-                    user.soonOutOfStock.push(temp)
+                    // var t = (date1.getTime() - item.date) - avg_lasted
+                    // var temp = { name: item.name, time: t, priotiry: 2 };
+                    // console.log(item.name)
+                    // user.soonOutOfStock.push(temp)
+                }
+                else if(item.added.length > 1){
+                    var total_added = 0;
+                    for (var i = 0; i < item.added.length-1; i++) {
+                        total_added = total_added + Math.abs(item.added[i+1]-item.added[i])
+                    }
+                    var avg_added = total_added / item.added.length;
+                                        console.log(avg_added)
+
+                    if(avg_added <= date1.getTime() - item.added[item.added.length-1]){
+                        var t = (date1.getTime() - item.date) - avg_lasted
+                        var temp = { name: item.name, time: avg_added, priotiry: 4 };
+                        console.log(item.name)
+                        user.soonOutOfStock.push(temp)
+                    }
+                
                 }
             }
         }
