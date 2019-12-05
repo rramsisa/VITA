@@ -39,6 +39,9 @@ async function manual(req, res) {
             });
         } else {
             item.quantity = parseInt(item.quantity) - parseInt(req.body.quantity)
+            console.log(item.quantity)
+                        console.log(req.body.quantity)
+
         }
         if (item.quantity <= 0) {
             item.quantity = 0;

@@ -314,7 +314,7 @@ async function refreshSoonOutOfStockList(req, res) {
                 var date1 = new Date();
                 if (date1.getTime() - item.date > avg) {
 
-                    var t = date1.getTime() - item.date
+                    var t = (date1.getTime() - item.date) - avg
                     var temp = { name: item.name, time: t, priotiry: 2 };
                     console.log(item.name)
                     user.soonOutOfStock.push(temp)
