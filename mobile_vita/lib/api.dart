@@ -8,8 +8,8 @@ import 'dart:io';
 
 
 // Use these to switch paths for testing
-var callPath = "localhost";
-// var callPath = "198.199.89.191";
+// var callPath = "localhost";
+var callPath = "167.71.145.115";
 
 //-----------------------API FOR LOGIN-----------------------------------------
 Future<bool> loginCall(String email, String pass, BuildContext context) async {
@@ -234,7 +234,7 @@ Future<bool> pair(
 }
 
 
-//-----------------------API FOR SCANNER PAIR-----------------------------------------
+//-----------------------API FOR SCANNER UNPAIR-----------------------------------------
 Future<bool> unpairCall(
     String id, BuildContext context) async {
   var call;
@@ -259,6 +259,105 @@ Future<bool> unpairCall(
           builder: (BuildContext context) {
             return AlertDialog(
               title: Text(bod["message"]),
+            );
+          });
+    }
+    return false;
+  } catch (exception) {
+    print(exception);
+    return false;
+  }
+}
+
+//-----------------------API FOR SCANNER PAIR-----------------------------------------
+Future<bool> pairAlexa(
+    String id, BuildContext context) async {
+  var call;
+  call = "http://$callPath:3000/api/alexa/pair/";
+  print(call);
+  try {
+    print("before await");
+    final response = await http.post(call,
+        body: json
+            .encode({'alexaID': id}),
+        headers: {"Content-Type": "application/json", "auth-token": authToken});
+    print("after call");
+    Map<String, dynamic> bod = json.decode(response.body);
+    print(bod);
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      //error, display message according
+      print(response.statusCode);
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(bod["message"]),
+            );
+          });
+    }
+    return false;
+  } catch (exception) {
+    print(exception);
+    return false;
+  }
+}
+
+
+//-----------------------API FOR SCANNER UNPAIR-----------------------------------------
+Future<bool> unpairAlexa(
+    String id, BuildContext context) async {
+  var call;
+  call = "http://$callPath:3000/api/alexa/unpair/";
+  print(call);
+  try {
+    print("before await");
+    final response = await http.post(call,
+        body: json
+            .encode({'alexaID': id}),
+        headers: {"Content-Type": "application/json", "auth-token": authToken});
+    print("after call");
+    Map<String, dynamic> bod = json.decode(response.body);
+    print(bod);
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      //error, display message according
+      print(response.statusCode);
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(bod["message"]),
+            );
+          });
+    }
+    return false;
+  } catch (exception) {
+    print(exception);
+    return false;
+  }
+}
+
+//-----------------------API FOR ALEXA RETREIVE-----------------------------------------
+Future<bool> getAlexas(BuildContext context) async{
+  var call;
+  call = "http://$callPath:3000/api/user/alexa/";
+  try {
+    final response = await http.get(call,
+        headers: {"Content-Type": "application/json", "auth-token": authToken});
+    if (response.statusCode == 200) {
+      setAlexas(json.decode(response.body)["alexas"]); 
+      return true;
+    } else {
+      //error, display message according
+      print(response.statusCode);
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              // title: Text(bod["message"]),
             );
           });
     }
