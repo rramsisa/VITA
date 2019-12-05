@@ -121,13 +121,13 @@ async function moveFromOutOfStockList(req, res) {
         var item = user.outOfStock.filter(obj => {
             return obj.name === req.body.name
         })
-        if (item.length != 0) {
+        if (item.length > 0) {
             console.log(req.body.name)
             user.outOfStock.splice(user.outOfStock.indexOf(item[0]), 1)
             var item2 = user.shoppingList.filter(obj => {
                 return obj.name === req.body.name
             })
-            if (item2.length != 0) {
+            if (item2.length > 0) {
                 user.shoppingList.splice(user.shoppingList.indexOf(item2[0]), 1)
                 item2[0].priotiry = item[0].priotiry
                 item2[0].time = item[0].time
@@ -158,13 +158,13 @@ async function moveFromSoonOutOfStockList(req, res) {
         var item = user.soonOutOfStock.filter(obj => {
             return obj.name === req.body.name
         })
-        if (item.length != 0) {
+        if (item.length > 0) {
             console.log(req.body.name)
             user.soonOutOfStock.splice(user.soonOutOfStock.indexOf(item[0]), 1)
             var item2 = user.shoppingList.filter(obj => {
                 return obj.name === req.body.name
             })
-            if (item2.length != 0) {
+            if (item2.length > 0) {
                 user.shoppingList.splice(user.shoppingList.indexOf(item2[0]), 1)
                 item2[0].priotiry = item[0].priotiry
                 item2[0].time = item[0].time
