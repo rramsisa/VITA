@@ -134,7 +134,7 @@ async function postBarCodeData(req, res) {
         if (item.quantity == 0) {
             item.status = false;
             var date1 = new Date();
-            var Difference_In_Time = date1.getTime()-item.date; 
+            var Difference_In_Time = date1.getTime() - item.date;
             console.log(Difference_In_Time)
             item.lasted.push(Difference_In_Time);
         }
@@ -277,7 +277,6 @@ async function getMyItems(req, res) {
         })
 
         return res.send(user.listOfItems);
-
     } catch (err) {
         return res.status(400).send({
             message: err
