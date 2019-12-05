@@ -111,6 +111,8 @@ app.route("/api/alexa/getItems")
     .post(alexaRoute.getMyItemsFromAlexa)
 app.route("/api/alexa/modify")
     .post(alexaRoute.modifyFromAlexa)
+app.route("/api/user/alexa")
+    .get(verify, alexaRoute.pairedAlexas)
 
 // listen for requests
 const server = app.listen(3000, () => {
