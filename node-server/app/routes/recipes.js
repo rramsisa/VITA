@@ -49,18 +49,18 @@ async function GetRecipe(req, res) {
 		// const entries = Object.entries(user.listOfItems)
 
 		console.log(values)
-		breadcrumbs = []
+		var breadcrumbs = " "
 		for (var property in values) {
 
 			const item = await Item.findOne({
 				_id: values[property]
 			})
 			if (item.status == true) {
-				breadcrumbs.push.apply(breadcrumbs, item.breadcrumbs)
+				item.breadcrumbs.forEach(i => breadcrumbs = breadcrumbs + i + ", ");
+				breadcrumbs = breadcrumbs + item.name + ", "
 			}
 
 		}
-		console.log(breadcrumbs)
 
 		unirest.get(url + requestString)
 			.header("apiKey", process.env.API_KEY)

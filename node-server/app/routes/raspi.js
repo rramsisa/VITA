@@ -167,11 +167,14 @@ async function postBarCodeData(req, res) {
 
             })
             .end(result => {
-                breadList = [result.body.category]
+                breadList = result.body.breadcrumbs
+
                 // console.log(breadList);
                 if (breadList.indexOf("non food item") >= 0) {
                     breadList = []
                 }
+                breadList.push(result.body.category)
+
                 var d = new Date();
                 const newItem = new Item({
                     name: req.body.name,
