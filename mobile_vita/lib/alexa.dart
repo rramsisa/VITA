@@ -79,7 +79,7 @@ class _AlexaPageState extends State<AlexaPage> {
           itemBuilder: (BuildContext ctxt, int Index) {
             return new Card(
               child: ListTile(
-                leading: Icon(Icons.scanner, size: 40.0),
+                leading: Icon(Icons.mic, size: 40.0),
                 title: Text(alexas[Index]),
                 trailing: IconButton(
                   icon: Icon(Icons.clear),
