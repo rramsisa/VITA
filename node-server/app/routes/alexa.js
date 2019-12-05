@@ -3,7 +3,6 @@ const Item = require('../models/Item');
 const unirest = require('unirest')
 const url = "https://api.spoonacular.com/"
 
-
 const {
     pairAlexaValidation,
     modifyAlexaValidation
@@ -218,7 +217,6 @@ async function getRecipesFromAlexa(req, res) {
 
         }
         console.log(breadcrumbs)
-
 
 
         unirest.get(url + requestString)

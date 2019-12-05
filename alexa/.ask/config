@@ -21,7 +21,7 @@
         },
         "interactionModel": {
           "en-US": {
-            "eTag": "0d86672bcdd6a18c61c4928a3da65d9f"
+            "eTag": "8e7bf7098281eb4e9164087d8368b0cd"
           }
         },
         "lambda": [
@@ -34,7 +34,7 @@
             "codeUri": "lambda/custom",
             "functionName": "ask-custom-dabblelab-vita-default",
             "handler": "index.handler",
-            "revisionId": "0697007f-ec85-4b0e-817c-6b712dcd7d08",
+            "revisionId": "a8ea47d5-13fd-4df0-9af0-30c709e10148",
             "runtime": "nodejs8.10"
           }
         ]

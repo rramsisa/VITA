@@ -62,8 +62,6 @@ async function GetRecipe(req, res) {
 		}
 		console.log(breadcrumbs)
 
-
-
 		unirest.get(url + requestString)
 			.header("apiKey", process.env.API_KEY)
 			.header('Content-Type', 'application/json')
