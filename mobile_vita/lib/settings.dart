@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_vita/api.dart';
 import 'package:mobile_vita/main.dart';
 import 'changePassword.dart';
+import 'alexa.dart';
 import 'scanners.dart';
 
 // class SettingsApp extends StatelessWidget {
@@ -93,6 +94,24 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
     );
 
+    final alexaButton = Material(
+      borderRadius: BorderRadius.circular(10.0),
+      color: Colors.purple,
+      child: MaterialButton(
+        minWidth: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AlexaPage()),
+          );
+        },
+        child: Text("Manage Alexa Accounts",
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    );
+
     final logoutButton = Material(
       borderRadius: BorderRadius.circular(10.0),
       color: Colors.deepPurple,
@@ -118,6 +137,8 @@ class _SettingsPageState extends State<SettingsPage> {
               children: <Widget>[
                 SizedBox(height: 25.0),
                 scannersButton,
+                SizedBox(height: 25.0),
+                alexaButton,
                 SizedBox(height: 25.0),
                 changePasswordButton,
                 SizedBox(

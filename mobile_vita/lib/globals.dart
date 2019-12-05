@@ -4,10 +4,11 @@
 
   var pantryItems = [];
   var scanners = [];
+  var alexas = [];
   var selectedItem = {};
-  var shoppingList = ["S Item One", "S Item Two", "S Item Three"]; //TODO: temp. Should be changed
-  var recommendedList = ["R Item One", "R Item Two", "R Item Three"]; //TODO: temp. Should be changed
-  var outOfStockList = ["O Item One", "O Item Two", "O Item Three"]; //TODO: temp. Should be changed
+  var shoppingList = [];// ["S Item One", "S Item Two", "S Item Three"]; //TODO: temp. Should be changed
+  var recommendedList = []; //["R Item One", "R Item Two", "R Item Three"]; //TODO: temp. Should be changed
+  var outOfStockList = []; // ["O Item One", "O Item Two", "O Item Three"]; //TODO: temp. Should be changed
 
   var recipesList = [
     {
@@ -94,7 +95,7 @@
 
 // TODO: These are manipulating the local array, should probably be done differently, or update entire list with API call
   void shoppingListAdd(var a){
-    shoppingList.add(a);
+    //shoppingList.add(a);
     print("New Shopping List: ");
     print(shoppingList);
   }
@@ -118,9 +119,15 @@
   }
 
   void setScanners(var s){
-      scanners = s;
-      print("Scanners Updated");
-      print(s);
+    scanners = s;
+    print("Scanners Updated");
+    print(s);
+  }
+
+  void setAlexas(var a){
+    alexas = a;
+    print("Alexas Updated");
+    print(a);
   }
 
   void setSelectedItem(String name){
