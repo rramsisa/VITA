@@ -33,6 +33,10 @@ const itemSchema = new mongoose.Schema({
     lasted: { // List of item's simplified names
         type: [Number],
         required: true
+    },
+    added:{
+        type: [Number],
+        required: true
     }
 });
 

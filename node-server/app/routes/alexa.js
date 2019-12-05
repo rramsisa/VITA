@@ -205,14 +205,15 @@ async function getRecipesFromAlexa(req, res) {
         // const entries = Object.entries(user.listOfItems)
 
         console.log(values)
-        breadcrumbs = []
+        breadcrumbs = " "
         for (var property in values) {
 
             const item = await Item.findOne({
                 _id: values[property]
             })
             if (item.status == true) {
-                breadcrumbs.push.apply(breadcrumbs, item.breadcrumbs)
+                item.breadcrumbs.forEach(i => breadcrumbs = breadcrumbs + i + ", ");
+                breadcrumbs = breadcrumbs + item.name + ", "            
             }
 
         }

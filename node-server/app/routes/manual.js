@@ -80,10 +80,18 @@ async function manual(req, res) {
 
             })
             .end(result => {
-                breadList = [result.body.category]
+                breadList = result.body.breadcrumbs
+
                 // console.log(breadList);
                 if (breadList.indexOf("non food item") >= 0) {
                     breadList = []
+                }
+                else if(result.body.category == null){
+                    console.log("it was null")
+                    breadList = [req.body.name]
+                }
+                else{
+                    breadList.push(result.body.category)
                 }
                 const newItem = new Item({
                     name: req.body.name,

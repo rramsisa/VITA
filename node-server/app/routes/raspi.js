@@ -124,6 +124,8 @@ async function postBarCodeData(req, res) {
         if (req.body.flag == 1) {
             item.quantity = item.quantity + 1
             item.status = true;
+            var d = new Date();
+            item.added.push(d.getTime())
         } else if (item.quantity == 0) {
             return res.status(400).send({
                 "message": "Item is out of stock"
@@ -165,18 +167,23 @@ async function postBarCodeData(req, res) {
 
             })
             .end(result => {
-                breadList = [result.body.category]
+                breadList = result.body.breadcrumbs
+
                 // console.log(breadList);
                 if (breadList.indexOf("non food item") >= 0) {
                     breadList = []
                 }
+                breadList.push(result.body.category)
+
+                var d = new Date();
                 const newItem = new Item({
                     name: req.body.name,
                     status: true,
                     quantity: 1,
                     barCode: req.body.barCode,
                     userID: user._id,
-                    breadcrumbs: breadList
+                    breadcrumbs: breadList,
+                    added: [d.getTime()]
                 });
 
                 const savedItem = newItem.save();
