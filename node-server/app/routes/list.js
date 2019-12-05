@@ -196,9 +196,9 @@ async function removeFromShoppingList(req, res) {
         var item = user.shoppingList.filter(obj => {
             return obj.name === req.body.name
         })
-        if (item.length != 0) {
+        if (item.length > 0) {
             console.log(req.body.name)
-            user.shoppingList.splice(user.shoppingList.indexOf(item), 1)
+            user.shoppingList.splice(user.shoppingList.indexOf(item[0]), 1)
         }
         const savedUser = await user.save();
         return res.send({
