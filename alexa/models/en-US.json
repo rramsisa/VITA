@@ -40,7 +40,7 @@
 					"slots": [
 						{
 							"name": "item",
-							"type": "AMAZON.FOOD"
+							"type": "AMAZON.Food"
 						},
 						{
 							"name": "quantity",
@@ -57,7 +57,7 @@
 					"slots": [
 						{
 							"name": "item",
-							"type": "AMAZON.FOOD"
+							"type": "AMAZON.Food"
 						},
 						{
 							"name": "quantity",

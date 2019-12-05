@@ -3,7 +3,6 @@
 
 // Auth token for user rishabh@google.com
 // May require to be regenerated
-const authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGJiOTJhYzYwZTlmNDNkNTE5OWI5YmEiLCJpYXQiOjE1NzU0MzAzNTcsImV4cCI6MTU3NTUxNjc1N30.GTtpK86LWRgERz4jiFAwISLK4BNT_1Am_ls2BhX2n9k';
 const ip = '167.71.145.115';
 
 const Alexa = require('ask-sdk-core');
@@ -15,18 +14,45 @@ const GetShoppingListHandler = {
   },
   async handle(handlerInput) {
     let outputSpeech = 'This is the default message.';
-    const api = url + 'list/getShoppingList/';
+    const api = '/api/alexa/getShoppingList/';
+    const userId = handlerInput.requestEnvelope.context.System.user.userId
+    const alexaID = userId.substring(userId.length - 10, userId.length);
 
-    await getRemoteData(api)
+    await getRemoteData(api, alexaID)
       .then((response) => {
+        console.log('in then')
         const data = JSON.parse(response);
-        outputSpeech = `There are currently ${data.people.length} shopping items in space. `;
+        console.log(data)
+        if (data.message) {
+          console.log('There is a message')
+          outputSpeech = data.message
+          outputSpeech = outputSpeech + ' I\'ve sent instructions to the alexa app on how to do this.'
+        }
+        else {
+          console.log('Shopping Items exist')
+          if (data.list.length === 0) {
+            console.log('No item')
+            outputSpeech = 'Your Shopping List is empty.'
+          }
+          else if (data.list.length === 1) {
+            console.log('1 item')
+            outputSpeech = `The only item in your shopping list is ${data.list[0].name}`;
+          }
+          else {
+            console.log(`${data.list.length} items`)
+            outputSpeech = `The items in your shopping list are: `;
+            for (i = 0; i < data.list.length - 1; i++) {
+              outputSpeech = outputSpeech + `${data.list[i].name}, `;
+            }
+            outputSpeech = outputSpeech + `and ${data.list[data.list.length - 1].name}.`
+          }
+        }
       })
       .catch((err) => {
         //set an optional error message here
-        //outputSpeech = err.message;
+        console.log(err.message)
+        outputSpeech = 'API request failed.';
       });
-
     return handlerInput.responseBuilder
       .speak(outputSpeech)
       .getResponse();
@@ -41,16 +67,44 @@ const GetItemListHandler = {
   },
   async handle(handlerInput) {
     let outputSpeech = 'This is the default message.';
-    const api = '/api/myitemsInfo/';
-    await getRemoteData(api)
+    const api = '/api/alexa/getItems/';
+    const userId = handlerInput.requestEnvelope.context.System.user.userId
+    const alexaID = userId.substring(userId.length - 10, userId.length);
+    // console.log(alexaID);
+    await getRemoteData(api, alexaID)
       .then((response) => {
+        console.log('in then')
         const data = JSON.parse(response);
-        outputSpeech = `The items in your pantry are . `;
-
+        console.log(data)
+        if (data.message) {
+          console.log('There is a message')
+          outputSpeech = data.message
+          outputSpeech = outputSpeech + ' I\'ve sent instructions to the alexa app on how to do this.'
+        }
+        else {
+          console.log('Items exist')
+          if (data.length === 0) {
+            console.log('No item')
+            outputSpeech = 'Your pantry is empty.'
+          }
+          else if (data.length === 1) {
+            console.log('1 item')
+            outputSpeech = `The only item in your pantry is ${data[0].quantity} ${data[0].name}`;
+          }
+          else {
+            console.log(`${data.length} items`)
+            outputSpeech = `The items in your pantry are: `;
+            for (i = 0; i < data.length - 1; i++) {
+              outputSpeech = outputSpeech + `${data[i].quantity} ${data[i].name}, `;
+            }
+            outputSpeech = outputSpeech + `and ${data[data.length - 1].quantity} ${data[data.length - 1].name}.`
+          }
+        }
       })
       .catch((err) => {
         //set an optional error message here
-        //outputSpeech = err.message;
+        console.log(err.message)
+        outputSpeech = 'API request failed.';
       });
 
     return handlerInput.responseBuilder
@@ -67,17 +121,44 @@ const GetRecipeListHandler = {
   },
   async handle(handlerInput) {
     let outputSpeech = 'This is the default message.';
-    const api = '/api/recipes/recipe/';
+    const api = '/api/alexa/getRecipes/';
+    const userId = handlerInput.requestEnvelope.context.System.user.userId
+    const alexaID = userId.substring(userId.length - 10, userId.length);
 
-    await getRemoteData(api)
+    await getRemoteData(api, alexaID)
       .then((response) => {
+        console.log('in then')
         const data = JSON.parse(response);
-        outputSpeech = `There are currently ${data.people.length} recipes in space. `;
-
+        console.log(data)
+        if (typeof (data.message) === String) {
+          console.log('There is a message')
+          outputSpeech = data.message
+          outputSpeech = outputSpeech + ' I\'ve sent instructions to the alexa app on how to do this.'
+        }
+        else {
+          console.log('Recipes exist')
+          if (data.message.length === 0) {
+            console.log('No recipes')
+            outputSpeech = 'There are no recipes you can make with the your current inventory.'
+          }
+          else if (data.message.length === 1) {
+            console.log('1 item')
+            outputSpeech = `The only recipe you can make is ${data.message[0].title}`;
+          }
+          else {
+            console.log(`${data.message.length} items`)
+            outputSpeech = `The recipes that you can make with your current pantry are: `;
+            for (i = 0; i < data.message.length - 1; i++) {
+              outputSpeech = outputSpeech + `${data.message[i].title}, `;
+            }
+            outputSpeech = outputSpeech + `and ${data.message[data.message.length - 1].title}.`
+          }
+        }
       })
       .catch((err) => {
         //set an optional error message here
-        //outputSpeech = err.message;
+        console.log(err.message)
+        outputSpeech = 'API request failed.';
       });
 
     return handlerInput.responseBuilder
@@ -103,21 +184,24 @@ const AddPantryItemHandler = {
     } else {
       slotStatus += 'slot item is empty. ';
     }
+    console.log(slotStatus)
 
-    var api = '/api/manual/';
+    var api = '/api/alexa/modify';
+    const userId = handlerInput.requestEnvelope.context.System.user.userId
+    const alexaID = userId.substring(userId.length - 10, userId.length);
 
-    await postManualData(api, 1, slotValues.item.value, slotValues.quantity.value)
+    await postManualData(api, 1, slotValues.item.value, slotValues.quantity.value, alexaID)
       .then((response) => {
+        console.log('in then')
         const data = JSON.parse(response);
-        outputSpeech = `There are currently ${data.people.length} astronauts in space. `;
-
+        console.log(data)
+        outputSpeech = data.message;
       })
       .catch((err) => {
         //set an optional error message here
-        //outputSpeech = err.message;
+        console.log(err.message)
+        outputSpeech = 'API request failed';
       });
-
-    outputSpeech = slotStatus;
 
     return handlerInput.responseBuilder
       .speak(outputSpeech)
@@ -142,21 +226,24 @@ const RemovePantryItemHandler = {
     } else {
       slotStatus += 'slot item is empty. ';
     }
+    console.log(slotStatus)
 
-    var api = '/api/manual/';
+    var api = '/api/alexa/modify/';
+    const userId = handlerInput.requestEnvelope.context.System.user.userId
+    const alexaID = userId.substring(userId.length - 10, userId.length);
 
-    await postManualData(api, 0, slotValues.item.value, slotValues.quantity.value)
+    await postManualData(api, 0, slotValues.item.value, slotValues.quantity.value, alexaID)
       .then((response) => {
+        console.log('in then')
         const data = JSON.parse(response);
-        outputSpeech = `There are currently ${data.people.length} astronauts in space. `;
-
+        console.log(data)
+        outputSpeech = data.message;
       })
       .catch((err) => {
         //set an optional error message here
-        //outputSpeech = err.message;
+        console.log(err.message)
+        outputSpeech = 'API request failed';
       });
-
-    outputSpeech = slotStatus;
 
     return handlerInput.responseBuilder
       .speak(outputSpeech)
@@ -234,38 +321,13 @@ const ErrorHandler = {
   },
 };
 
-const getRemoteData = function (url) {
-  return new Promise((resolve, reject) => {
-    const client = require('http');
-    const options = {
-      hostname: ip,
-      port: 3000,
-      path: url,
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'auth-token': authToken
-      }
-    };
-    const request = client.request(options, (response) => {
-      if (response.statusCode < 200 || response.statusCode > 299) {
-        reject(new Error('Failed with status code: ' + response.statusCode));
-      }
-      const body = [];
-      response.on('data', (chunk) => body.push(chunk));
-      response.on('end', () => resolve(body.join('')));
-    });
-    request.on('error', (err) => reject(err))
-  })
-};
-
-const postManualData = function (url, flag, name, quantity) {
+const getRemoteData = function (url, alexaID) {
+  console.log(url)
+  console.log(alexaID)
   return new Promise((resolve, reject) => {
     const client = require('http');
     const data = JSON.stringify({
-      'name': name,
-      'flag': flag,
-      'quantity': quantity
+      'alexaID': alexaID
     });
     const options = {
       hostname: ip,
@@ -274,19 +336,67 @@ const postManualData = function (url, flag, name, quantity) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'auth-token': authToken,
-        'Content-Length': data.length
       }
     };
+    console.log(options)
     const request = client.request(options, (response) => {
-      if (response.statusCode < 200 || response.statusCode > 299) {
-        reject(new Error('Failed with status code: ' + response.statusCode));
-      }
+      console.log(response.statusCode);
+      console.log(response);
+      // if (response.statusCode < 200 || response.statusCode > 299) {
+      //   reject(new Error('Failed with status code: ' + response.statusCode));
+      // }
       const body = [];
-      response.on('data', (chunk) => body.push(chunk));
-      response.on('end', () => resolve(body.join('')));
+      response.on('data', (chunk) => {
+        body.push(chunk)
+      });
+      response.on('end', () => {
+        body.join(' ')
+        console.log(body.toString());
+        resolve(body.toString());
+      });
     });
-    request.on('error', (err) => reject(err));
+    request.on('error', (err) => console.log(err))
+    request.write(data);
+    request.end();
+  })
+};
+
+const postManualData = function (url, flag, name, quantity, alexaID) {
+  return new Promise((resolve, reject) => {
+    const client = require('http');
+    const data = JSON.stringify({
+      'name': name,
+      'flag': flag,
+      'quantity': quantity,
+      'alexaID': alexaID
+    });
+    const options = {
+      hostname: ip,
+      port: 3000,
+      path: url,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    };
+    console.log(options)
+    const request = client.request(options, (response) => {
+      console.log(response.statusCode);
+      console.log(response);
+      // if (response.statusCode < 200 || response.statusCode > 299) {
+      //   reject(new Error('Failed with status code: ' + response.statusCode));
+      // }
+      const body = [];
+      response.on('data', (chunk) => {
+        body.push(chunk)
+      });
+      response.on('end', () => {
+        body.join(' ')
+        console.log(body.toString());
+        resolve(body.toString());
+      });
+    });
+    request.on('error', (err) => console.log(err))
     request.write(data);
     request.end();
   })
