@@ -10,7 +10,7 @@
   var recommendedList = []; //["R Item One", "R Item Two", "R Item Three"]; //TODO: temp. Should be changed
   var outOfStockList = []; // ["O Item One", "O Item Two", "O Item Three"]; //TODO: temp. Should be changed
 
-  var recipesList = [
+  var recipesList = [];/*[
     {
       "id": 933310,
       "title": "2 Ingredient Instant Pot Applesauce",
@@ -72,7 +72,7 @@
       "likes": 0
     },
   ];
-  
+  */
   void setAuthToken(var t){
     authToken = t;
   }

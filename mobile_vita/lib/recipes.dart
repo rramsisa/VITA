@@ -33,7 +33,7 @@ class _RecipesPageState extends State<RecipesPage> {
     print("Updating Recipes");
 
     //Make API call to get pantry & update list
-    bool success = await getPantryItems(context); //TODO: Update with appropriate call
+    bool success = await recipeItemsGet(context); //TODO: Update with appropriate call
     if(success){
       // Generate list on page done below
       setState(() {

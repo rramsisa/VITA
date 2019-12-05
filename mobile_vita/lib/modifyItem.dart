@@ -75,7 +75,8 @@ class _ModifyItemPageState extends State<ModifyItemPage> {
         int.parse(itemAmountController.text), context);
     */
     
-    bool delSuccess = await deleteCall(itemNameController.text, context);
+    bool delSuccess = await manual(itemNameController.text, 0, selectedItem["quantity"], context);
+    //bool delSuccess = await deleteCall(itemNameController.text, context);
     //Nav back to original page
     if(delSuccess){
       Navigator.pop(context);
