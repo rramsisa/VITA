@@ -27,6 +27,14 @@ const GetShoppingListHandler = {
           console.log('There is a message')
           outputSpeech = data.message
           outputSpeech = outputSpeech + ' I\'ve sent instructions to the alexa app on how to do this.'
+
+          return handlerInput.responseBuilder
+		      .speak(outputSpeech)
+		      .withSimpleCard(
+		      	"VITA Pairing Instructions",
+		      	`In order to pair this Alexa Account to your VITA account, please navigate to the VITA app, click on Settings, then Manage Alexa Accounts. From there, enter the account ID below and click pair. \nAlexa Account ID: ${alexaID}`
+	      		)
+		      .getResponse();
         }
         else {
           console.log('Shopping Items exist')
@@ -80,6 +88,14 @@ const GetItemListHandler = {
           console.log('There is a message')
           outputSpeech = data.message
           outputSpeech = outputSpeech + ' I\'ve sent instructions to the alexa app on how to do this.'
+
+          return handlerInput.responseBuilder
+		      .speak(outputSpeech)
+		      .withSimpleCard(
+		      	"VITA Pairing Instructions",
+		      	`In order to pair this Alexa Account to your VITA account, please navigate to the VITA app, click on Settings, then Manage Alexa Accounts. From there, enter the account ID below and click pair. \nAlexa Account ID: ${alexaID}`
+	      		)
+		      .getResponse();
         }
         else {
           console.log('Items exist')
@@ -134,6 +150,14 @@ const GetRecipeListHandler = {
           console.log('There is a message')
           outputSpeech = data.message
           outputSpeech = outputSpeech + ' I\'ve sent instructions to the alexa app on how to do this.'
+
+          return handlerInput.responseBuilder
+		      .speak(outputSpeech)
+		      .withSimpleCard(
+		      	"VITA Pairing Instructions",
+		      	`In order to pair this Alexa Account to your VITA account, please navigate to the VITA app, click on Settings, then Manage Alexa Accounts. From there, enter the account ID below and click pair. \nAlexa Account ID: ${alexaID}`
+	      		)
+		      .getResponse();
         }
         else {
           console.log('Recipes exist')
