@@ -3,8 +3,6 @@ const Item = require('../models/Item');
 const unirest = require('unirest')
 const url = "https://api.spoonacular.com/"
 
-const url = "https://api.spoonacular.com/"
-
 const {
     pairAlexaValidation,
     modifyAlexaValidation
