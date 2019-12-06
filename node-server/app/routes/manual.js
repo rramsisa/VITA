@@ -35,6 +35,7 @@ async function manual(req, res) {
             item.quantity = parseInt(item.quantity) + parseInt(req.body.quantity)
             item.status = true;
             item.date = d.getTime();
+            // console.log(d.getMilliseconds())
             for( h = 1; h <=req.body.quantity; h++){
                 item.added.push(d.getTime())
             }

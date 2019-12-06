@@ -10,7 +10,7 @@ const itemSchema = new mongoose.Schema({
         required: true
     },
     date: { // Date created
-        type: Date,
+        type: Number,
         default: Date.now
     },
     quantity: {
