@@ -25,9 +25,6 @@ class _AddItemPageState extends State<AddItemPage> {
     // Call API to successfully add item to pantry & update list
     bool addSuccess = await manual(itemNameController.text, 1,
         int.parse(itemAmountController.text), context);
-        setState(() {
-          
-        });
         if(addSuccess){
           Navigator.pop(context);
         }

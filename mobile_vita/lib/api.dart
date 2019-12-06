@@ -547,6 +547,7 @@ Future<bool> recommendedListGet(BuildContext context) async{
     // Map<String, dynamic> bod = json.decode(response.body);
     if (response.statusCode == 200) {
       print("respnse body: " + response.body);
+      print("Recommended Length: " + json.decode(response.body)["message"].length.toString());
       setRecommendedList(json.decode(response.body)["message"]);
       return true;
     } else {

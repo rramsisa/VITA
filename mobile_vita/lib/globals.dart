@@ -38,7 +38,6 @@
     print(l);
   }
 
-// TODO: These are manipulating the local array, should probably be done differently, or update entire list with API call
   void shoppingListAdd(var a){
     //shoppingList.add(a);
     print("New Shopping List: ");

@@ -33,7 +33,6 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
     updateLists();
 
     tabController = TabController(length: 3, vsync: this);
-    tabController.addListener(updateView);
   }
 
   Future<void> updateLists() async {
@@ -161,9 +160,10 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
         return new Card(
           child: ListTile(
             title: Text(recommendedList[Index]["name"]),
-            subtitle: Text("Will run out in about # days"),
+            subtitle: Text(recommendedList[Index]["message"]),
             // leading: Icon(Icons.cancel),
             trailing: Icon(Icons.add_shopping_cart),
+            isThreeLine: true,
             onTap: (){
               addToShoppingList(recommendedList[Index]["name"]);
             },
