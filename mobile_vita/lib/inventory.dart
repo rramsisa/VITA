@@ -68,7 +68,7 @@ class _InventoryPageState extends State<InventoryPage> {
               child: ListTile(
                 title: Text(pantryItems[Index]["name"]),
                 subtitle: Text(
-                  'Quantity: ${pantryItems[Index]["quantity"].toString()} \nLast Modified: ${pantryItems[Index]["date"].substring(0,10)}'
+                  'Quantity: ${pantryItems[Index]["quantity"].toString()} \nLast Modified: ${DateTime.fromMillisecondsSinceEpoch(pantryItems[Index]["date"]).toString().substring(0,10)}'
                 ),
                 trailing: Icon(Icons.arrow_forward_ios),
                 onTap: (){
