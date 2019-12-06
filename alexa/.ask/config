@@ -34,7 +34,7 @@
             "codeUri": "lambda/custom",
             "functionName": "ask-custom-dabblelab-vita-default",
             "handler": "index.handler",
-            "revisionId": "a8ea47d5-13fd-4df0-9af0-30c709e10148",
+            "revisionId": "ae1ceb7e-ba30-4066-985a-9cdaa674d86e",
             "runtime": "nodejs8.10"
           }
         ]

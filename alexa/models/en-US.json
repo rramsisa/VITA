@@ -1,7 +1,7 @@
 {
 	"interactionModel": {
 		"languageModel": {
-			"invocationName": "inventory assistant",
+			"invocationName": "the vita app",
 			"types": [],
 			"intents": [
 				{
