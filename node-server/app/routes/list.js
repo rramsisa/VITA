@@ -307,7 +307,8 @@ async function getSoonOutOfStockList(req, res) {
             }
         }
         console.log(soonOutOfStock)
-        // const savedUser = await user.save();
+                console.log(soonOutOfStock)
+
         return res.send({
             message:soonOutOfStock
         });
