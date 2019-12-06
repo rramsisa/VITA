@@ -51,7 +51,7 @@ async function manual(req, res) {
             var date1 = new Date();
             var Difference_In_Time = date1.getTime()-item.date; 
             console.log(Difference_In_Time)
-            item.lasted.push(Difference_In_Time);
+            item.lasted.push(Difference_In_Time/parseInt(req.body.quantity));
         }
         // console.log("Item exists")
         try {

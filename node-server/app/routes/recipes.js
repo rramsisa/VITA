@@ -110,9 +110,9 @@ async function GetRecipeLink(req, res) {
 				"includeNutrition": false
 			})
 			.end(result => {
-				console.log(result.body[0].spoonacularSourceUrl);
+				console.log(result.body[0].sourceUrl);
 				return res.send({
-					link: result.body[0].spoonacularSourceUrl
+					link: result.body[0].sourceUrl
 				});
 			})
 
