@@ -121,10 +121,11 @@ async function postBarCodeData(req, res) {
     });
     // console.log(item)
     if (item != null) {
+        var d = new Date();
         if (req.body.flag == 1) {
             item.quantity = item.quantity + 1
             item.status = true;
-            var d = new Date();
+            item.date = d.getTime();
             item.added.push(d.getTime())
         } else if (item.quantity == 0) {
             return res.status(400).send({
@@ -132,6 +133,7 @@ async function postBarCodeData(req, res) {
             });
         } else {
             item.quantity = item.quantity - 1
+            item.date = d.getTime();
         }
         if (item.quantity == 0) {
             item.status = false;

@@ -30,17 +30,19 @@ async function manual(req, res) {
     });
     // console.log(item)
     if(item != null){
+        var d = new Date();
         if (req.body.flag == 1) {
             item.quantity = parseInt(item.quantity) + parseInt(req.body.quantity)
             item.status = true;
+            item.date = d.getTime();
+            item.added.push(d.getTime())
         } else if (item.quantity == 0) {
             return res.status(400).send({
                 "message": "Item is out of stock"
             });
         } else {
             item.quantity = parseInt(item.quantity) - parseInt(req.body.quantity)
-            console.log(item.quantity)
-                        console.log(req.body.quantity)
+            item.date = d.getTime();
 
         }
         if (item.quantity <= 0) {
