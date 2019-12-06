@@ -118,6 +118,12 @@
     print(o);
   }
 
+  void setRecipes(var r){
+    recipesList = r;
+    print("Recipes Updated");
+    print(r);
+  }
+
   void setScanners(var s){
     scanners = s;
     print("Scanners Updated");

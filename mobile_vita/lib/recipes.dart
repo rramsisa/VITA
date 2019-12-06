@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_vita/api.dart';
 import 'package:mobile_vita/main.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'addItem.dart';
 import 'modifyItem.dart';
 import 'globals.dart';
@@ -33,7 +34,7 @@ class _RecipesPageState extends State<RecipesPage> {
     print("Updating Recipes");
 
     //Make API call to get pantry & update list
-    bool success = await recipeItemsGet(context); //TODO: Update with appropriate call
+    bool success = await recipeItemsGet(context);
     if(success){
       // Generate list on page done below
       setState(() {
@@ -42,9 +43,14 @@ class _RecipesPageState extends State<RecipesPage> {
     }
   }
 
-  void navigateToRecipe(recipeID){
+  Future<void> navigateToRecipe(context, recipeID) async{
     print("Navigating to Recipe with id $recipeID");
-    // TODO: Actual navigation
+    var url = await getRecipeLink(context, recipeID);
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   @override
@@ -64,7 +70,7 @@ class _RecipesPageState extends State<RecipesPage> {
                 leading: Image.network(recipesList[Index]["image"]),
                 trailing: Icon(Icons.language),
                 onTap: (){
-                  navigateToRecipe(recipesList[Index]["id"]);
+                  navigateToRecipe(context, recipesList[Index]["id"]);
                 },
               )
             );

@@ -614,7 +614,7 @@ Future<bool> outOfStockListGet(BuildContext context) async{
     // Map<String, dynamic> bod = json.decode(response.body);
     if (response.statusCode == 200) {
       print("respnse body: " + response.body);
-      setOutOfStockList(json.decode(response.body)["list"]);
+      setOutOfStockList(json.decode(response.body));
       return true;
     } else {
       //error, display message according
@@ -680,8 +680,38 @@ Future<bool> recipeItemsGet(BuildContext context) async{
         headers: {"Content-Type": "application/json", "auth-token": authToken});
     // Map<String, dynamic> bod = json.decode(response.body);
     if (response.statusCode == 200) {
-      //setPantry(json.decode(response.body));
+      // print(response.body);
+      setRecipes(json.decode(response.body)["message"]);
       return true;
+    } else {
+      //error, display message according
+      print(response.statusCode);
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              // title: Text(bod["message"]),
+            );
+          });
+    }
+    return false;
+  } catch (exception) {
+    print(exception);
+    return false;
+  }
+}
+
+Future<String> getRecipeLink(BuildContext context, String id) async{
+  var call;
+  call = "http://$callPath:3000/api/recipes/recipeLink";
+  try {
+    final response = await http.post(call,
+        body: json.encode({'id': id}),
+        headers: {"Content-Type": "application/json", "auth-token": authToken});
+    // Map<String, dynamic> bod = json.decode(response.body);
+    if (response.statusCode == 200) {
+      print(response.body);
+      return(json.decode(response.body)["link"]);
     } else {
       //error, display message according
       print(response.statusCode);
