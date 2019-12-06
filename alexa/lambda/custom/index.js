@@ -227,9 +227,20 @@ const AddPantryItemHandler = {
         outputSpeech = 'API request failed';
       });
 
-    return handlerInput.responseBuilder
-      .speak(outputSpeech)
-      .getResponse();
+    if(outputSpeech.includes("not paired")){ //Not authed
+	  	return handlerInput.responseBuilder
+		      .speak(outputSpeech)
+		      .withSimpleCard(
+		      	"VITA Pairing Instructions",
+		      	`In order to pair this Alexa Account to your VITA account, please navigate to the VITA app, click on Settings, then Manage Alexa Accounts. From there, enter the account ID below and click pair. \nAlexa Account ID: ${alexaID}`
+	      		)
+		      .getResponse();
+	  }
+	  else{
+	  	return handlerInput.responseBuilder
+	      .speak(outputSpeech)
+	      .getResponse();
+	  }
 
   },
 };
@@ -269,10 +280,20 @@ const RemovePantryItemHandler = {
         outputSpeech = 'API request failed';
       });
 
-    return handlerInput.responseBuilder
-      .speak(outputSpeech)
-      .getResponse();
-
+      if(outputSpeech.includes("not paired")){ //Not authed
+      	return handlerInput.responseBuilder
+		      .speak(outputSpeech)
+		      .withSimpleCard(
+		      	"VITA Pairing Instructions",
+		      	`In order to pair this Alexa Account to your VITA account, please navigate to the VITA app, click on Settings, then Manage Alexa Accounts. From there, enter the account ID below and click pair. \nAlexa Account ID: ${alexaID}`
+	      		)
+		      .getResponse();
+      }
+      else{
+      	return handlerInput.responseBuilder
+	      .speak(outputSpeech)
+	      .getResponse();
+      }
   },
 };
 
