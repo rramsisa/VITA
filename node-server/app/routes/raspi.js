@@ -321,11 +321,12 @@ async function getMyItemsInfo(req, res) {
 
         itemInfo = []
         itemInfoprint = []
-
+        console.log(user.listOfItems)
         for (var property in values) {
             const item = await Item.findOne({
                 _id: values[property]
             })
+            
            if (item.status) {
                 itemInfo.push(item)
            }
@@ -333,12 +334,13 @@ async function getMyItemsInfo(req, res) {
 
         }
         console.log("---")
-        console.log(itemInfoprint)
+        console.log(itemInfo)
         console.log("---")
 
         return res.send(itemInfo);
 
     } catch (err) {
+        console.log(err)
         res.status(400).send({
             message: err
         })
