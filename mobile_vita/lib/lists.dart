@@ -50,13 +50,10 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
     }
     
     //refresh out of stock then call get
-    bool oosSuc = await outOfStockListRefresh(context);
-    bool osSuccess;
-    if(oosSuc){
-      osSuccess = await outOfStockListGet(context);
-    }
+    // bool oosSuc = await outOfStockListRefresh(context);
+    bool osSuccess = await outOfStockListGet(context);
 
-    //bool success = await getPantryItems(context); // TODO: Change to proper calls
+    //bool success = await getPantryItems(context);
     if(slSuccess || rlSuccess || osSuccess){
       // Generate list on page done below
       setState(() {
@@ -184,15 +181,15 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
   Widget returnOutOfStockList(){
     return ListView.builder(
       itemCount: outOfStockList.length,
-      itemBuilder: (BuildContext ctxt, int Index) {
+      itemBuilder: (BuildContext ctxt, int index) {
         return new Card(
           child: ListTile(
-            title: Text(outOfStockList[Index]["name"]),
-            subtitle: Text(outOfStockList[Index]["time"].toString()),
+            title: Text(outOfStockList[index]["name"]),
+            subtitle: Text("Out of Stock: " + outOfStockList[index]["date"].substring(0, 10)),
             // leading: Icon(Icons.cancel),
             trailing: Icon(Icons.add_shopping_cart),
             onTap: (){
-              addToShoppingList(outOfStockList[Index]["name"]);
+              addToShoppingList(outOfStockList[index]["name"]);
             },
           )
         );
