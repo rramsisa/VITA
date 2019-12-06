@@ -134,10 +134,10 @@ async function getMyItemsFromAlexa(req, res) {
             const item = await Item.findOne({
                 _id: values[property]
             })
-            
+
             if (item.status) {
                 itemInfo.push(item)
-           }
+            }
 
         }
         return res.send(itemInfo);
@@ -216,7 +216,7 @@ async function getRecipesFromAlexa(req, res) {
             })
             if (item.status == true) {
                 item.breadcrumbs.forEach(i => breadcrumbs = breadcrumbs + i + ", ");
-                breadcrumbs = breadcrumbs + item.name + ", "            
+                breadcrumbs = breadcrumbs + item.name + ", "
             }
 
         }
@@ -273,15 +273,24 @@ async function modifyFromAlexa(req, res) {
     });
     // console.log(item)
     if (item != null) {
+        var d = new Date();
         if (req.body.flag == 1) {
             item.quantity = parseInt(item.quantity) + parseInt(req.body.quantity)
             item.status = true;
+            item.date = d.getTime();
+            // console.log(d.getMilliseconds())
+            for (h = 1; h <= req.body.quantity; h++) {
+                item.added.push(d.getTime())
+            }
+
         } else if (item.quantity == 0) {
             return res.status(400).send({
                 "message": "Item is out of stock"
             });
         } else {
             item.quantity = parseInt(item.quantity) - parseInt(req.body.quantity)
+            item.date = d.getTime();
+
         }
         if (item.quantity <= 0) {
             item.quantity = 0;
@@ -289,7 +298,7 @@ async function modifyFromAlexa(req, res) {
             var date1 = new Date();
             var Difference_In_Time = date1.getTime() - item.date;
             console.log(Difference_In_Time)
-            item.lasted.push(Difference_In_Time);
+            item.lasted.push(Difference_In_Time / parseInt(req.body.quantity));
         }
         // console.log("Item exists")
         try {
@@ -320,10 +329,18 @@ async function modifyFromAlexa(req, res) {
 
             })
             .end(result => {
-                breadList = [result.body.category]
+                breadList = result.body.breadcrumbs
+
                 // console.log(breadList);
                 if (breadList.indexOf("non food item") >= 0) {
                     breadList = []
+                }
+                else if (result.body.category == null) {
+                    console.log("it was null")
+                    breadList = [req.body.name]
+                }
+                else {
+                    breadList.push(result.body.category)
                 }
                 const newItem = new Item({
                     name: req.body.name,
@@ -332,6 +349,10 @@ async function modifyFromAlexa(req, res) {
                     userID: user._id,
                     breadcrumbs: breadList
                 });
+                var d = new Date();
+                for (h = 1; h <= req.body.quantity; h++) {
+                    newItem.added.push(d.getTime())
+                }
 
                 const savedItem = newItem.save();
                 user.listOfItems.push(newItem._id);
@@ -352,6 +373,7 @@ async function modifyFromAlexa(req, res) {
             message: err
         });
         // return  err
+
     }
 }
 
