@@ -45,11 +45,13 @@ class _RecipesPageState extends State<RecipesPage> {
 
   Future<void> navigateToRecipe(context, recipeID) async{
     print("Navigating to Recipe with id $recipeID");
-    var url = await getRecipeLink(context, recipeID);
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
+    bool urlSuccess = await getRecipeLink(context, recipeID.toString());
+    if(urlSuccess){
+      if (await canLaunch(recipeLink)) {
+        await launch(recipeLink);
+      } else {
+        throw 'Could not launch $recipeLink';
+      }
     }
   }
 

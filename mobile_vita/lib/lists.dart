@@ -42,15 +42,10 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
     //Make API call to get pantry & update list
     bool slSuccess = await shoppingListGet(context);
 
-    //refresh recommended then call get
-    bool refSuc = await recommendedListRefresh(context);
-    bool rlSuccess;
-    if(refSuc){
-      rlSuccess = await recommendedListGet(context);
-    }
+    //refresh recommended
+    bool rlSuccess = await recommendedListGet(context);
     
-    //refresh out of stock then call get
-    // bool oosSuc = await outOfStockListRefresh(context);
+    //refresh out of stock
     bool osSuccess = await outOfStockListGet(context);
 
     //bool success = await getPantryItems(context);
@@ -185,7 +180,7 @@ class _ListsPageState extends State<ListsPage> with SingleTickerProviderStateMix
         return new Card(
           child: ListTile(
             title: Text(outOfStockList[index]["name"]),
-            subtitle: Text("Out of Stock: " + outOfStockList[index]["date"].substring(0, 10)),
+            subtitle: Text("Out of Stock: " + DateTime.fromMillisecondsSinceEpoch(outOfStockList[index]["date"]).toString().substring(0, 10)),
             // leading: Icon(Icons.cancel),
             trailing: Icon(Icons.add_shopping_cart),
             onTap: (){

@@ -547,7 +547,7 @@ Future<bool> recommendedListGet(BuildContext context) async{
     // Map<String, dynamic> bod = json.decode(response.body);
     if (response.statusCode == 200) {
       print("respnse body: " + response.body);
-      setRecommendedList(json.decode(response.body)["list"]);
+      setRecommendedList(json.decode(response.body)["message"]);
       return true;
     } else {
       //error, display message according
@@ -701,7 +701,7 @@ Future<bool> recipeItemsGet(BuildContext context) async{
   }
 }
 
-Future<String> getRecipeLink(BuildContext context, String id) async{
+Future<bool> getRecipeLink(BuildContext context, String id) async{
   var call;
   call = "http://$callPath:3000/api/recipes/recipeLink";
   try {
@@ -711,7 +711,8 @@ Future<String> getRecipeLink(BuildContext context, String id) async{
     // Map<String, dynamic> bod = json.decode(response.body);
     if (response.statusCode == 200) {
       print(response.body);
-      return(json.decode(response.body)["link"]);
+      setRecipeLink(json.decode(response.body)["link"]);
+      return true;
     } else {
       //error, display message according
       print(response.statusCode);
