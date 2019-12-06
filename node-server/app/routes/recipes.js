@@ -67,7 +67,7 @@ async function GetRecipe(req, res) {
 			.header('Content-Type', 'application/json')
 			.query({
 				"ingredients": breadcrumbs,
-				"number": 2,
+				"number": 10,
 				"ranking": 2,
 				"ignorePantry": true
 			})
