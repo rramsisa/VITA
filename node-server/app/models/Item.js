@@ -10,7 +10,7 @@ const itemSchema = new mongoose.Schema({
         required: true
     },
     date: { // Date created
-        type: Date,
+        type: Number,
         default: Date.now
     },
     quantity: {
@@ -36,6 +36,10 @@ const itemSchema = new mongoose.Schema({
     },
     added:{
         type: [Number],
+        required: true
+    },
+    message:{
+        type: String,
         required: true
     }
 });

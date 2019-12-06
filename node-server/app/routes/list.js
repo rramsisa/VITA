@@ -59,7 +59,7 @@ async function clearShoppingList(req, res) {
 }
 //get outOfStock list
 async function getOutOfStockList(req, res) {
-     try {
+    try {
         const user = await User.findOne({
             _id: req.user._id
         })
@@ -262,52 +262,14 @@ async function addToShoppingList(req, res) {
     }
 }
 
+
 //refresh list of my items' names
-async function refreshOutOfStockList(req, res) {
+async function getSoonOutOfStockList(req, res) {
     try {
         const user = await User.findOne({
             _id: req.user._id
         })
-        const values = Object.values(user.listOfItems)
-        user.outOfStock = []
-        for (var property in values) {
-            const item = await Item.findOne({
-                _id: values[property]
-            })
-            console.log(item.name)
-            if (user.outOfStock.includes(item.name)) {
-                continue;
-
-            }
-            if (item.status == false) {
-                console.log("out of stock")
-                var date1 = new Date();
-                var t = date1.getTime() - item.date
-                var temp = { name: item.name, time: t, priotiry: 1 };
-                console.log(temp.name)
-                console.log(item.name)
-                user.outOfStock.push(temp)
-            }
-
-        }
-        const savedUser = await user.save();
-        return res.send({
-            message: "list refreshed"
-        });
-
-    } catch (err) {
-        res.status(400).send({
-            message: err
-        })
-    }
-}
-
-//refresh list of my items' names
-async function refreshSoonOutOfStockList(req, res) {
-    try {
-        const user = await User.findOne({
-            _id: req.user._id
-        })
+        soonOutOfStock = []
         const values = Object.values(user.listOfItems)
         console.log("--------")
         user.soonOutOfStock = []
@@ -315,11 +277,7 @@ async function refreshSoonOutOfStockList(req, res) {
             const item = await Item.findOne({
                 _id: values[property]
             })
-            console.log(item.name)
-            if (user.soonOutOfStock.includes(item.name)) {
-                continue;
-
-            }
+            
             if (item.status != false) {
                 var total_lasted = 0;
                 for (var i = 0; i < item.lasted.length; i++) {
@@ -329,11 +287,9 @@ async function refreshSoonOutOfStockList(req, res) {
                 
                 var date1 = new Date();
                if (date1.getTime() - item.date > avg_lasted) {
-
-                    var t = (date1.getTime() - item.date) - avg_lasted
-                    var temp = { name: item.name, time: t, priotiry: 2 };
-                    console.log(item.name)
-                    user.soonOutOfStock.push(temp)
+                    item.message = "lasted"
+                    soonOutOfStock.push(item)
+                    
                 }
                 else if(item.added.length > 1){
                     var total_added = 0;
@@ -341,21 +297,19 @@ async function refreshSoonOutOfStockList(req, res) {
                         total_added = total_added + Math.abs(item.added[i+1]-item.added[i])
                     }
                     var avg_added = total_added / item.added.length;
-                                        console.log(avg_added)
 
                     if(avg_added <= date1.getTime() - item.added[item.added.length-1]){
-                        var t = (date1.getTime() - item.date) - avg_lasted
-                        var temp = { name: item.name, time: avg_added, priotiry: 4 };
-                        console.log(item.name)
-                        user.soonOutOfStock.push(temp)
+                        item.message = "added"
+                        soonOutOfStock.push(item)
                     }
                 
                 }
             }
         }
-        const savedUser = await user.save();
+        console.log(soonOutOfStock)
+        // const savedUser = await user.save();
         return res.send({
-            message: "list refreshed"
+            message:soonOutOfStock
         });
 
     } catch (err) {
@@ -369,5 +323,5 @@ module.exports = {
     clearOutOfStockList, clearSoonOutOfStockList, clearShoppingList,
     getOutOfStockList, getSoonOutOfStockList, getShoppingList,
     moveFromOutOfStockList, moveFromSoonOutOfStockList, removeFromShoppingList,
-    addToShoppingList, refreshOutOfStockList, refreshSoonOutOfStockList
+    addToShoppingList
 };

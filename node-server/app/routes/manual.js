@@ -35,7 +35,11 @@ async function manual(req, res) {
             item.quantity = parseInt(item.quantity) + parseInt(req.body.quantity)
             item.status = true;
             item.date = d.getTime();
-            item.added.push(d.getTime())
+            // console.log(d.getMilliseconds())
+            for( h = 1; h <=req.body.quantity; h++){
+                item.added.push(d.getTime())
+            }
+            
         } else if (item.quantity == 0) {
             return res.status(400).send({
                 "message": "Item is out of stock"
@@ -102,6 +106,10 @@ async function manual(req, res) {
                     userID: user._id,
                     breadcrumbs: breadList
                 });
+                var d = new Date();
+                 for( h = 1; h <=req.body.quantity; h++){
+                    newItem.added.push(d.getTime())
+                }
 
                 const savedItem = newItem.save();
                 user.listOfItems.push(newItem._id);
