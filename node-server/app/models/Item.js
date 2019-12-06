@@ -31,16 +31,14 @@ const itemSchema = new mongoose.Schema({
         required: true
     },
     lasted: { // List of item's simplified names
-        type: [Number],
-        required: true
+        type: [Number]
     },
     added:{
         type: [Number],
         required: true
     },
     message:{
-        type: String,
-        required: true
+        type: String   
     }
 });
 

@@ -287,7 +287,8 @@ async function getSoonOutOfStockList(req, res) {
                 
                 var date1 = new Date();
                if (date1.getTime() - item.date > avg_lasted) {
-                    item.message = "lasted"
+
+                    item.message = "Lasts on average " + Math.round(((avg_lasted) / (60*60*24*1000)))  + " day(s).\nLast added " + Math.round(((date1.getTime() - item.date) / (60*60*24*1000))) + " day(s) ago"
                     soonOutOfStock.push(item)
                     
                 }
@@ -297,9 +298,8 @@ async function getSoonOutOfStockList(req, res) {
                         total_added = total_added + Math.abs(item.added[i+1]-item.added[i])
                     }
                     var avg_added = total_added / item.added.length;
-
                     if(avg_added <= date1.getTime() - item.added[item.added.length-1]){
-                        item.message = "added"
+                        item.message = "Added on average every " +Math.round(((avg_added) / (60*60*24*1000)))  + " day(s).\nLast added "+ Math.round(((date1.getTime() - item.added[item.added.length-1]) / (60*60*24*1000))) + " day(s) ago"
                         soonOutOfStock.push(item)
                     }
                 
@@ -307,7 +307,8 @@ async function getSoonOutOfStockList(req, res) {
             }
         }
         console.log(soonOutOfStock)
-        // const savedUser = await user.save();
+                console.log(soonOutOfStock)
+
         return res.send({
             message:soonOutOfStock
         });

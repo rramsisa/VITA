@@ -23,23 +23,23 @@ async function manual(req, res) {
     const user = await User.findOne({
         _id: req.user._id
     })
-   
-     const item = await Item.findOne({
+
+    const item = await Item.findOne({
         userID: user._id,
         name: req.body.name
     });
     // console.log(item)
-    if(item != null){
+    if (item != null) {
         var d = new Date();
         if (req.body.flag == 1) {
             item.quantity = parseInt(item.quantity) + parseInt(req.body.quantity)
             item.status = true;
             item.date = d.getTime();
             // console.log(d.getMilliseconds())
-            for( h = 1; h <=req.body.quantity; h++){
+            for (h = 1; h <= req.body.quantity; h++) {
                 item.added.push(d.getTime())
             }
-            
+
         } else if (item.quantity == 0) {
             return res.status(400).send({
                 "message": "Item is out of stock"
@@ -53,9 +53,9 @@ async function manual(req, res) {
             item.quantity = 0;
             item.status = false;
             var date1 = new Date();
-            var Difference_In_Time = date1.getTime()-item.date; 
+            var Difference_In_Time = date1.getTime() - item.date;
             console.log(Difference_In_Time)
-            item.lasted.push(Difference_In_Time/parseInt(req.body.quantity));
+            item.lasted.push(Difference_In_Time / parseInt(req.body.quantity));
         }
         // console.log("Item exists")
         try {
@@ -92,11 +92,11 @@ async function manual(req, res) {
                 if (breadList.indexOf("non food item") >= 0) {
                     breadList = []
                 }
-                else if(result.body.category == null){
+                else if (result.body.category == null) {
                     console.log("it was null")
                     breadList = [req.body.name]
                 }
-                else{
+                else {
                     breadList.push(result.body.category)
                 }
                 const newItem = new Item({
@@ -107,7 +107,7 @@ async function manual(req, res) {
                     breadcrumbs: breadList
                 });
                 var d = new Date();
-                 for( h = 1; h <=req.body.quantity; h++){
+                for (h = 1; h <= req.body.quantity; h++) {
                     newItem.added.push(d.getTime())
                 }
 
