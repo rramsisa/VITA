@@ -37,6 +37,10 @@ const itemSchema = new mongoose.Schema({
     added:{
         type: [Number],
         required: true
+    },
+    message:{
+        type: String,
+        required: true
     }
 });
 

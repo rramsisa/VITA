@@ -287,6 +287,7 @@ async function getSoonOutOfStockList(req, res) {
                 
                 var date1 = new Date();
                if (date1.getTime() - item.date > avg_lasted) {
+                    item.message = "lasted"
                     soonOutOfStock.push(item)
                     
                 }
@@ -298,6 +299,7 @@ async function getSoonOutOfStockList(req, res) {
                     var avg_added = total_added / item.added.length;
 
                     if(avg_added <= date1.getTime() - item.added[item.added.length-1]){
+                        item.message = "added"
                         soonOutOfStock.push(item)
                     }
                 
