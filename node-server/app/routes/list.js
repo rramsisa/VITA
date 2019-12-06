@@ -59,15 +59,30 @@ async function clearShoppingList(req, res) {
 }
 //get outOfStock list
 async function getOutOfStockList(req, res) {
-    try {
+     try {
         const user = await User.findOne({
             _id: req.user._id
         })
-        // const values = Object.values(user.listOfItems)
+        const values = Object.values(user.listOfItems)
 
-        return res.send({
-            list: user.outOfStock
-        });
+        itemInfo = []
+        itemInfoprint = []
+
+        for (var property in values) {
+            const item = await Item.findOne({
+                _id: values[property]
+            })
+           if (item.status == false) {
+                itemInfo.push(item)
+           }
+            itemInfoprint.push(item)
+
+        }
+        console.log("---")
+        console.log(itemInfoprint)
+        console.log("---")
+
+        return res.send(itemInfo);
 
     } catch (err) {
         res.status(400).send({

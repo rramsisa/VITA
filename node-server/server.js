@@ -42,7 +42,7 @@ app.use(express.json());
 app.route("/api/recipes/recipe")
     .get(verify, recipesRoute.GetRecipe)
 app.route("/api/recipes/recipeLink")
-    .get(verify, recipesRoute.GetRecipeLink)
+    .post(verify, recipesRoute.GetRecipeLink)
 app.route("/api/user/")
     .get(authRoute.getUsers);
 app.route("/api/items/")

@@ -134,7 +134,10 @@ async function getMyItemsFromAlexa(req, res) {
             const item = await Item.findOne({
                 _id: values[property]
             })
-            itemInfo.push(item)
+            
+            if (item.status) {
+                itemInfo.push(item)
+           }
 
         }
         return res.send(itemInfo);
@@ -225,7 +228,7 @@ async function getRecipesFromAlexa(req, res) {
             .header('Content-Type', 'application/json')
             .query({
                 "ingredients": breadcrumbs,
-                "number": 2,
+                "number": 5,
                 "ranking": 2,
                 "ignorePantry": true
             })

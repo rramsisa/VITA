@@ -67,7 +67,7 @@ async function GetRecipe(req, res) {
 			.header('Content-Type', 'application/json')
 			.query({
 				"ingredients": breadcrumbs,
-				"number": 2,
+				"number": 10,
 				"ranking": 2,
 				"ignorePantry": true
 			})
@@ -110,9 +110,9 @@ async function GetRecipeLink(req, res) {
 				"includeNutrition": false
 			})
 			.end(result => {
-				console.log(result.body[0].spoonacularSourceUrl);
+				console.log(result.body[0].sourceUrl);
 				return res.send({
-					link: result.body[0].spoonacularSourceUrl
+					link: result.body[0].sourceUrl
 				});
 			})
 
