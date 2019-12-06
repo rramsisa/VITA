@@ -134,7 +134,10 @@ async function getMyItemsFromAlexa(req, res) {
             const item = await Item.findOne({
                 _id: values[property]
             })
-            itemInfo.push(item)
+            
+            if (item.status) {
+                itemInfo.push(item)
+           }
 
         }
         return res.send(itemInfo);
