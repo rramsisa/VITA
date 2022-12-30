@@ -33,7 +33,7 @@
     "unirest": "^0.6.0"
   },
   "devDependencies": {
-    "mocha": "^6.2.0",
+    "mocha": "^10.2.0",
     "mongo-unit": "^1.4.5"
   }
 }
